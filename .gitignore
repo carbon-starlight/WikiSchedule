@@ -1,3 +1,15 @@
+config.json
+masterfolders/getpage MASTERFOLDER/textbooks
+masterfolders/wsbot MASTERFOLDER/interchange
+masterfolders/wsbot MASTERFOLDER/forward_group-table_dictionary.json
+masterfolders/wsbot MASTERFOLDER/lg_logs
+masterfolders/wsbot MASTERFOLDER/mainArray
+masterfolders/wsbot MASTERFOLDER/sg_toggle_logs
+masterfolders/wsbot MASTERFOLDER/start_logs
+masterfolders/wsbot MASTERFOLDER/
+masterfolders/wsbot MASTERFOLDER/
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
