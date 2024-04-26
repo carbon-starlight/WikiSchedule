@@ -19,7 +19,9 @@ If you have DE/VM installed you can exit GUI with `Ctrl+Alt+F2` (on some systems
 Install GitHub to your operating system. 
 
 Clone this repo to your machine with the following command:  
-`how`
+`gh repo clone carbon-starlight/WikiSchedule`
+
+If you already hosted WikiSchedule on a different computer and now are moving to a new machine and want to preserve the database, move your `config.json` and `mainArray.json` files to their locations. Since 2.0 they are the only database files _(I hope)_. Addition of `mediaArray` file or catalog/folder to this list is planned in the future.  
 
 Navigate to project's folder. Launch cli.py to start the program.  
 `python3 cli.py`
