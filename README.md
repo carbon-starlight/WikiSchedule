@@ -16,9 +16,9 @@ Possible options:
 
 If you have DE/VM installed you can exit GUI with `Ctrl+Alt+F2` (on some systems `Alt+Ctrl+F4`) to save some RAM. Turning it back may be accomprished with `Ctrl+Alt+F1`
 
-Install GitHub to your operating system. 
+Install GitHub [CLI] to your operating system. 
 
-Clone this repo to your machine with the following command:  
+[Navigate](https://andysbrainbook.readthedocs.io/en/latest/unix/Unix_01_Navigation.html) to the folder where you want this program to be stored. Clone this repo to your machine with the following command:  
 `gh repo clone carbon-starlight/WikiSchedule`
 
 If you already hosted WikiSchedule on a different computer and now are moving to a new machine and want to preserve the database, move your `config.json` and `mainArray.json` files to their locations. Since 2.0 they are the only database files _(I hope)_. Addition of `mediaArray` file or catalog/folder to this list is planned in the future.  
