@@ -39,5 +39,7 @@ Navigate to project's folder. Launch cli.py to start the program.
 
 Follow the instructions.
 
+If you encounter `error: externally-managed-environment"` some solutions are listed here: https://stackoverflow.com/a/75696359
+
 ## License / Copying:
 Under consideration.
