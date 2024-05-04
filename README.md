@@ -24,6 +24,7 @@ Install GitHub [CLI] to your operating system.
 If you already hosted WikiSchedule on a different computer and now are moving to a new machine and want to preserve the database, move your configuration/database files/cataloges to their locations. Since 2.0 these are the only database files _(I hope)_. Addition of `mediaArray` file or catalog/folder to this list is planned in the future.  
 
 ```
+"config.json"
 "masterfolders/getpage MASTERFOLDER/textbooks"
 "masterfolders/wsbot MASTERFOLDER/interchange"
 "masterfolders/wsbot MASTERFOLDER/forward_group-table_dictionary.json"
