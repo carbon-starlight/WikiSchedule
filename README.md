@@ -21,7 +21,17 @@ Install GitHub [CLI] to your operating system.
 [Navigate](https://andysbrainbook.readthedocs.io/en/latest/unix/Unix_01_Navigation.html) to the folder where you want this program to be stored. Clone this repo to your machine with the following command:  
 `gh repo clone carbon-starlight/WikiSchedule`
 
-If you already hosted WikiSchedule on a different computer and now are moving to a new machine and want to preserve the database, move your `config.json` and `mainArray.json` files to their locations. Since 2.0 they are the only database files _(I hope)_. Addition of `mediaArray` file or catalog/folder to this list is planned in the future.  
+If you already hosted WikiSchedule on a different computer and now are moving to a new machine and want to preserve the database, move your configuration/database files/cataloges to their locations. Since 2.0 these are the only database files _(I hope)_. Addition of `mediaArray` file or catalog/folder to this list is planned in the future.  
+
+```
+"masterfolders/getpage MASTERFOLDER/textbooks"
+"masterfolders/wsbot MASTERFOLDER/interchange"
+"masterfolders/wsbot MASTERFOLDER/forward_group-table_dictionary.json"
+"masterfolders/wsbot MASTERFOLDER/lg_logs"
+"masterfolders/wsbot MASTERFOLDER/mainArray"
+"masterfolders/wsbot MASTERFOLDER/sg_toggle_logs"
+"masterfolders/wsbot MASTERFOLDER/start_logs"
+```
 
 Navigate to project's folder. Launch cli.py to start the program.  
 `python3 cli.py`
