@@ -133,7 +133,7 @@ if change_token not in ('1', '2'):
         python_executable = sys.executable
         
         # Define the command to install dependencies
-        command = [python_executable, '-m', 'pip', 'install', '-r', 'requirements.txt']
+        command = [python_executable, '-m', 'pip', '--timeout=1000' 'install', '-r', 'requirements.txt']
         
         # Run the command
         try:
