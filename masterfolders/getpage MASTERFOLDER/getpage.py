@@ -392,6 +392,10 @@ async def general_handler(message: Message):
     except IndexError:
         await message.answer('IndexError: Страница не найдена')
         return
+    
+    # Send a message to the user.
+    loading_to_server_msg = await bot.api.messages.send(user_id=message.peer_id, message="🛰 Отправка…", random_id=123654159)
+
 
     doc_uploader = DocMessagesUploader(bot.api)
 
@@ -408,6 +412,9 @@ async def general_handler(message: Message):
     )
                                             
     print("Doc uploaded in ", time.time() - upl_start_time, " seconds")         
+
+    # Delete the message.
+    await bot.api.messages.delete(message_ids=[loading_to_server_msg], delete_for_all=True)
 
     ans_start_time = time.time()
     await message.answer(attachment=doc)
