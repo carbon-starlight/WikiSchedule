@@ -12,6 +12,7 @@ displayVersion = False
 # Configure version number font here
 numberFontIsLightLine = True
 numberFontIsBoldLine = False
+preset_config = None
 
 import json
 # import os
