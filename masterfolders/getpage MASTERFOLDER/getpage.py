@@ -382,7 +382,7 @@ async def general_handler(message: Message):
     try:
 
         # Send a message to the user.
-        loading_msg = await bot.api.messages.send(user_id=message.peer_id, message="💬 Загрузка страницы…", random_id=123654852)
+        loading_msg = await bot.api.messages.send(user_id=message.peer_id, message="💬 Загрузка страницы…", random_id=0)
 
         output_pdf, temp_pdf_path = await get_doc(tb_id, page_number)
         
@@ -394,7 +394,7 @@ async def general_handler(message: Message):
         return
     
     # Send a message to the user.
-    loading_to_server_msg = await bot.api.messages.send(user_id=message.peer_id, message="🛰 Отправка…", random_id=123654159)
+    loading_to_server_msg = await bot.api.messages.send(user_id=message.peer_id, message="🛰 Отправка…", random_id=0)
 
 
     doc_uploader = DocMessagesUploader(bot.api)
