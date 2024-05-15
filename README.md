@@ -41,5 +41,7 @@ Follow the instructions.
 
 If you encounter `error: externally-managed-environment` some solutions are listed here: https://stackoverflow.com/a/75696359
 
+After getting the system up and running you may disable GUI to save CPU and RAM resources with `sudo systemctl set-default multi-user.target`; `reboot` ([read article](https://www.cyberciti.biz/faq/switch-boot-target-to-text-gui-in-systemd-linux/)). Works with systemd-based OSes (Fedora, Debian, etc.). Doesn't work with Alpine, but it should come without intrusive GUI anyway.
+
 ## License / Copying:
 Under consideration.
