@@ -380,7 +380,15 @@ async def general_handler(message: Message):
     #     return
 
     try:
+
+        # Send a message to the user.
+        loading_msg = await bot.api.messages.send(user_id=user_id, message="💬 Загрузка страницы…", random_id=123654852)
+
         output_pdf, temp_pdf_path = await get_doc(tb_id, page_number)
+        
+        # Delete the message.
+        await bot.api.messages.delete(message_ids=[loading_msg], delete_for_all=True)
+
     except IndexError:
         await message.answer('IndexError: Страница не найдена')
         return
