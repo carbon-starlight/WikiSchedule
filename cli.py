@@ -218,18 +218,76 @@ from pathlib import Path
 wsbot_dir = Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER")
 
 # Adjust the command to just the script name, because cwd is set to the script's directory
-subprocess.Popen(['python', 'wsbot.py'], cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER")))
-# subprocess.Popen(['python', 'add_webapp.py'], cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER")))
 
-if forward_to_vk:
-    print('Starting getpage.py...')
-    subprocess.Popen(['python', 'getpage.py'], cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/getpage MASTERFOLDER")))
-    print('Starting VRSF.py...')
-    subprocess.Popen(['python', 'VRSF.py'], cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER")))
-    print('Starting VRSFS.py...')
-    subprocess.Popen(['python', 'VRSFS.py'], cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER")))
 
-finish = input('Enter "f" or <Ctrl+C> to finish execution.')
+
+try:
+    processes = []
+
+    # Start wsbot.py
+    wsbot_process = subprocess.Popen(
+        ['python', 'wsbot.py'], 
+        cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER"))
+    )
+    processes.append(wsbot_process)
+
+    if forward_to_vk:
+        print('Starting getpage.py...')
+        getpage_process = subprocess.Popen(
+            ['python', 'getpage.py'], 
+            cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/getpage MASTERFOLDER"))
+        )
+        processes.append(getpage_process)
+
+        print('Starting VRSF.py...')
+        vrsf_process = subprocess.Popen(
+            ['python', 'VRSF.py'], 
+            cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER"))
+        )
+        processes.append(vrsf_process)
+
+        print('Starting VRSFS.py...')
+        vrsfs_process = subprocess.Popen(
+            ['python', 'VRSFS.py'], 
+            cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER"))
+        )
+        processes.append(vrsfs_process)
+
+    finish = input('Enter "f" or <Ctrl+C> to finish execution.')
+
+finally:
+    # Stop all started processes
+    for proc in processes:
+        proc.terminate()  # Send SIGTERM
+        try:
+            proc.wait(timeout=5)  # Wait for process to gracefully exit
+        except subprocess.TimeoutExpired:
+            proc.kill()  # Force kill if it doesn't exit in time
+
+    print('All subprocesses were terminated.')
+
+
+
+# subprocess.Popen(['python', 'wsbot.py'], cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER")))
+# # subprocess.Popen(['python', 'add_webapp.py'], cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER")))
+
+# if forward_to_vk:
+#     print('Starting getpage.py...')
+#     subprocess.Popen(['python', 'getpage.py'], cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/getpage MASTERFOLDER")))
+#     print('Starting VRSF.py...')
+#     subprocess.Popen(['python', 'VRSF.py'], cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER")))
+#     print('Starting VRSFS.py...')
+#     subprocess.Popen(['python', 'VRSFS.py'], cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER")))
+
+# finish = input('Enter "f" or <Ctrl+C> to finish execution.')
+
+
+
+
+
+
+
+
 
 # scripts = ['masterfolders/wsbot MASTERFOLDER/wsbot.py', 'masterfolders/getpage MASTERFOLDER/getpage.py', 'masterfolders/getpage MASTERFOLDER/VRSF.py', 'masterfolders/getpage MASTERFOLDER/VRSFS.py']
 
