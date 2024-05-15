@@ -68,9 +68,9 @@ import openmeteo_requests
 print(f"compiling took {time.time() - timestamp1}{' f#cking' if time.time() - timestamp1 > 10 else ''} seconds")
 print('line 60')
 import requests_cache
-print('line 62  compiling pandas')  # right after it struggling
+print('<depreciated> line 62  compiling pandas')  # right after it struggling
 timestamp1 = time.time()
-import pandas as pd
+# import pandas as pd
 print(f"compiling took {time.time() - timestamp1}{' f#cking' if time.time() - timestamp1 > 10 else ''} seconds")
 print('line 66')
 from retry_requests import retry
