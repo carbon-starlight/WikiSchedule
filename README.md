@@ -10,8 +10,8 @@ You will need a computer that will run 24/7 with active internet connection. You
 
 Possible options:
 
-- [Debian](https://www.debian.org/) *Finding an option right for your machine on their website might be challenging*
-- [Fedora Server](https://fedoraproject.org/)
+- [Fedora Server](https://fedoraproject.org/) *No version for IA-32 processors*
+- [Debian](https://www.debian.org/) *Supports most architectures, but finding an option right for your machine on their website might be challenging*
 - [Alpine Linux](https://www.alpinelinux.org/) *Lightest of them all, but dual-boot may be challenging and some users reported it being slow specifically for Python code*
 
 If you have DE/VM installed you can exit GUI with `Ctrl+Alt+F2` (on some systems `Alt+Ctrl+F4`) to save some RAM. Turning it back may be accomprished with `Ctrl+Alt+F1`
