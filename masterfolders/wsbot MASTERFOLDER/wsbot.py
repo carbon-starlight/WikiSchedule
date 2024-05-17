@@ -109,6 +109,7 @@ async def getCurrentTemporalInfo():
 
     Call after getUserInfo(), needs global utz"""
     print('EXECUTING GETCURRENTTEMPORALINFO')
+    start_gcti_exec_timestamp = time.time()
     # 1688947200 is Monday, 10 July 2023 г., 0:00:00 UTC
     global current_week_utc
     global current_day_utc
@@ -126,7 +127,7 @@ async def getCurrentTemporalInfo():
     print(current_day_utc)
     print(current_week_utz)
     print(current_day_utz)
-    print('END OF GETCURRENTTEMPORALINFO EXECUTION')
+    print('END OF GETCURRENTTEMPORALINFO EXECUTION IN', time.time() - start_gcti_exec_timestamp)
     return current_week_utc, current_day_utc, current_week_utz, current_day_utz, current_lesson_num_utz, current_lesson_id_utz
 
 
@@ -155,6 +156,7 @@ def isinteger(string):
 async def getUserInfo(user_id, username = None):
     """Get what table the user is in, it's tz (as utz), their semigraphic_mode_on and where they are allowed as an admin or a contributor"""
     print('EXECUTING GETUSERINFO')
+    start_gui_exec_timestamp = time.time()
     global utz
     global table_user_in
     global tables_user_admin_in
@@ -212,7 +214,7 @@ async def getUserInfo(user_id, username = None):
 
     print('in func getUserInfo: ', mainArray)
     print('in func getUserInfo: table_user_in:', table_user_in)
-    print('END OF GETUSERINFO EXECUTION')
+    print('END OF GETUSERINFO EXECUTION IN', time.time() - start_gui_exec_timestamp)
 
     return semigraphic_mode_on, tables_user_admin_in, tables_user_allowed_in, table_user_in, utz
 
@@ -236,6 +238,7 @@ def getTableTemporalInfoFromMainArray(table_id):
 async def getToLesFromCurrent(user_id):
     """Get an "add to" week_number, day_of_week and lesson_number based on an ongoing lesson"""
     print('EXECUTING GETTOLESFROMCURRENT')
+    start_gtlfc_timestamp = time.time()
     await getUserInfo(user_id)
     await getCurrentTemporalInfo()
     await getWeekArray(table_user_in, current_week_utz)
@@ -316,7 +319,7 @@ async def getToLesFromCurrent(user_id):
     next_of_kind_lesson_day_in_week = next_of_kind_lesson // 10 + 1
     """number in week, 1-7"""
 
-    print('END OF GETTOLESFROMCURRENT EXECUTION')
+    print('END OF GETTOLESFROMCURRENT EXECUTION IN', time.time() - start_gtlfc_timestamp)
 
     return next_of_kind_lesson_week, next_of_kind_lesson_day_in_week, next_of_kind_lesson_in_day, current_lesson
 
@@ -359,6 +362,7 @@ async def getWeekArray(table_user_in, adding_from_week):
         list: A list containing all the lessons 1-10 starting from 0 in a week.
     """
     print('EXECUTING GETWEEKARRAY')
+    start_gwa_timestamp = time.time()
     weekArray.clear()
     print('in func getWeekArray (beginning): adding_from_week: ', adding_from_week)
     await getCurrentTemporalInfo()
@@ -407,7 +411,7 @@ async def getWeekArray(table_user_in, adding_from_week):
                 if found == False:
                     weekArray.append(None)
     print('in func getWeekArray (end): adding_from_week: ', adding_from_week)
-    print('END OF GETWEEKARRAY EXECUTION')
+    print('END OF GETWEEKARRAY EXECUTION IN: ', time.time() - start_gwa_timestamp)
     return weekArray
 
 
@@ -419,6 +423,7 @@ async def getWeekArray_HW(table_user_in, adding_from_week):
         weekArray_HW: A list containing all the hw 1-10 starting from 0 in a week.
     """
     print('EXECUTING GETWEEKARRAY_HW')
+    start_gwahw_timestamp = time.time()
     await getCurrentTemporalInfo()
     # Decode the JSON array to Python object
     with open('mainArray.json', 'r') as fileMA:
@@ -461,7 +466,7 @@ async def getWeekArray_HW(table_user_in, adding_from_week):
             if not found:  # If no valid subarray was found, we append None
                 weekArray_HW.append(None)
     print('in func getWeekArray_HW (end): adding_from_week: ', adding_from_week)
-    print('END OF GETWEEKARRAY_HW EXECUTION')
+    print('END OF GETWEEKARRAY_HW EXECUTION IN: ', time.time() - start_gwahw_timestamp)
     return weekArray_HW
 
 
@@ -469,6 +474,7 @@ async def get_room_number_weekArray(table_user_in, adding_from_week):
     """"""
     global room_number_weekArray
     print('EXECUTING GET_ROOM_NUMBER_WEEKARRAY')
+    start_grnwA_timestamp = time.time()
     with open('mainArray.json', 'r') as fileMA:
         mainArray = json.load(fileMA)
 
@@ -523,7 +529,7 @@ async def get_room_number_weekArray(table_user_in, adding_from_week):
                             found = True
                 if found == False:
                     room_number_weekArray.append(None)
-    print('END OF GET_ROOM_NUMBER_WEEKARRAY EXECUTION')
+    print('END OF GET_ROOM_NUMBER_WEEKARRAY EXECUTION IN: ', time.time() - start_grnwA_timestamp)
     return room_number_weekArray
 
 
@@ -531,6 +537,7 @@ async def get_done_hw_weekArray(table_user_in, adding_from_week, user_id):
     """"""
     global done_hw_weekArray
     print('EXECUTING GET_DONE_HW_WEEKARRAY')
+    start_gdhwA_timestamp = time.time()
     with open('mainArray.json', 'r') as fileMA:
         mainArray = json.load(fileMA)
 
@@ -559,6 +566,7 @@ async def get_done_hw_weekArray(table_user_in, adding_from_week, user_id):
             if not found:  # If no valid subarray was found, we append None
                 done_hw_weekArray.append(' ')
     print('formed done_hw_weekArray: ', done_hw_weekArray)
+    print('END OF GET_DONE_HW_WEEKARRAY EXECUTION IN: ', time.time() - start_gdhwA_timestamp)
     return done_hw_weekArray
     
 
@@ -570,6 +578,7 @@ async def getWeekArray_N(table_user_in, adding_from_week):
         weekArray_N: A list containing all the notes 1-10 starting from 0 in a week.
     """
     print('EXECUTING GETWEEKARRAY_N')
+    start_gwn_timestamp = time.time()
     await getCurrentTemporalInfo()
     # Decode the JSON array to Python object
     with open('mainArray.json', 'r') as fileMA:
@@ -612,7 +621,7 @@ async def getWeekArray_N(table_user_in, adding_from_week):
             if not found:  # If no valid subarray was found, we append None
                 weekArray_N.append(None)
     print('in func getWeekArray_N (end): adding_from_week: ', adding_from_week)
-    print('END OF GETWEEKARRAY_N EXECUTION')
+    print('END OF GETWEEKARRAY_N EXECUTION IN: ', time.time() - start_gwn_timestamp)
     return weekArray_N
 # async def log(user_id, type, table_user_in, week_number, day_of_week, lesson_number, content, utz, subgroup_level):
 
@@ -626,6 +635,7 @@ async def log(new_data):
 #    0      1            2        3      4     5  6  7   8    9   10 11 12 13 14```"""
 
     print('EXECUTING LOG FUNCTION')
+    start_log_timestamp = time.time()
     # First, load the data already in the fileMA
     with open('mainArray.json', 'r') as fileMA:
         mainArray = json.load(fileMA)
@@ -636,12 +646,13 @@ async def log(new_data):
     # Now write the data back to the fileMA
     with open('mainArray.json', 'w') as fileMA:
         json.dump(mainArray, fileMA)
-    print('END OF LOG FUNCTION EXECUTION')
+    print('END OF LOG FUNCTION EXECUTION IN: ', time.time() - start_log_timestamp)
 
 
 async def getWeekCalendarBoundaries(adding_from_week):
     '''get the adding_from_week calendar boundaries as week_calendar_boundaries'''
     print('EXECUTING GETWEEKCALENDARBOUNDARIES')
+    start_gwcb_timestamp = time.time()
     
     await getCurrentTemporalInfo()
 
@@ -667,7 +678,7 @@ async def getWeekCalendarBoundaries(adding_from_week):
     # current_week_utz = (time.time() + utz - 1688947200) // 604800
     # current_day_utz = (time.time() + utz - 1688947200) % 604800 // 86400 + 1
 
-    print('END OF GETWEEKCALENDARBOUNDARIES EXECUTION')
+    print('END OF GETWEEKCALENDARBOUNDARIES EXECUTION IN: ', time.time() - start_gwcb_timestamp)
     return week_calendar_boundaries
 
 def get_weekday_names(language_code):
@@ -707,6 +718,7 @@ def get_weekday_names(language_code):
 async def today_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """List schedule for today"""
     print('EXECUTING TODAY_COMMAND')
+    start_tc_timestamp = time.time()
     print(str(Update))
     # print(Update.message.photo)
     user_id = update.message.chat.id
@@ -831,7 +843,7 @@ async def today_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 │TABLE ID: {table_user_in + ' '*(16-len(table_user_in))}│
 └──────────────────────────┘</pre>""")
     await update.message.reply_text(s_table, parse_mode='HTML')
-    print('END OF TODAY_COMMAND EXECUTION')
+    print('END OF TODAY_COMMAND EXECUTION IN', time.time() - start_tc_timestamp)
     return weekArray
 
 #     s_table = (f"""<pre>{wd_n, current_day_utz, current_day_utc}
@@ -859,6 +871,7 @@ async def today_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def formSemigraphicTable(adding_from_week, user_id, table_type, weekArray, weekArray_HW = [], weekArray_N = [], done_hw_weekArray = [], roomNpos = 'no', update = None):
     """Creates a semigraphic table. Pass table_type as 'lessons_only' or 'hw' or 'notes'"""
     print('EXECUTING FORMSEMIGRAPHICTABLE')
+    start_fst_timestamp = time.time()
     global s_table
     getUserInfo(user_id)
     week_calendar_boundaries = await getWeekCalendarBoundaries(adding_from_week)
@@ -1394,7 +1407,7 @@ q
     # │6│17:35│19:10│            │
     # └─┴─────┴─────┴────────────┘
 
-    print("END OF FORMSEMIGRAPHICTABLE EXECUTION")
+    print("END OF FORMSEMIGRAPHICTABLE EXECUTION IN: ", time.time() - start_fsmt_timestamp)
 
 
 # Commands
@@ -1988,6 +2001,7 @@ Correct syntax:
 
 async def ah_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print('EXECUTING AH COMMAND')
+    start_ac_timestamp = time.time()
     user_id = update.message.chat.id
     await getCurrentTemporalInfo()
     await getUserInfo(user_id)
@@ -2066,7 +2080,7 @@ Correct syntax:
 
         await update.message.reply_text(f'Adding hw in auto mode for {hw}, to week {next_of_kind_lesson_week}, day {next_of_kind_lesson_day_in_week}, lesson number {next_of_kind_lesson_in_day} for register 1')
         await save_data_for_interchange(table_user_in)
-        print('END OF AH COMMAND EXECUTION')
+        print('END OF AH COMMAND EXECUTION IN ', time.time() - start_ac_timestamp)
 
 
 async def an_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2162,6 +2176,7 @@ async def mv_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """ c  w d l w d l"""
     """ 0  1 2 3 4 5 6"""
     print("EXECUTING MV_COMMAND")
+    start_mc_timestamp = time.time()
     await getUserInfo(update.message.chat.id)
     print(utz)
     await getCurrentTemporalInfo()
@@ -2261,7 +2276,7 @@ async def mv_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     await update.message.reply_text(f"Lesson {words[3]} of week {words[1]} day {words[2]} moved to week {words[4]}, day {words[5]} lesson {words[6]} with notes and homework")
 
-    print ("END OF MV_COMMAND EXECUTION")
+    print ("END OF MV_COMMAND EXECUTION IN ", time.time() - start_mc_timestamp)
             
     
   #res0|   time    |contrib_id| type  |table| w |d |l |cntnt|utz |vl|rg|ex|rn|r6
@@ -2274,6 +2289,7 @@ async def ls_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """list week lessons and hw: *** /ls 4 *** is getting 4th week; default is current"""
     global adding_from_week
     print('EXECUTING LS_COMMAND')
+    start_ls_timestamp = time.time()
     user_id = update.message.chat.id
     await getUserInfo(update.message.chat.id)
     await getCurrentTemporalInfo()
@@ -2403,13 +2419,14 @@ SUNDAY:
     room_number_weekArray.clear()
 
 
-    print('END OF LS_COMMAND EXECUTION')
+    print('END OF LS_COMMAND EXECUTION IN', time.time() - start_ls_timestamp)
 
 
 async def ls_hw_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """list week lessons and hw: *** /ls_hw 4 *** is getting 4th week; default is current"""
     global adding_from_week
     print('EXECUTING LS_HW_COMMAND')
+    start_ls_hw_timestamp = time.time()
     user_id = update.message.chat.id
     await getUserInfo(update.message.chat.id)
     await getCurrentTemporalInfo()
@@ -2588,11 +2605,12 @@ SUNDAY:
         await update.message.reply_text("There are no lessons this week.")
     weekArray.clear()
 
-    print('END OF LS_HW_COMMAND EXECUTION')
+    print('END OF LS_HW_COMMAND EXECUTION IN ', time.time() - start_ls_hw_timestamp)
 
 
 async def ls_n_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print('EXECUTING LS_N_COMMAND')
+    start_ls_n_timestamp = time.time()
     global adding_from_week
     user_id = update.message.chat.id
     await getUserInfo(update.message.chat.id)
@@ -2744,13 +2762,14 @@ Table: {table_user_in}""")
         await update.message.reply_text("There are no lessons this week.")
     weekArray.clear()
 
-    print('END OF LS_HW_COMMAND EXECUTION')
-    print('END OF LS_N_COMMAND EXECUTION')
+    # print('END OF LS_HW_COMMAND EXECUTION')
+    print('END OF LS_N_COMMAND EXECUTION IN ' + str(time.time() - start_ls_n_timestamp))
 
 
 async def cs_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """create schedule command"""
     print('EXECUTING CS_COMMAND')
+    start_timestamp = time.time()
     user_id = update.message.chat.id
     await getCurrentTemporalInfo()
     await getUserInfo(user_id)
@@ -2837,7 +2856,7 @@ async def cs_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         # if anything goes wrong, tell the user
         await update.message.reply_text(str(e))
 
-    print('END OF CS_COMMAND EXECUTION')
+    print('END OF CS_COMMAND EXECUTION IN ' + str(time.time() - start_timestamp))
 
 
 async def set_temporal_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -2854,6 +2873,7 @@ async def set_temporal_command(update: Update, context: ContextTypes.DEFAULT_TYP
     ***"""
     
     print('EXECUTING SET_TEMPORAL_COMMAND')
+    start_timestamp = time.time()
     user_id = update.message.chat.id
     await getCurrentTemporalInfo()
     await getUserInfo(user_id)
@@ -2889,12 +2909,13 @@ async def set_temporal_command(update: Update, context: ContextTypes.DEFAULT_TYP
     except ValueError as e:
         # if anything goes wrong, tell the user
         await update.message.reply_text(str(e))
-    print('END OF SET_TEMPORAL_COMMAND EXECUTION')
+    print('END OF SET_TEMPORAL_COMMAND EXECUTION IN ' + str(time.time() - start_timestamp))
 
 
 async def au_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Add User command. Logs 5725753364 from *** /au 5725753364 *** to mainArray as [0, time.time(), update.message.chat.id, 'au', table_user_in, 0, 0, 0, newcomer_id, utz, 0, 0, 0, 0, 0,]. Now 5725753364 is allowed to contribute to this table"""
     print('EXECUTING AU_COMMAND')
+    start_timestamp = time.time()
     await getUserInfo(update.message.chat.id)
     text = update.message.text
     words = text.split()
@@ -2919,12 +2940,13 @@ async def au_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text(invite_code)
         else:
             await update.message.reply_text(f"You are not allowed to add new users to table {table_user_in}")
-    print('END OF AU_COMMAND EXECUTION')
+    print('END OF AU_COMMAND EXECUTION IN ' + str(time.time() - start_timestamp))
 
 
 async def ls_db_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """list db lists/arrays"""
     print('EXECUTING LS_MA_COMMAND')
+    start_timestamp = time.time()
     await getCurrentTemporalInfo()
     await getUserInfo(update.message.chat.id)
     with open('mainArray.json', 'r') as fileMA:
@@ -2945,12 +2967,13 @@ async def ls_db_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     for wrapped_message in wrapped_messages:
         await update.message.reply_text(wrapped_message)
 
-    print('END OF LS_MA_COMMAND EXECUTION')
+    print('END OF LS_MA_COMMAND EXECUTION IN ' + str(time.time() - start_timestamp))
 
 
 async def toggle_semigraphics_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """tg_sg"""
     print('EXECUTING TOGGLE_SEMIGRAPHICS_COMMAND')
+    start_timestamp = time.time()
     semigraphic_mode_on, tables_user_admin_in, tables_user_allowed_in, table_user_in, utz = await getUserInfo(update.message.chat.id)
     print(semigraphic_mode_on)
     if semigraphic_mode_on == False:
@@ -2973,7 +2996,7 @@ async def toggle_semigraphics_command(update: Update, context: ContextTypes.DEFA
         json.dump(sg_toggle_logs_array, file)
 
     await update.message.reply_text(f"Semigr mode is now {semigraphic_mode_on}")
-    print('END OF TOGGLE_SEMIGRAPHICS_COMMAND EXECUTION')
+    print('END OF TOGGLE_SEMIGRAPHICS_COMMAND EXECUTION IN ' + str(time.time() - start_timestamp))
 
 
 
@@ -3053,6 +3076,7 @@ async def edit_logs_command(update: Update, context: CallbackContext):
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     print('EXECUTING EDIT_LOG_COMMAND')
+    start_timestamp = time.time()
     await getCurrentTemporalInfo()
     await getUserInfo(update.effective_user.id)
 
@@ -3069,7 +3093,7 @@ async def edit_logs_command(update: Update, context: CallbackContext):
         reply_markup=reply_markup
     )
 
-    print('END OF EDIT_LOG_COMMAND EXECUTION')
+    print('END OF EDIT_LOG_COMMAND EXECUTION IN ' + str(time.time() - start_timestamp))
 
 
 def generate_message(cr_pos, table_log_array):
