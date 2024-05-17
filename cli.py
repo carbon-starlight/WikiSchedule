@@ -253,7 +253,7 @@ try:
         )
         processes.append(vrsfs_process)
 
-    finish = input('Enter "f" or <Ctrl+C> to finish execution.')
+    finish = input('Enter "f" to finish execution.')
 
 finally:
     # Stop all started processes
