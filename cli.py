@@ -220,57 +220,51 @@ wsbot_dir = Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFO
 # Adjust the command to just the script name, because cwd is set to the script's directory
 
 
-def launch_subprocesses():
 
-    try:
-        processes = []
+try:
+    processes = []
 
-        # Start wsbot.py
-        wsbot_process = subprocess.Popen(
-            ['python', 'wsbot.py'], 
+    # Start wsbot.py
+    wsbot_process = subprocess.Popen(
+        ['python', 'wsbot.py'], 
+        cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER"))
+    )
+    processes.append(wsbot_process)
+
+    if forward_to_vk:
+        print('Starting getpage.py...')
+        getpage_process = subprocess.Popen(
+            ['python', 'getpage.py'], 
+            cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/getpage MASTERFOLDER"))
+        )
+        processes.append(getpage_process)
+
+        print('Starting VRSF.py...')
+        vrsf_process = subprocess.Popen(
+            ['python', 'VRSF.py'], 
             cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER"))
         )
-        processes.append(wsbot_process)
+        processes.append(vrsf_process)
 
-        if forward_to_vk:
-            print('Starting getpage.py...')
-            getpage_process = subprocess.Popen(
-                ['python', 'getpage.py'], 
-                cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/getpage MASTERFOLDER"))
-            )
-            processes.append(getpage_process)
+        print('Starting VRSFS.py...')
+        vrsfs_process = subprocess.Popen(
+            ['python', 'VRSFS.py'], 
+            cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER"))
+        )
+        processes.append(vrsfs_process)
 
-            print('Starting VRSF.py...')
-            vrsf_process = subprocess.Popen(
-                ['python', 'VRSF.py'], 
-                cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER"))
-            )
-            processes.append(vrsf_process)
+    finish = input('Enter "f" or <Ctrl+C> to finish execution.')
 
-            print('Starting VRSFS.py...')
-            vrsfs_process = subprocess.Popen(
-                ['python', 'VRSFS.py'], 
-                cwd=str(Path(__file__).parent.resolve() / Path("masterfolders/wsbot MASTERFOLDER"))
-            )
-            processes.append(vrsfs_process)
+finally:
+    # Stop all started processes
+    for proc in processes:
+        proc.terminate()  # Send SIGTERM
+        try:
+            proc.wait(timeout=5)  # Wait for process to gracefully exit
+        except subprocess.TimeoutExpired:
+            proc.kill()  # Force kill if it doesn't exit in time
 
-        finish = input('Enter "f" to finish execution or "r" to reboot with recompilation of all scripts from their current state.')
-
-    finally:
-        if input == 'f':
-        # Stop all started processes
-            for proc in processes:
-                proc.terminate()  # Send SIGTERM
-                try:
-                    proc.wait(timeout=5)  # Wait for process to gracefully exit
-                except subprocess.TimeoutExpired:
-                    proc.kill()  # Force kill if it doesn't exit in time
-
-            print('All subprocesses were terminated.')
-        else:
-            launch_subprocesses()
-
-launch_subprocesses()
+    print('All subprocesses were terminated.')
 
 
 
