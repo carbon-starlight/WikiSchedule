@@ -1407,7 +1407,7 @@ q
     # │6│17:35│19:10│            │
     # └─┴─────┴─────┴────────────┘
 
-    print("END OF FORMSEMIGRAPHICTABLE EXECUTION IN: ", time.time() - start_fsmt_timestamp)
+    print("END OF FORMSEMIGRAPHICTABLE EXECUTION IN: ", time.time() - start_fst_timestamp)
 
 
 # Commands
