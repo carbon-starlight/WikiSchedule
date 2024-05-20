@@ -3576,7 +3576,7 @@ if __name__ == '__main__':
     app = Application.builder().token(TOKEN).build()
 
     convo_handler = ConversationHandler(
-        entry_points=[CommandHandler('add', add)],
+        entry_points=[CommandHandler('add', add_command)],
         states={
             TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_command)],
             WEEK: [MessageHandler(filters.TEXT & ~filters.COMMAND, week_selection)],
