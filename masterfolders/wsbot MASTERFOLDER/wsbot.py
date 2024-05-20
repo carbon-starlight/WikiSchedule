@@ -3613,7 +3613,7 @@ if __name__ == '__main__':
     app.add_handler(CallbackQueryHandler(button_callback))
     app.add_handler(CommandHandler('today', today_command))
     app.add_handler(CommandHandler('mv', mv_command))
-    app.add_handler(CommandHandler('add', add_command))
+    # app.add_handler(CommandHandler('add', add_command))
 
     timer_handler = CommandHandler('timer', callback_timer)
     app.add_handler(timer_handler)
