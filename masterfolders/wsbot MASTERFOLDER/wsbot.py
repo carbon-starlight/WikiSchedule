@@ -2294,7 +2294,7 @@ async def mv_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # Define conversation states
 TYPE, WEEK, SPECIFIC_DATE, LESSON_NUMBER, EVENT_TYPE, ADD_FOR, CONTENT = range(7)
 
-async def add(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     reply_keyboard = [['Lesson', 'Homework', 'Note']]
     await update.message.reply_text(
         'What would you like to add?',
@@ -2302,7 +2302,7 @@ async def add(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     )
     return TYPE
 
-async def type_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def week_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['type'] = update.message.text
     reply_keyboard = [['Current', 'Next', 'Other']]
     await update.message.reply_text(
@@ -2311,7 +2311,7 @@ async def type_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     )
     return WEEK
 
-async def week_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def day_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['week'] = update.message.text
     if update.message.text == 'Other':
         reply_keyboard = [
@@ -2322,13 +2322,13 @@ async def week_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         )
         return SPECIFIC_DATE
     else:
-        return await ask_lesson_number(update, context)
+        return await lesson_number_selection(update, context)
 
 async def specific_date_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['specific_date'] = update.message.text
-    return await ask_lesson_number(update, context)
+    return await lesson_number_selection(update, context)
 
-async def ask_lesson_number(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def lesson_number_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     reply_keyboard = [[str(x) for x in range(1, 9)]]
     await update.message.reply_text(
         'What is the lesson number?',
@@ -2336,7 +2336,7 @@ async def ask_lesson_number(update: Update, context: ContextTypes.DEFAULT_TYPE) 
     )
     return LESSON_NUMBER
 
-async def lesson_number_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def if_one_time_event_or_regular_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['lesson_number'] = update.message.text
     if context.user_data.get('type') == 'Lesson':
         reply_keyboard = [['One-time', 'Regular']]
@@ -2346,13 +2346,13 @@ async def lesson_number_selection(update: Update, context: ContextTypes.DEFAULT_
         )
         return EVENT_TYPE
     else:
-        return await add_for_selection(update, context)
+        return await add_for_what_tables_selection(update, context)
 
 async def event_type_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['event_type'] = update.message.text
-    return await add_for_selection(update, context)
+    return await add_for_what_tables_selection(update, context)
 
-async def add_for_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def add_for_what_tables_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     reply_keyboard = [['For yourself', 'For the schedule of your class', 'For all the schedules that are connected']]
     await update.message.reply_text(
         'Would you like to add it:',
@@ -2367,12 +2367,12 @@ async def add_for(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     )
     return CONTENT
 
-async def content(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['content'] = update.message.text
     await update.message.reply_text(f"Data collected: {context.user_data}")
     return ConversationHandler.END
 
-async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def cancel_add_conv(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await update.message.reply_text('Operation cancelled.')
     return ConversationHandler.END
 
@@ -3578,16 +3578,16 @@ if __name__ == '__main__':
     convo_handler = ConversationHandler(
         entry_points=[CommandHandler('add', add)],
         states={
-            TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_type)],
-            WEEK: [MessageHandler(filters.TEXT & ~filters.COMMAND, week_specify)],
-            SPECIFIC_DATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, date_specify)],
-            LESSON_NUMBER: [MessageHandler(filters.TEXT & ~filters.COMMAND, lesson_number)],
-            EVENT_TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, lesson_type)],
-            ADD_FOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, audience)],
-            CONTENT: [MessageHandler(filters.TEXT & ~filters.COMMAND, content)],
-            ConversationHandler.END: [MessageHandler(filters.TEXT & ~filters.COMMAND, save_content)],
+            TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_command)],
+            WEEK: [MessageHandler(filters.TEXT & ~filters.COMMAND, week_selection)],
+            SPECIFIC_DATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, specific_date_selection)],
+            LESSON_NUMBER: [MessageHandler(filters.TEXT & ~filters.COMMAND, lesson_number_selection)],
+            EVENT_TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, if_one_time_event_or_regular_selection)],
+            ADD_FOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_for_what_tables_selection)],
+            CONTENT: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_for)],
+            ConversationHandler.END: [MessageHandler(filters.TEXT & ~filters.COMMAND, content_input)],
         },
-        fallbacks=[CommandHandler('cancel', cancel)]
+        fallbacks=[CommandHandler('cancel', cancel_add_conv)]
     )
 
     app.add_handler(convo_handler)
