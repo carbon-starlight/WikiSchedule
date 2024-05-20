@@ -43,6 +43,7 @@ from telegram.ext import CallbackContext, CallbackQueryHandler, Updater
 # from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import Application, CallbackQueryHandler, CommandHandler, ContextTypes
+from telegram import Update, ReplyKeyboardMarkup
 import sys
 import traceback
 import tracemalloc
