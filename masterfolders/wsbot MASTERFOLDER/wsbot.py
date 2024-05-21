@@ -2293,8 +2293,16 @@ async def mv_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # Each category corresponds to a specific menu step
 # Define conversation states
+from telegram import Update, ReplyKeyboardMarkup
+from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler
+
+# Constants for states
 TYPE, WEEK, SPECIFIC_DATE, LESSON_NUMBER, EVENT_TYPE, ADD_FOR, CONTENT = range(7)
 
+# Token placeholder
+TOKEN = 'YOUR_TELEGRAM_BOT_TOKEN'
+
+# Command handler functions
 async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     reply_keyboard = [['Lesson', 'Homework', 'Note']]
     await update.message.reply_text(
@@ -3579,14 +3587,13 @@ if __name__ == '__main__':
     convo_handler = ConversationHandler(
         entry_points=[CommandHandler('add', add_command)],
         states={
-            TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_command)],
-            WEEK: [MessageHandler(filters.TEXT & ~filters.COMMAND, week_selection)],
+            TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, week_selection)],
+            WEEK: [MessageHandler(filters.TEXT & ~filters.COMMAND, day_selection)],
             SPECIFIC_DATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, specific_date_selection)],
             LESSON_NUMBER: [MessageHandler(filters.TEXT & ~filters.COMMAND, lesson_number_selection)],
-            EVENT_TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, if_one_time_event_or_regular_selection)],
-            ADD_FOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_for_what_tables_selection)],
-            CONTENT: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_for)],
-            ConversationHandler.END: [MessageHandler(filters.TEXT & ~filters.COMMAND, content_input)],
+            EVENT_TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, event_type_selection)],
+            ADD_FOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_for)],
+            CONTENT: [MessageHandler(filters.TEXT & ~filters.COMMAND, content_input)],
         },
         fallbacks=[CommandHandler('cancel', cancel_add_conv)]
     )
