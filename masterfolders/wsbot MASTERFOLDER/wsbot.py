@@ -3588,7 +3588,7 @@ if __name__ == '__main__':
             WEEK: [MessageHandler(filters.TEXT & ~filters.COMMAND, day_selection)],
             SPECIFIC_DATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, specific_date_selection)],
             LESSON_NUMBER: [MessageHandler(filters.TEXT & ~filters.COMMAND, lesson_number_selection)],
-            EVENT_TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, event_type_selection)],
+            EVENT_TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, if_one_time_event_or_regular_selection)],
             ADD_FOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_for)],
             CONTENT: [MessageHandler(filters.TEXT & ~filters.COMMAND, content_input)],
         },
