@@ -2356,9 +2356,9 @@ async def if_one_time_event_or_regular_selection(update: Update, context: Contex
     else:
         return await add_for_what_tables_selection(update, context)
 
-async def event_type_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    context.user_data['event_type'] = update.message.text
-    return await add_for_what_tables_selection(update, context)
+# async def event_type_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+#     context.user_data['event_type'] = update.message.text
+#     return await add_for_what_tables_selection(update, context)
 
 async def add_for_what_tables_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     reply_keyboard = [['For yourself', 'For the schedule of your class', 'For all the schedules that are connected']]
