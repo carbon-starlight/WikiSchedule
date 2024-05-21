@@ -2299,9 +2299,6 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 # Constants for states
 TYPE, WEEK, SPECIFIC_DATE, LESSON_NUMBER, EVENT_TYPE, ADD_FOR, CONTENT = range(7)
 
-# Token placeholder
-TOKEN = 'YOUR_TELEGRAM_BOT_TOKEN'
-
 # Command handler functions
 async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     reply_keyboard = [['Lesson', 'Homework', 'Note']]
