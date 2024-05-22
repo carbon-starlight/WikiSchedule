@@ -2319,9 +2319,17 @@ async def week_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 async def day_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['week'] = update.message.text
-    if update.message.text == 'Other':
+    # TODO: Localization ↓
+    if update.message.text != 'Other':
         reply_keyboard = [
-            ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']]
+            ['Monday'], 
+            ['Tuesday'], 
+            ['Wednesday'], 
+            ['Thursday'], 
+            ['Friday'], 
+            ['Saturday'], 
+            ['Sunday']
+        ]
         await update.message.reply_text(
             'Please, specify the date',
             reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
@@ -3588,7 +3596,7 @@ if __name__ == '__main__':
         states={
             TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, week_selection)],
             WEEK: [MessageHandler(filters.TEXT & ~filters.COMMAND, day_selection)],
-            # SPECIFIC_DA: [MessageHandler(filters.TEXT & ~filters.COMMAND, specific_date_selection)],
+            DAY: [MessageHandler(filters.TEXT & ~filters.COMMAND, specific_date_selection)],
             SPECIFIC_DATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, lesson_number_selection)],
             LESSON_NUMBER: [MessageHandler(filters.TEXT & ~filters.COMMAND, if_one_time_event_or_regular_selection)],
             EVENT_TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_for)],
