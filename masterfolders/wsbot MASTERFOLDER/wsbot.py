@@ -3588,10 +3588,11 @@ if __name__ == '__main__':
         states={
             TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, week_selection)],
             WEEK: [MessageHandler(filters.TEXT & ~filters.COMMAND, day_selection)],
-            SPECIFIC_DATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, specific_date_selection)],
-            LESSON_NUMBER: [MessageHandler(filters.TEXT & ~filters.COMMAND, lesson_number_selection)],
-            EVENT_TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, if_one_time_event_or_regular_selection)],
-            ADD_FOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_for)],
+            # SPECIFIC_DA: [MessageHandler(filters.TEXT & ~filters.COMMAND, specific_date_selection)],
+            SPECIFIC_DATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, lesson_number_selection)],
+            LESSON_NUMBER: [MessageHandler(filters.TEXT & ~filters.COMMAND, if_one_time_event_or_regular_selection)],
+            EVENT_TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_for)],
+            ADD_FOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, content_input)],
             CONTENT: [MessageHandler(filters.TEXT & ~filters.COMMAND, content_input)],
         },
         fallbacks=[CommandHandler('cancel', cancel_add_conv)]
