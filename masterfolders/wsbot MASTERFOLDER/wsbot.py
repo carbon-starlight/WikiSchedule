@@ -2356,7 +2356,7 @@ async def if_one_time_event_or_regular_selection(update: Update, context: Contex
     print("010")
     context.user_data['lesson_number'] = update.message.text
     if context.user_data['lesson_number'] == 'Cancel':
-        cancel_add_conv(update, context)
+        await cancel_add_conv(update, context)
     if context.user_data.get('type') == 'Lesson':
         reply_keyboard = [['﻿One-time', '﻿﻿Regular']]
         await update.message.reply_text(
