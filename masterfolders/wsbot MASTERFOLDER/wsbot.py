@@ -2301,7 +2301,7 @@ TYPE, WEEK, DAY, SPECIFIC_DATE, LESSON_NUMBER, EVENT_TYPE, ADD_FOR, CONTENT = ra
 
 # Command handler functions
 async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    reply_keyboard = [['Lesson', 'Homework', 'Note']]
+    reply_keyboard = [['﻿Lesson', '﻿﻿Homework', '﻿﻿﻿Note']]
     await update.message.reply_text(
         'What would you like to add?',
         reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
@@ -2310,7 +2310,7 @@ async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
 
 async def week_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['type'] = update.message.text
-    reply_keyboard = [['Current', 'Next', 'Other']]
+    reply_keyboard = [['﻿Current', '﻿﻿Next', '﻿﻿﻿Other']]
     await update.message.reply_text(
         'Please, specify the week',
         reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
@@ -2356,7 +2356,7 @@ async def if_one_time_event_or_regular_selection(update: Update, context: Contex
     print("010")
     context.user_data['lesson_number'] = update.message.text
     if context.user_data.get('type') == 'Lesson':
-        reply_keyboard = [['One-time', 'Regular']]
+        reply_keyboard = [['﻿One-time', '﻿﻿Regular']]
         await update.message.reply_text(
             'Would you like to add it as a one-time event or as a regular one?',
             reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
@@ -3328,8 +3328,8 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 async def handle_response(text: str) -> str:
     
-    if 'he' in text:
-        return 'INCORRECT INPUT'
+    if '/add' in text:
+        return 'INCORRECT INPUT. You didn\'t cancel your last addition session. Try /cancel and then enter the command again.'
 
     return 'INCORRECT INPUT'
 
