@@ -220,6 +220,7 @@ async def getUserInfo(user_id, username = None):
     return semigraphic_mode_on, tables_user_admin_in, tables_user_allowed_in, table_user_in, utz
 
 def getTableTemporalInfoFromMainArray(table_id):
+    """Returnes an array with every lesson start/end times"""
     with open('mainArray.json', 'r') as fileMA:
         mainArray = json.load(fileMA)
 
@@ -227,6 +228,7 @@ def getTableTemporalInfoFromMainArray(table_id):
     #   0, 1689546503, 5725753364, 'cs', '1-HAL', 0, 0, 0, 't', utz, 0, 0, 0, 0, 0],
     #   0      1            2        3      4     5  6  7   8    9   10 11 12 13 14
 
+    # TODO: isn't "reverse" required?
     for subarray in mainArray:
         if (
                 subarray[3] == 'set_temporal'
@@ -234,6 +236,9 @@ def getTableTemporalInfoFromMainArray(table_id):
                 and subarray[10] == 0
         ):
             return subarray[8]
+    ti = []
+    for i in range(160):
+        ti.append(" N/A ")
 
 
 async def getToLesFromCurrent(user_id):
@@ -2373,7 +2378,7 @@ async def if_one_time_event_or_regular_selection(update: Update, context: Contex
 #     return await add_for_what_tables_selection(update, context)
 
 async def add_for_what_tables_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    reply_keyboard = [['For yourself', 'For the schedule of your class', 'For all the schedules that are connected']]
+    reply_keyboard = [['﻿For yourself', '﻿﻿For the schedule of your class', '﻿﻿﻿For all the schedules that are connected']]
     await update.message.reply_text(
         'Would you like to add it:',
         reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
