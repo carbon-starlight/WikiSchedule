@@ -253,7 +253,7 @@ try:
         )
         processes.append(vrsfs_process)
 
-    finish = input('\033[94m╭──────────────────────────────╮\n│Enter "f" to finish execution.│\n╰──────────────────────────────╯\033[0m\n')
+    finish = input('\033[94m╭───────────────────────────────╮\n│ Enter "f" to finish execution │\n╰───────────────────────────────╯\033[0m\n')
 
 finally:
     # Stop all started processes
@@ -265,6 +265,27 @@ finally:
             proc.kill()  # Force kill if it doesn't exit in time
 
     print('All subprocesses were terminated.')
+
+
+
+# ╭──────────────────────────────╮
+# │Enter "f" to finish execution.│
+# ╰──────────────────────────────╯
+
+# >>> print('\033[94m╭────────────────────────────────╮\n│ Enter "f" to finish execution. │\n╰────────────────────────────────╯\033[0m\n')
+# ╭────────────────────────────────╮
+# │ Enter "f" to finish execution. │
+# ╰────────────────────────────────╯
+
+# >>> print('\033[94m╭───────────────────────────────╮\n│ Enter "f" to finish execution │\n╰───────────────────────────────╯\033[0m\n')
+# ╭───────────────────────────────╮
+# │ Enter "f" to finish execution │
+# ╰───────────────────────────────╯
+
+# >>> print('\033[94m╭─────────────────────────────╮\n│Enter "f" to finish execution│\n╰─────────────────────────────╯\033[0m\n')
+# ╭─────────────────────────────╮
+# │Enter "f" to finish execution│
+# ╰─────────────────────────────╯
 
 
 
