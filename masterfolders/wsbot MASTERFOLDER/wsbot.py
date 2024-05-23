@@ -2322,13 +2322,13 @@ async def day_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     # TODO: Localization ↓
     if update.message.text != 'Other':
         reply_keyboard = [
-            ['Monday'], 
-            ['Tuesday'], 
-            ['Wednesday'], 
-            ['Thursday'], 
-            ['Friday'], 
-            ['Saturday'], 
-            ['Sunday']
+            ['﻿Monday'], 
+            ['﻿﻿Tuesday'], 
+            ['﻿﻿﻿Wednesday'], 
+            ['﻿﻿﻿﻿Thursday'], 
+            ['﻿﻿﻿﻿﻿Friday'], 
+            ['﻿﻿﻿﻿﻿﻿Saturday'], 
+            ['﻿﻿﻿﻿﻿﻿﻿Sunday']
         ]
         await update.message.reply_text(
             'Please, specify the date',
@@ -2343,6 +2343,7 @@ async def specific_date_selection(update: Update, context: ContextTypes.DEFAULT_
     return await lesson_number_selection(update, context)
 
 async def lesson_number_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    context.user_data['day'] = update.message.text
     reply_keyboard = [[str(x) for x in range(1, 9)]]
     await update.message.reply_text(
         'What is the lesson number?',
