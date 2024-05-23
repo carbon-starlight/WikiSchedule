@@ -2344,7 +2344,7 @@ async def specific_date_selection(update: Update, context: ContextTypes.DEFAULT_
 
 async def lesson_number_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['day'] = update.message.text
-    reply_keyboard = [[str(x) for x in range(1, 9)]]
+    reply_keyboard = [[str(x) for x in range(1, 5)], [str(x) for x in range(5, 9)], ['Cancel']]
     await update.message.reply_text(
         'What is the lesson number?',
         reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
@@ -2354,6 +2354,8 @@ async def lesson_number_selection(update: Update, context: ContextTypes.DEFAULT_
 
 async def if_one_time_event_or_regular_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     print("010")
+    if context.user_data['lesson_number'] == 'Cancel':
+        cancel_add_conv(update, context)
     context.user_data['lesson_number'] = update.message.text
     if context.user_data.get('type') == 'Lesson':
         reply_keyboard = [['﻿One-time', '﻿﻿Regular']]
