@@ -253,7 +253,7 @@ try:
         )
         processes.append(vrsfs_process)
 
-    finish = input('Enter "f" to finish execution.\n')
+    finish = input('\033[94m╭──────────────────────────────╮\n│Enter "f" to finish execution.│\n╰──────────────────────────────╯\033[0m\n')
 
 finally:
     # Stop all started processes
