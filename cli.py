@@ -117,7 +117,7 @@ print('You can also proceed with one of pre-set configurations by pressing a num
 
 preconfig = None
 # change_token = ((input(f'\nDo you want to ensure dependencies are installed? (If it is the first time you run this program on this computer / virtual enviroment it is recommended to leave "y") (y/n) [y]: ')).lower() or 'y') == 'y'
-change_token = input(f'\nDo you want to ensure dependencies are installed? (If it is the first time you run this program on this computer / virtual enviroment it is recommended to leave "y") (y/n) [y]: ').lower() or 'y'
+change_token = input(f'\nDo you want to ensure dependencies are installed? (If it is the first time you run this program on this computer / virtual enviroment it is recommended to leave "y") (y/n/1/2) [y]: ').lower() or 'y'
 
 if change_token == '' or change_token == 'y':
     change_token == True
