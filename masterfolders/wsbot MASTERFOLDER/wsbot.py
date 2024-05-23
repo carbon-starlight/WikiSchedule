@@ -2297,7 +2297,7 @@ from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler
 
 # Constants for states
-TYPE, WEEK, SPECIFIC_DATE, LESSON_NUMBER, EVENT_TYPE, ADD_FOR, CONTENT = range(7)
+TYPE, WEEK, DAY, SPECIFIC_DATE, LESSON_NUMBER, EVENT_TYPE, ADD_FOR, CONTENT = range(8)
 
 # Command handler functions
 async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
