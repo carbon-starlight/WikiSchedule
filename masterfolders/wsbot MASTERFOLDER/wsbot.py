@@ -2302,30 +2302,34 @@ from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler
 
 # Constants for states
-TYPE, WEEK, DAY, SPECIFIC_DATE, LESSON_NUMBER, EVENT_TYPE, ADD_FOR, CONTENT = range(8)
+TYPE, WEEK, DAY, LESSON_NUMBER, event_type_if_regular, ADD_FOR, CONTENT = range(7)
 
 # Command handler functions
 async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    reply_keyboard = [['﻿Lesson', '﻿﻿Homework', '﻿﻿﻿Note']]
+    reply_keyboard = [['﻿Lesson', '﻿﻿Homework', '﻿﻿﻿Homework mark', '﻿﻿﻿﻿Note']]
     await update.message.reply_text(
         'What would you like to add?',
         reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
     )
     return TYPE
 
-async def week_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def type_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['type'] = update.message.text
-    reply_keyboard = [['﻿Current', '﻿﻿Next', '﻿﻿﻿Other']]
+
+    # reply_keyboard = [['﻿Current', '﻿﻿Next', '﻿﻿﻿Other']]
+    reply_keyboard = [['﻿Current', '﻿﻿Next']]
     await update.message.reply_text(
         'Please, specify the week',
         reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
     )
     return WEEK
 
-async def day_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def week_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['week'] = update.message.text
+
     # TODO: Localization ↓
-    if update.message.text != 'Other':
+    # if update.message.text != '﻿﻿﻿Other':
+    if len(update.message.text) - len(update.message.text.lstrip('\uFEFF')) != 3:
         reply_keyboard = [
             ['﻿Monday'], 
             ['﻿﻿Tuesday'], 
@@ -2339,15 +2343,16 @@ async def day_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
             'Please, specify the date',
             reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
         )
-        return SPECIFIC_DATE
+        return DAY
     else:
-        return await lesson_number_selection(update, context)
+        print('\033[91mERROR: Week "Other" (digit code 3) is not supported yet\033[0m')
+        return ConversationHandler.END
 
-async def specific_date_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    context.user_data['specific_date'] = update.message.text
-    return await lesson_number_selection(update, context)
+# async def specific_date_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+#     context.user_data['specific_date'] = update.message.text
+#     return await lesson_number_selection(update, context)
 
-async def lesson_number_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def day_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['day'] = update.message.text
     reply_keyboard = [[str(x) for x in range(1, 5)], [str(x) for x in range(5, 9)], ['Cancel']]
     await update.message.reply_text(
@@ -2357,32 +2362,39 @@ async def lesson_number_selection(update: Update, context: ContextTypes.DEFAULT_
     print(2343)
     return LESSON_NUMBER
 
-async def if_one_time_event_or_regular_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def lesson_number_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     print("010")
     context.user_data['lesson_number'] = update.message.text
+
     if context.user_data['lesson_number'] == 'Cancel':
         await cancel_add_conv(update, context)
         return ConversationHandler.END
-    if context.user_data.get('type') == 'Lesson':
+    
+    if len(context.user_data['type']) - len(context.user_data['type'].lstrip('\uFEFF')) == 1:
         reply_keyboard = [['﻿One-time', '﻿﻿Regular']]
         await update.message.reply_text(
             'Would you like to add it as a one-time event or as a regular one?',
             reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
         )
-        return EVENT_TYPE
-    else:
-        return await add_for_what_tables_selection(update, context)
+
+    return event_type_if_regular
 
 # async def event_type_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-#     context.user_data['event_type'] = update.message.text
-#     return await add_for_what_tables_selection(update, context)
+#     context.user_data['event_type_if_regular'] = update.message.text
+#     return await if_one_time_event_or_regular_sel(update, context)
 
-async def add_for_what_tables_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+async def if_one_time_event_or_regular_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    if len(context.user_data['type']) - len(context.user_data['type'].lstrip('\uFEFF')) == 1:
+    # if a lesson is being added
+        context.user_data['event_type_if_regular'] = update.message.text
+    else:
+        context.user_data['event_type_if_regular'] = None
+    # if context.user_data['type'] = '﻿Lesson':
     reply_keyboard = [['﻿For yourself', '﻿﻿For the schedule of your class', '﻿﻿﻿For all the schedules that are connected']]
     await update.message.reply_text(
         'Would you like to add it:',
         reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
-    )
+
     return ADD_FOR
 
 async def add_for(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -3603,13 +3615,14 @@ if __name__ == '__main__':
     convo_handler = ConversationHandler(
         entry_points=[CommandHandler('add', add_command)],
         states={
-            TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, week_selection)],
-            WEEK: [MessageHandler(filters.TEXT & ~filters.COMMAND, day_selection)],
-            DAY: [MessageHandler(filters.TEXT & ~filters.COMMAND, specific_date_selection)],
-            SPECIFIC_DATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, lesson_number_selection)],
-            LESSON_NUMBER: [MessageHandler(filters.TEXT & ~filters.COMMAND, if_one_time_event_or_regular_selection)],
-            EVENT_TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_for)],
-            ADD_FOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, content_input)],
+            TYPE: [MessageHandler(filters.TEXT & ~filters.COMMAND, type_sel)],
+            WEEK: [MessageHandler(filters.TEXT & ~filters.COMMAND, week_sel)],
+            # DAY: [MessageHandler(filters.TEXT & ~filters.COMMAND, specific_date_selection)],
+            # SPECIFIC_DATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, lesson_number_selection)],
+            DAY: [MessageHandler(filters.TEXT & ~filters.COMMAND, day_sel)]
+            LESSON_NUMBER: [MessageHandler(filters.TEXT & ~filters.COMMAND, lesson_number_sel)],
+            event_type_if_regular: [MessageHandler(filters.TEXT & ~filters.COMMAND, if_one_time_event_or_regular_sel)],
+            ADD_FOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_for)],
             CONTENT: [MessageHandler(filters.TEXT & ~filters.COMMAND, content_input)],
         },
         fallbacks=[CommandHandler('cancel', cancel_add_conv)]

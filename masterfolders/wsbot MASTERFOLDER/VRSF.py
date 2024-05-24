@@ -47,20 +47,6 @@ import os
 
 import re
 
-data_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'config.json'))
-
-# Open the config.json file
-with open(data_file_path) as file:
-    data = json.load(file)
-
-token = data['vk_bot_token']
-print('Token:', token)
-
-# token = ""
-bot = Bot(token=token)
-photo_uploader = PhotoMessageUploader(bot.api)
-
-
 import traceback
 
 print('line 55  compiling openmeteo_requests')  # right after it struggling
@@ -78,6 +64,19 @@ print('line 66')
 from retry_requests import retry
 
 print('line 69')
+
+data_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'config.json'))
+
+# Open the config.json file
+with open(data_file_path) as file:
+    data = json.load(file)
+
+token = data['vk_bot_token']
+print('Token:', token)
+
+# token = ""
+bot = Bot(token=token)
+photo_uploader = PhotoMessageUploader(bot.api)
 
 def get_weather_data_from_openmeteo(lat, lon):
     """Get weather data from Open-Meteo API"""
