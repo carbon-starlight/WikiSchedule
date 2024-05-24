@@ -36,6 +36,7 @@ import PyPDF2
 import io
 # import rich
 
+import sys
 from loguru import logger
 logger.remove()
 logger.add(sys.stderr, level="INFO")
