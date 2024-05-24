@@ -36,6 +36,11 @@ import PyPDF2
 import io
 # import rich
 
+from loguru import logger
+logger.remove()
+logger.add(sys.stderr, level="INFO")
+
+
 import os
 # os.chdir('C:/Users/qwert/wsbot foulder')
 
