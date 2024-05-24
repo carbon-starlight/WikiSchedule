@@ -2394,7 +2394,7 @@ async def if_one_time_event_or_regular_sel(update: Update, context: ContextTypes
     await update.message.reply_text(
         'Would you like to add it:',
         reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
-
+    )
     return ADD_FOR
 
 async def add_for(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
