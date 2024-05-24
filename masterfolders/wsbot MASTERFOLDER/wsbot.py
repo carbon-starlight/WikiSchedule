@@ -64,6 +64,8 @@ user_id = None
 import os
 import json
 
+from rich import traceback
+traceback.install()
 
 def extract_configuration_data_dictionary_from_config_json():
     """extracts given data from config.json"""
@@ -3619,7 +3621,7 @@ if __name__ == '__main__':
             WEEK: [MessageHandler(filters.TEXT & ~filters.COMMAND, week_sel)],
             # DAY: [MessageHandler(filters.TEXT & ~filters.COMMAND, specific_date_selection)],
             # SPECIFIC_DATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, lesson_number_selection)],
-            DAY: [MessageHandler(filters.TEXT & ~filters.COMMAND, day_sel)]
+            DAY: [MessageHandler(filters.TEXT & ~filters.COMMAND, day_sel)],
             LESSON_NUMBER: [MessageHandler(filters.TEXT & ~filters.COMMAND, lesson_number_sel)],
             event_type_if_regular: [MessageHandler(filters.TEXT & ~filters.COMMAND, if_one_time_event_or_regular_sel)],
             ADD_FOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_for)],
