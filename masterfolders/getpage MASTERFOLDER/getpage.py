@@ -39,7 +39,7 @@ import io
 import sys
 from loguru import logger
 logger.remove()
-logger.add(sys.stderr, level="INFO")
+logger.add(sys.stderr, level="WARNING")
 
 
 import os
