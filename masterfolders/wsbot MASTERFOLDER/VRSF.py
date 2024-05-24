@@ -30,7 +30,9 @@ import schedule
 import sys
 print(sys.path)
 import io
-# import rich
+import rich
+from rich.traceback import install
+install(show_locals=True)
 
 import os
 # os.chdir('C:/Users/qwert/wsbot foulder')
