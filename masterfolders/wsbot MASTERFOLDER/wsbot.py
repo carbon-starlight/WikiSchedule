@@ -3671,6 +3671,13 @@ if __name__ == '__main__':
     # Polls the bot
     # How often checks for new messages, secs
     print('Polling...')
+    print('\033[92m▶ WikiSchedule Telegram bot online!\033[0m')
+    # 
+    # >>> print('\033[92m▶ WikiSchedule Telegram bot online!\033[0m') 
+    # ▶ WikiSchedule Telegram bot online!
+    # >>> print('\033[32m▶ WikiSchedule Telegram bot online!\033[0m') 
+    # ▶ WikiSchedule Telegram bot online!
+    # 
     # await executor.start_polling(dp)
     # asyncio.run(save_data_for_interchange())
     app.run_polling(poll_interval=True)
