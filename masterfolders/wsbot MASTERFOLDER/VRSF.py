@@ -28,7 +28,7 @@ from vkbottle import VKAPIError
 import schedule
 
 import sys
-print(sys.path)
+# print(sys.path)
 import io
 import rich
 from rich.traceback import install
@@ -60,10 +60,10 @@ print('line 62  compiling pandas')  # right after it struggling
 timestamp1 = time.time()
 import pandas as pd
 print(f"compiling took {time.time() - timestamp1}{' f#cking' if time.time() - timestamp1 > 10 else ''} seconds")
-print('line 66')
+# print('line 66')
 from retry_requests import retry
 
-print('line 69')
+# print('line 69')
 
 data_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'config.json'))
 
@@ -72,7 +72,7 @@ with open(data_file_path) as file:
     data = json.load(file)
 
 token = data['vk_bot_token']
-print('Token:', token)
+# print('Token:', token)
 
 # token = ""
 bot = Bot(token=token)
@@ -165,7 +165,7 @@ def get_weather_data_from_openmeteo(lat, lon):
     return daily_data
 
 daily_data = get_weather_data_from_openmeteo(58.08, 52.4)
-print('shortwave_radiation_sum', daily_data['shortwave_radiation_sum'])
+# print('shortwave_radiation_sum', daily_data['shortwave_radiation_sum'])
 
 
 def get_weather_description(code, language):
@@ -181,7 +181,7 @@ Codes: "00" -- "99" """
             return item[1]  # Return the description
     return "Code not found"  # Return a default message if the code isn't found
 
-print(f"{get_weather_description(str(int(daily_data['weather_code'])), 'ru')} plfucmz9")
+# print(f"{get_weather_description(str(int(daily_data['weather_code'])), 'ru')} plfucmz9")
 async def send_schedule_updates():
 
     try:
@@ -191,7 +191,7 @@ async def send_schedule_updates():
     except:
         print('\n\n🟥 ERROR 8761JL01QV: json file not found 🟥\n\n')
 
-    print(clientListDic)
+    # print(clientListDic)
 
 
     try:
@@ -200,7 +200,7 @@ async def send_schedule_updates():
         print('\n\n🟥 ERROR UHYY5789LU: getting weather 🟥\n\n')
 
     for peer_id, table_id in clientListDic.items():
-        print(f"Key: {peer_id}, Value: {table_id}")
+        # print(f"Key: {peer_id}, Value: {table_id}")
         # peer_id | table_id
         # key     |    value
 
@@ -211,12 +211,12 @@ async def send_schedule_updates():
             with open(f'interchange/wsbot_today_update_{table_id}.json', 'r') as file:
                 tz = 14400  # TODO: replace with imported from mainArray
                 wsbot_today_update = json.load(file)
-            print('wsbot_today_update', wsbot_today_update)
+            # print('wsbot_today_update', wsbot_today_update)
             
             
             
             try:
-                print('ntaoir', str(int(daily_data['weather_code'])))
+                # print('ntaoir', str(int(daily_data['weather_code'])))
                 # msg_to_img_str = f"""{int(daily_data['temperature_2m_min'])} {int(daily_data["temperature_2m_max"])}
                 msg_to_img_str = f"""{get_weather_description(str(int(daily_data['weather_code'])), 'ru')}
 {str(int(daily_data['temperature_2m_min']))} ↔ {str(int(daily_data["temperature_2m_max"]))}°C, ветер {str(int(daily_data["wind_speed_10m_max"]))} м/c
@@ -228,7 +228,7 @@ async def send_schedule_updates():
                 message_image = string_to_image(msg_to_img_str)
                 message_image.save('message_image.png', 'PNG')
                 image_path = os.path.abspath('message_image.png')
-                print('image_path', image_path)
+                # print('image_path', image_path)
 
                 try:
                     image = await photo_uploader.upload(
@@ -237,7 +237,7 @@ async def send_schedule_updates():
                 except Exception as e:
                     print('\n\n🟥 ERROR 86xxVDEU4837 🟥\n\n', e)
                 try:
-                    print('image', image)
+                    # print('image', image)
                     # await message.answer(attachment=image)
                 except Exception as e:
                     print('\n\n🟥 ERROR 88xx58YUUY 🟥\n\n', e)
@@ -250,7 +250,7 @@ async def send_schedule_updates():
                 # await bot.api.messages.send(peer_id=peer_id, message=wsbot_today_update['today_text'], random_id=0)
             except Exception as e:
                 print('\n\n🟥 ERROR 27059sexcm75: message was not sent 🟥\n\n', str(e), '\n\n')
-                print()
+                # print()
         except:
             print('Empty iteration')
             

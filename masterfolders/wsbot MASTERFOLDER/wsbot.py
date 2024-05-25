@@ -76,7 +76,7 @@ def extract_configuration_data_dictionary_from_config_json():
     with open(data_file_path) as file:
         config_data_dictionary = json.load(file)
     
-    print(config_data_dictionary)
+    # print(config_data_dictionary)
     return config_data_dictionary
 
 # Navigate to the directory containing config.json
@@ -91,7 +91,7 @@ print('Bot username:', bot_username)
 
 # Access the value of the telegram_token key
 telegram_bot_token = data['telegram_bot_token']
-print('Telegram token:', telegram_bot_token)
+# print('Telegram token:', telegram_bot_token)
 
 DEVELOPER_CHAT_ID = data['developer_telegram_chat_id']
 print('DEVELOPER_CHAT_ID:', DEVELOPER_CHAT_ID)
@@ -126,10 +126,10 @@ async def getCurrentTemporalInfo():
     current_day_utz = (time.time() + utz - 1688947200) % 604800 // 86400 + 1
     #current_lesson_num_utz = 
     #current_lesson_id_utz = 
-    print(current_week_utc)
-    print(current_day_utc)
-    print(current_week_utz)
-    print(current_day_utz)
+    # print(current_week_utc)
+    # print(current_day_utc)
+    # print(current_week_utz)
+    # print(current_day_utz)
     print('END OF GETCURRENTTEMPORALINFO EXECUTION IN', time.time() - start_gcti_exec_timestamp)
     return current_week_utc, current_day_utc, current_week_utz, current_day_utz, current_lesson_num_utz, current_lesson_id_utz
 
@@ -200,7 +200,7 @@ async def getUserInfo(user_id, username = None):
                 and subarray[10] == 0
         ):
                 tables_user_allowed_in.append(subarray[4])
-                print(f'User {username} is allowed in table {subarray[4]} according to {subarray}')
+                # print(f'User {username} is allowed in table {subarray[4]} according to {subarray}')
 
 
     with open('sg_toggle_logs.json', 'r') as stf:
@@ -215,8 +215,8 @@ async def getUserInfo(user_id, username = None):
                 semigraphic_mode_on = subarray[8]
                 print("semigr mode set to " + str(semigraphic_mode_on))
 
-    print('in func getUserInfo: ', mainArray)
-    print('in func getUserInfo: table_user_in:', table_user_in)
+    # print('in func getUserInfo: ', mainArray)
+    # print('in func getUserInfo: table_user_in:', table_user_in)
     print('END OF GETUSERINFO EXECUTION IN', time.time() - start_gui_exec_timestamp)
 
     return semigraphic_mode_on, tables_user_admin_in, tables_user_allowed_in, table_user_in, utz
@@ -253,7 +253,7 @@ async def getToLesFromCurrent(user_id):
     daily_week_array = []  # array for a day
     start_index: int = int((current_day_utz - 1) * 10)
     end_index: int = int(start_index + 10)
-    print(start_index, end_index)
+    # print(start_index, end_index)
     # for i in range(start_index, end_index):
     #     daily_week_array.append(weekArray[i])
     # #     print('appending')
@@ -279,7 +279,7 @@ async def getToLesFromCurrent(user_id):
     epoch_t_starts = []
     for i in range(0, len(day_lesson_t_starts)):
         epoch_t_starts.append((int((str(day_lesson_t_starts[i]))[0:2]))*60*60 + (int((str(day_lesson_t_starts[i]))[3:5]))*60)
-        print(epoch_t_starts)
+        # print(epoch_t_starts)
 
         # current_week_utc = (time.time() - 1688947200) // 604800
         # current_day_utc = (time.time() - 1688947200) % 604800 // 86400 + 1
@@ -289,7 +289,7 @@ async def getToLesFromCurrent(user_id):
     for el in epoch_t_starts:
         el = el + 1688947200 + current_week_utz * 604800 + current_day_utz * 86400 + utz
 
-    print(epoch_t_starts)
+    # print(epoch_t_starts)
 
     for i in range(1, 11):
         if epoch_t_starts[i-1] < time.time() + utz:
@@ -316,7 +316,7 @@ async def getToLesFromCurrent(user_id):
             if les == current_lesson_id:
                 next_of_kind_lesson = iteration__les_num
                 next_of_kind_lesson_week = current_week_utz__to_edit
-                print(les)
+                # print(les)
                 break
             iteration__les_num += 1
         getWeekArray(table_user_in, current_week_utz__to_edit := current_week_utz__to_edit + 1)
@@ -372,14 +372,14 @@ async def getWeekArray(table_user_in, adding_from_week):
     print('EXECUTING GETWEEKARRAY')
     start_gwa_timestamp = time.time()
     weekArray.clear()
-    print('in func getWeekArray (beginning): adding_from_week: ', adding_from_week)
+    # print('in func getWeekArray (beginning): adding_from_week: ', adding_from_week)
     await getCurrentTemporalInfo()
-    print('in func getWeekArray (after getCurrentTemporalInfo): adding_from_week: ', adding_from_week)
+    # print('in func getWeekArray (after getCurrentTemporalInfo): adding_from_week: ', adding_from_week)
     # Decode the JSON array to Python object
     with open('mainArray.json', 'r') as fileMA:
         mainArray = json.load(fileMA)
 
-    print('in func getWeekArray: ', mainArray)
+    # print('in func getWeekArray: ', mainArray)
     adding_from_day = 1
     for adding_from_day in range(1, 8):
         for adding_from_lesson in range(1, 11):
@@ -418,7 +418,7 @@ async def getWeekArray(table_user_in, adding_from_week):
                             found = True
                 if found == False:
                     weekArray.append(None)
-    print('in func getWeekArray (end): adding_from_week: ', adding_from_week)
+    # print('in func getWeekArray (end): adding_from_week: ', adding_from_week)
     print('END OF GETWEEKARRAY EXECUTION IN: ', time.time() - start_gwa_timestamp)
     return weekArray
 
@@ -437,7 +437,7 @@ async def getWeekArray_HW(table_user_in, adding_from_week):
     with open('mainArray.json', 'r') as fileMA:
         mainArray = json.load(fileMA)
 
-    print('in func getWeekArray_HW: ', mainArray)
+    # print('in func getWeekArray_HW: ', mainArray)
     weekArray_HW = []
     adding_from_day = 1
     upd_found = True
@@ -473,7 +473,7 @@ async def getWeekArray_HW(table_user_in, adding_from_week):
                         # found = False
             if not found:  # If no valid subarray was found, we append None
                 weekArray_HW.append(None)
-    print('in func getWeekArray_HW (end): adding_from_week: ', adding_from_week)
+    # print('in func getWeekArray_HW (end): adding_from_week: ', adding_from_week)
     print('END OF GETWEEKARRAY_HW EXECUTION IN: ', time.time() - start_gwahw_timestamp)
     return weekArray_HW
 
@@ -573,7 +573,7 @@ async def get_done_hw_weekArray(table_user_in, adding_from_week, user_id):
                     found = True  # if matching criteria found found = True
             if not found:  # If no valid subarray was found, we append None
                 done_hw_weekArray.append(' ')
-    print('formed done_hw_weekArray: ', done_hw_weekArray)
+    # print('formed done_hw_weekArray: ', done_hw_weekArray)
     print('END OF GET_DONE_HW_WEEKARRAY EXECUTION IN: ', time.time() - start_gdhwA_timestamp)
     return done_hw_weekArray
     
@@ -592,7 +592,7 @@ async def getWeekArray_N(table_user_in, adding_from_week):
     with open('mainArray.json', 'r') as fileMA:
         mainArray = json.load(fileMA)
 
-    print('in func getWeekArray_N: ', mainArray)
+    # print('in func getWeekArray_N: ', mainArray)
     weekArray_N = []
     adding_from_day = 1
     upd_found = True
@@ -628,7 +628,7 @@ async def getWeekArray_N(table_user_in, adding_from_week):
                     #     found = False
             if not found:  # If no valid subarray was found, we append None
                 weekArray_N.append(None)
-    print('in func getWeekArray_N (end): adding_from_week: ', adding_from_week)
+    # print('in func getWeekArray_N (end): adding_from_week: ', adding_from_week)
     print('END OF GETWEEKARRAY_N EXECUTION IN: ', time.time() - start_gwn_timestamp)
     return weekArray_N
 # async def log(user_id, type, table_user_in, week_number, day_of_week, lesson_number, content, utz, subgroup_level):
@@ -676,7 +676,7 @@ async def getWeekCalendarBoundaries(adding_from_week):
     # Format the beginning and end dates in the desired format
     formatted_dates = f"({start_date.strftime('%d.%m')} - {end_date.strftime('%d.%m')})"
     
-    print(formatted_dates)
+    # print(formatted_dates)
     week_calendar_boundaries = formatted_dates
     # yield week_calendar_boundaries
 
@@ -727,7 +727,7 @@ async def today_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """List schedule for today"""
     print('EXECUTING TODAY_COMMAND')
     start_tc_timestamp = time.time()
-    print(str(Update))
+    # print(str(Update))
     # print(Update.message.photo)
     user_id = update.message.chat.id
     username = update.message.chat.username
@@ -736,7 +736,7 @@ async def today_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     week_calendar_boundaries = await getWeekCalendarBoundaries(current_week_utz)
     adding_from_week = current_week_utz
     weekArray = await getWeekArray(table_user_in, adding_from_week)
-    print('cvxmxa weekArray: ', weekArray)
+    # print('cvxmxa weekArray: ', weekArray)
     room_number_weekArray = await get_room_number_weekArray(table_user_in, adding_from_week)
     # filename = f"{table_user_in}_temporal_info.json"
     # with open(filename, 'r') as fileTI:
@@ -767,7 +767,7 @@ async def today_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         [ti[140], ti[141], ti[142], ti[143], ti[144], ti[145], ti[146], ti[147], ti[148], ti[149], ti[150], ti[151], ti[152], ti[153], ti[154], ti[155], ti[156], ti[157], ti[158], ti[159]],  # sunday
     ]
 
-    print('in td wA: ', weekArray)
+    # print('in td wA: ', weekArray)
     wA_nums = [
         [weekArray[0], weekArray[1], weekArray[2], weekArray[3], weekArray[4], weekArray[5], weekArray[6], weekArray[7], weekArray[8], weekArray[9]],
         [weekArray[10], weekArray[11], weekArray[12], weekArray[13], weekArray[14], weekArray[15], weekArray[16], weekArray[17], weekArray[18], weekArray[19]],
@@ -778,7 +778,7 @@ async def today_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         [weekArray[60], weekArray[61], weekArray[62], weekArray[63], weekArray[64], weekArray[65], weekArray[66], weekArray[67], weekArray[68], weekArray[69]],  # sunday
     ]
 
-    print(wA_nums)
+    # print(wA_nums)
 
 
     # s_table = [
@@ -827,9 +827,9 @@ async def today_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if len(str(element)) != 5:
             room_number_weekArray[i] = ' '*(5-len(str(element))) + str(element)
     
-    print(int(wd_n*10+1))
-    print(wd_n)
-    print(room_number_weekArray)
+    # print(int(wd_n*10+1))
+    # print(wd_n)
+    # print(room_number_weekArray)
 
     s_table = (f"""<pre>┌──────────────────────────┐
 │WEEK {str(int(adding_from_week))} {str(week_calendar_boundaries)}{' '*(20-(len(str(int(adding_from_week)))+len(str(week_calendar_boundaries))))}│
@@ -890,7 +890,7 @@ async def formSemigraphicTable(adding_from_week, user_id, table_type, weekArray,
         #     ti = json.load(fileTI)
         ti = getTableTemporalInfoFromMainArray(table_user_in)
     except:
-        print('Something went wrong. Try setting /set_temporal first.')
+        print('Something went wrong. Try setting time with /set_temporal first.')
         await update.message.reply_text('Something went wrong. Try setting /set_temporal first.')
 
     done_hw_weekArray = await get_done_hw_weekArray(table_user_in, adding_from_week, user_id)
@@ -1131,7 +1131,7 @@ async def formSemigraphicTable(adding_from_week, user_id, table_type, weekArray,
 
 
     elif table_type == 'hw':
-        print('weekArray_HW at start: ', weekArray_HW)
+        # print('weekArray_HW at start: ', weekArray_HW)
         lined_hw_array = []
         
         for i in range(len(weekArray_HW)):
@@ -1164,8 +1164,8 @@ async def formSemigraphicTable(adding_from_week, user_id, table_type, weekArray,
                 # adds a non-space character to make the table display the line
             temp_subarray = [element_1, element_2, element_3, element_4, element_5, element_6, element_7, element_8]
             lined_hw_array.append(temp_subarray)
-        print("weekArray_HW: ", weekArray_HW)
-        print("lined_hw_array: ", lined_hw_array)
+        # print("weekArray_HW: ", weekArray_HW)
+        # print("lined_hw_array: ", lined_hw_array)
         eol = '\n'
         # the following one is reassigned later
         s_table = f"""<pre>
@@ -1279,7 +1279,7 @@ q
 
 
 
-        print("right before error: done_hw_weekArray = ", done_hw_weekArray)
+        # print("right before error: done_hw_weekArray = ", done_hw_weekArray)
 
         # for a draft for 10-lesson table refer to 10-lesson_hw_sg_table_draft.txt
 
@@ -1375,7 +1375,7 @@ q
 └──────────────────────────┘
 </pre>"""
         
-        print(lined_hw_array[2][0])
+        # print(lined_hw_array[2][0])
 
         #separated_version_s_table = 
 
@@ -1430,7 +1430,7 @@ async def done_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         text = update.message.text
         # split the text into words
         words = text.split()
-        print(update.message.text)
+        # print(update.message.text)
 
         # check if the command is formed correctly
         if len(words) < 3 or len(words) > 5:
@@ -1466,7 +1466,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     with open('start_logs.txt', 'a') as f:
         f.write(f'{datetime.now()}: User {update.message.chat.id} {update.message.chat.username} started the bot in {(update.message.from_user.language_code)} language\n')
     
-    print(update.message.from_user.language_code)
+    # print(update.message.from_user.language_code)
     if update.message.from_user.language_code == 'ru':
         await update.message.reply_text("""Добро пожаловать в WikiSchedule!
 
@@ -1492,7 +1492,7 @@ View a detailed tutorial with /help command.""", parse_mode="HTML")
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Sending a message with documentation"""
-    print(update.message.from_user.language_code)
+    # print(update.message.from_user.language_code)
     if update.message.from_user.language_code == 'ru':
         await update.message.reply_text("""Добро пожаловать в WikiSchedule!
 
@@ -1906,7 +1906,7 @@ async def al_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         text = update.message.text
         # split the text into words
         words = text.split()
-        print(update.message.text)
+        # print(update.message.text)
 
         # check if the command is formed correctly
         if len(words) < 5 or len(words) > 8:
@@ -2015,7 +2015,7 @@ async def ah_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await getUserInfo(user_id)
     text = update.message.text
     words = text.split()
-    print(len(words))
+    # print(len(words))
 
     if len(words) == 1:
         await update.message.reply_text("""<pre>ERR1777: INVALID COMMAND
@@ -2032,7 +2032,7 @@ Correct syntax:
 
     if isinteger(words[1]) or (words[1] == 'c') or (words[1] == 'n'): 
         try:
-            print('1205818478')
+            # print('1205818478')
             # access the text in the message object(member inside update)
             text = update.message.text
             # split the text into words
@@ -2061,7 +2061,7 @@ Correct syntax:
             split_command = text.split(" ")
             hw = " ".join(split_command[4:])
     
-            print('hw:',hw)
+            # print('hw:',hw)
 
             new_data = [0, time.time(), update.message.chat.id, 'ah', table_user_in, week_number, day_of_week, lesson_number, hw, utz, 0, subgroup_level, 0, 0, 0, 0,]
             await log(new_data)
@@ -2186,14 +2186,14 @@ async def mv_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print("EXECUTING MV_COMMAND")
     start_mc_timestamp = time.time()
     await getUserInfo(update.message.chat.id)
-    print(utz)
+    # print(utz)
     await getCurrentTemporalInfo()
-    print('cool')
-    print(current_week_utz)
+    # print('cool')
+    # print(current_week_utz)
 
     text = update.message.text
     words = text.split()
-    print(words)
+    # print(words)
     if words[1] == 'c':
         words[1] = current_week_utz
     if words[1] == 'n':
@@ -2203,13 +2203,13 @@ async def mv_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if words[4] == 'n':
         words[4] = current_week_utz + 1
 
-    print(words)
+    # print(words)
 
     getWeekArray(table_user_in, words[1])
 
     with open('mainArray.json', 'r') as fileMA:
         mainArray = json.load(fileMA)
-    print(words[1:7])
+    # print(words[1:7])
 
     words[1:6] = [int(word) for word in words[1:6]]
 
@@ -2237,13 +2237,13 @@ async def mv_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         and subarray[10] == 0
         and subarray[3] == 'al'
         ):
-            print('found les')
+            # print('found les')
             new_data = [subarray[0], time.time(), update.message.chat.id, 'al', table_user_in, words[4], words[5], int(words[6]), subarray[8], subarray[9], subarray[10], subarray[11], subarray[12], subarray[13], subarray[14]]
             await log(new_data)
-            print(new_data)
+            # print(new_data)
             new_data = [subarray[0], time.time(), update.message.chat.id, 'al', table_user_in, subarray[5], subarray[6], subarray[7], None, subarray[9], subarray[10], subarray[11], subarray[12], None, subarray[14]]
             await log(new_data)
-            print(new_data)
+            # print(new_data)
             break
             
     for subarray in mainArray:
@@ -2361,11 +2361,11 @@ async def day_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         'What is the lesson number?',
         reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
     )
-    print(2343)
+    # print(2343)
     return LESSON_NUMBER
 
 async def lesson_number_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    print("010")
+    # print("010")
     context.user_data['lesson_number'] = update.message.text
 
     if context.user_data['lesson_number'] == 'Cancel':
@@ -2430,19 +2430,19 @@ async def ls_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.chat.id
     await getUserInfo(update.message.chat.id)
     await getCurrentTemporalInfo()
-    print('In ls_command: tables_user_admin_in: ' + str(tables_user_admin_in))
-    print('In ls_command: tables_user_allowed_in: ' + str(tables_user_allowed_in))
-    print('In ls_command: table_user_in: ' + str(table_user_in))
+    # print('In ls_command: tables_user_admin_in: ' + str(tables_user_admin_in))
+    # print('In ls_command: tables_user_allowed_in: ' + str(tables_user_allowed_in))
+    # print('In ls_command: table_user_in: ' + str(table_user_in))
     with open('mainArray.json', 'r') as fileMA:
         mainArray = json.load(fileMA)
     text = update.message.text
     words = text.split()
     await getCurrentTemporalInfo()
-    print('In ls_command: words: ' + str(words))
+    # print('In ls_command: words: ' + str(words))
 
     if len(words) == 1:
         adding_from_week = current_week_utz
-        print('executing if, len(words) == 1')
+        # print('executing if, len(words) == 1')
     else:
         if words[1] != 'n' and words[1] != 'c' and words[1] != 'N' and words[1] != 'C':
             adding_from_week = int(words[1])
@@ -2450,17 +2450,17 @@ async def ls_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             adding_from_week = current_week_utz + 1
         elif words[1] == 'c' or words[1] == 'C':
             adding_from_week = current_week_utz
-        print('words[1]: ' + words[1])
-        print('adding_from_week: ' + str(adding_from_week))
-        print('добрались до else')
+        # print('words[1]: ' + words[1])
+        # print('adding_from_week: ' + str(adding_from_week))
+        # print('добрались до else')
     
     await getWeekArray(table_user_in, adding_from_week)
     await get_room_number_weekArray(table_user_in, adding_from_week)
 
-    print('In ls_command: adding_from_week: ' + str(adding_from_week))
-    print('In ls_command: room_number_weekArray: ' + str(room_number_weekArray))
-    print('In ls_command: ' + str(room_number_weekArray[0]))
-    print('In ls_command: ' + str(weekArray))
+    # print('In ls_command: adding_from_week: ' + str(adding_from_week))
+    # print('In ls_command: room_number_weekArray: ' + str(room_number_weekArray))
+    # print('In ls_command: ' + str(room_number_weekArray[0]))
+    # print('In ls_command: ' + str(weekArray))
 
     if weekArray and semigraphic_mode_on == False:
         await update.message.reply_text(f"""WEEK {int(adding_from_week)}
@@ -2568,38 +2568,38 @@ async def ls_hw_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await getUserInfo(update.message.chat.id)
     await getCurrentTemporalInfo()
     done_hw_weekArray = await get_done_hw_weekArray(table_user_in, adding_from_week, update.message.chat.id)
-    print('In ls_command: tables_user_admin_in: ' + str(tables_user_admin_in))
-    print('In ls_command: tables_user_allowed_in: ' + str(tables_user_allowed_in))
-    print('In ls_command: table_user_in: ' + str(table_user_in))
+    # print('In ls_command: tables_user_admin_in: ' + str(tables_user_admin_in))
+    # print('In ls_command: tables_user_allowed_in: ' + str(tables_user_allowed_in))
+    # print('In ls_command: table_user_in: ' + str(table_user_in))
     with open('mainArray.json', 'r') as fileMA:
         mainArray = json.load(fileMA)
     text = update.message.text
     words = text.split()
     await getCurrentTemporalInfo()
-    print('In ls_hw_command: words: ' + str(words))
+    # print('In ls_hw_command: words: ' + str(words))
 
     if len(words) == 1:
         adding_from_week = current_week_utz
-        print('executing if, len(words) == 1')
+        # print('executing if, len(words) == 1')
     else:
         adding_from_week = int(words[1])
-        print('words[1]: ' + words[1])
-        print('adding_from_week: ' + str(adding_from_week))
+        # print('words[1]: ' + words[1])
+        # print('adding_from_week: ' + str(adding_from_week))
 
     await getWeekArray(table_user_in, adding_from_week)
     await getWeekArray_HW(table_user_in, adding_from_week)
 
     weekArray_HW = await getWeekArray_HW(table_user_in, adding_from_week)
 
-    print('In ls_hw_command: adding_from_week: ' + str(adding_from_week))
-    print(adding_from_week, current_week_utc, current_week_utz, utz, tables_user_admin_in, tables_user_allowed_in, table_user_in)
+    # print('In ls_hw_command: adding_from_week: ' + str(adding_from_week))
+    # print(adding_from_week, current_week_utc, current_week_utz, utz, tables_user_admin_in, tables_user_allowed_in, table_user_in)
 
-    print(weekArray)
-    print(mainArray)
-    print(weekArray_HW)
+    # print(weekArray)
+    # print(mainArray)
+    # print(weekArray_HW)
 
     if weekArray and semigraphic_mode_on == False:
-        print('route if')
+        # print('route if')
         await update.message.reply_text(f"""WEEK {adding_from_week}
 Current week (UTC): {current_week_utc}
 Current week (UTZ): {current_week_utz}
@@ -2735,7 +2735,7 @@ SUNDAY:
 8: {weekArray[67]}
     • {weekArray_HW[67]}""")
     elif weekArray and semigraphic_mode_on == True:
-        print('done_hw_weekArray: ' + str(done_hw_weekArray))
+        # print('done_hw_weekArray: ' + str(done_hw_weekArray))
         await formSemigraphicTable(adding_from_week, update.message.chat.id, 'hw', weekArray, weekArray_HW, done_hw_weekArray, update = update)
         await update.message.reply_text(s_table, parse_mode = "HTML")
     else:
@@ -2759,22 +2759,22 @@ async def ls_n_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if len(words) == 1:
         adding_from_week = current_week_utz
-        print('executing if, len(words) == 1')
+        # print('executing if, len(words) == 1')
     else:
         adding_from_week = int(words[1])
-        print('words[1]: ' + words[1])
-        print('adding_from_week: ' + str(adding_from_week))
+        # print('words[1]: ' + words[1])
+        # print('adding_from_week: ' + str(adding_from_week))
 
     await getWeekArray(table_user_in, adding_from_week)
 
     weekArray_N = await getWeekArray_N(table_user_in, adding_from_week)
 
-    print('In ls_hw_command: adding_from_week: ' + str(adding_from_week))
-    print(adding_from_week, current_week_utc, current_week_utz, utz, tables_user_admin_in, tables_user_allowed_in, table_user_in)
+    # print('In ls_hw_command: adding_from_week: ' + str(adding_from_week))
+    # print(adding_from_week, current_week_utc, current_week_utz, utz, tables_user_admin_in, tables_user_allowed_in, table_user_in)
 
-    print(weekArray)
-    print(mainArray)
-    print(weekArray_N)
+    # print(weekArray)
+    # print(mainArray)
+    # print(weekArray_N)
 
     if weekArray:
 #         print('route if')
@@ -2792,7 +2792,7 @@ Table: {table_user_in}""")
         i = 0
         for note in weekArray_N:
             if note != None:
-                print(note)
+                # print(note)
                 await update.message.reply_text(f'Day {i // 10 + 1}, lesson {i % 10 + 1}:')
                 await update.message.reply_text(note)
             i += 1
@@ -2960,7 +2960,7 @@ async def cs_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
         utz = words[1]
 
-        print(utz)
+        # print(utz)
 
             # The additional subarray
         new_data = [0, time.time(), update.message.chat.id, 'cs', table_name, 0, 0, 0, 0, utz, 0, 0, 0, 0, 0,]
@@ -3023,7 +3023,7 @@ async def set_temporal_command(update: Update, context: ContextTypes.DEFAULT_TYP
         """array with temporal info, 0 -- start of 1-st lesson, 1 -- end of it, 2 -- start of second... All in "00:00" format strings"""
         ti.remove(ti[0])
 
-        print(ti)
+        # print(ti)
 
         if len(ti) < 21:
             for i in range(20 - len(ti)):
@@ -3031,7 +3031,7 @@ async def set_temporal_command(update: Update, context: ContextTypes.DEFAULT_TYP
             for i in range(7):
                 ti.extend(ti)
         
-        print(ti)
+        # print(ti)
 
         # OLD WAY to save (as a separate file):
         # filename = f"{table_user_in}_temporal_info.json"
@@ -3112,7 +3112,7 @@ async def toggle_semigraphics_command(update: Update, context: ContextTypes.DEFA
     print('EXECUTING TOGGLE_SEMIGRAPHICS_COMMAND')
     start_timestamp = time.time()
     semigraphic_mode_on, tables_user_admin_in, tables_user_allowed_in, table_user_in, utz = await getUserInfo(update.message.chat.id)
-    print(semigraphic_mode_on)
+    # print(semigraphic_mode_on)
     if semigraphic_mode_on == False:
         semigraphic_mode_on = True
     else:
@@ -3240,10 +3240,10 @@ def generate_message(cr_pos, table_log_array):
         line = f"{'👉' if i == 0 else ''} {table_log_array[line_index]}"
         if len(line) < 300:
             message_lines.append(line)
-            print('s')
+            # print('s')
         else:
             message_lines.append(line[:300] + "&lt;…&gt;" + line[int(len(line)-32):])
-            print('e')
+            # print('e')
     message_lines.insert(0, "VALIDITY STATUS CORRECTION TERMINAL\n\nres0 / time_epoch / contributor_id / type / table / week / day / lesson / content / utz / validity (0 is good) / level (register) / exclusiveness of lesson addition (one-time event? 0. Keep until cancelation? 1.) / room_number / res6\n")
 
     return "\n".join(message_lines)
@@ -3271,9 +3271,9 @@ async def button_callback(update: Update, context: CallbackContext):
                 # Update the mainArray with the modified table_log_array
                 with open('mainArray.json', 'r') as fileMA:
                     mainArray = json.load(fileMA)
-                    print('tla', table_log_array[cr_pos])
-                    print('ma', mainArray[mainArray.index(table_log_array[cr_pos])])
-                    print(mainArray.index(table_log_array[cr_pos]))
+                    # print('tla', table_log_array[cr_pos])
+                    # print('ma', mainArray[mainArray.index(table_log_array[cr_pos])])
+                    # print(mainArray.index(table_log_array[cr_pos]))
                 index = mainArray.index(table_log_array[cr_pos])
                 if table_log_array[cr_pos][10] == 0:
                     table_log_array[cr_pos][10] = 1
@@ -3286,7 +3286,7 @@ async def button_callback(update: Update, context: CallbackContext):
                 #         mainArray[line_index] = table_log_array[0]
                 with open('mainArray.json', 'w') as fileMA:
                     json.dump(mainArray, fileMA)
-                print("validity changed")
+                # print("validity changed")
             else:
                 message_text = generate_message('NOT ALLOWED | YOU HAVE TO BE AN ADMINISTRATOR\n\n', cr_pos, table_log_array)
     message_text = generate_message(cr_pos, table_log_array)
@@ -3317,7 +3317,7 @@ async def handle_button_press(update: Update, context: CallbackContext):
         cr_pos -= 1
     elif button == "down":
         cr_pos += 1
-        print(cr_pos)
+        # print(cr_pos)
     elif button == "prev":
         pass
     elif button == "next":
@@ -3499,7 +3499,7 @@ async def save_data_for_interchange(table_user_in):
         [ti[140], ti[141], ti[142], ti[143], ti[144], ti[145], ti[146], ti[147], ti[148], ti[149], ti[150], ti[151], ti[152], ti[153], ti[154], ti[155], ti[156], ti[157], ti[158], ti[159]],  # sunday
     ]
 
-    print('in td wA: ', weekArray)
+    # print('in td wA: ', weekArray)
     wA_nums = [
         [weekArray[0], weekArray[1], weekArray[2], weekArray[3], weekArray[4], weekArray[5], weekArray[6], weekArray[7], weekArray[8], weekArray[9]],
         [weekArray[10], weekArray[11], weekArray[12], weekArray[13], weekArray[14], weekArray[15], weekArray[16], weekArray[17], weekArray[18], weekArray[19]],
@@ -3510,7 +3510,7 @@ async def save_data_for_interchange(table_user_in):
         [weekArray[60], weekArray[61], weekArray[62], weekArray[63], weekArray[64], weekArray[65], weekArray[66], weekArray[67], weekArray[68], weekArray[69]],  # sunday
     ]
 
-    print(wA_nums)
+    # print(wA_nums)
 
 
 
@@ -3527,9 +3527,9 @@ async def save_data_for_interchange(table_user_in):
         if len(str(element)) != 5:
             room_number_weekArray[i] = ' '*(5-len(str(element))) + str(element)
     
-    print(int(wd_n*10+1))
-    print(wd_n)
-    print(room_number_weekArray)
+    # print(int(wd_n*10+1))
+    # print(wd_n)
+    # print(room_number_weekArray)
 
     s_table = (f"""┌──────────────────────────┐
 │WEEK {str(int(adding_from_week))} {str(week_calendar_boundaries)}{' '*(20-(len(str(int(adding_from_week)))+len(str(week_calendar_boundaries))))}│
@@ -3552,7 +3552,7 @@ async def save_data_for_interchange(table_user_in):
 └──────────────────────────┘""")
     # await update.message.reply_text(s_table, parse_mode='HTML')
 
-    print(s_table)
+    # print(s_table)
 
 
     # interchange_json_update = perform_task()
@@ -3583,7 +3583,7 @@ def get_list_of_all_tables():
     return ids
 
 async def update_interchange_data_for_all_tables(context):
-    print(random.randint(0, 100), '3255_0000')
+    # print(random.randint(0, 100), '3255_0000')
     table_ids = get_list_of_all_tables()
     for table_id in table_ids:
         save_data_for_interchange(table_id)
@@ -3671,7 +3671,7 @@ if __name__ == '__main__':
     # Polls the bot
     # How often checks for new messages, secs
     print('Polling...')
-    print('\033[92m▶ WikiSchedule Telegram bot online!\033[0m')
+    print('\033[92m▶ Telegram bot [ONLINE]\033[0m')
     # 
     # >>> print('\033[92m▶ WikiSchedule Telegram bot online!\033[0m') 
     # ▶ WikiSchedule Telegram bot online!

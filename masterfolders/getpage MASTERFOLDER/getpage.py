@@ -29,7 +29,7 @@ from vkbottle import PhotoMessageUploader
 from vkbottle.bot import Bot
 
 import sys
-print(sys.path)
+# print(sys.path)
 # import pytesseract
 from pdf2image import convert_from_path
 import PyPDF2
@@ -42,8 +42,8 @@ import io
 # logger.add(sys.stderr, level="WARNING")
 
 import logging
-logging.getLogger("vkbottle").setLevel(logging.INFO)
 
+# logger.disable("vkbottle")
 
 import os
 # os.chdir('C:/Users/qwert/wsbot foulder')
@@ -69,13 +69,13 @@ photo_uploader = PhotoMessageUploader(bot.api)
 
 async def get_pdf_names_in_MASTERFOLDER():
     """Returns a list of .pdf file names in MASTERFOLDER (the one py file is in), as a list, no ".pdf" at the end of each string"""
-    print('57823')
+    # print('57823')
     tb_list = []
     for i in os.listdir('textbooks/'):
         if i.endswith('.pdf') and not i.endswith('_temp.pdf'):
             tb_list.append(i[:-4])
-            print('tb_list', end=' ')
-            print(tb_list)
+            # print('tb_list', end=' ')
+            # print(tb_list)
     return tb_list
 
 # asyncio.run(get_pdf_names_in_MASTERFOLDER())
@@ -97,12 +97,12 @@ async def conv_pdf_to_image(doc, tb_id, page_number):
     # await message.answer(f'textbooks/{tb_id}_temp.pdf')
     try:
         image = convert_from_path(pdf_path = f'textbooks/{tb_id}_temp.pdf', poppler_path = r"C:\\poppler-windows-23.08.0-0")
-        print('fucm' + str(image))
+        # print('fucm' + str(image))
         image = await photo_uploader.upload(
         file_source="C:\\Users\\qwert\\OneDrive\\Изображения\\Screenshots\\Снимок экрана (28).png",
         peer_id=message.peer_id,
     )
-        print('nttntnao')
+        # print('nttntnao')
         await message.answer(attachment=image)
     except PDFInfoNotInstalledError:
         await message.answer('Nya!\n\nAn exception occured while uploading the image version.\n\nIt looks like we\'ve got PDFInfoNotInstalledError, senpai. Is Poppler installed? Is it added to PATH? If you are running this program on a Windows machine, chanses are, it\'s not.\n\nPlease refer to the library documentation: https://pypi.org/project/pdf2image/ (or just replace it with a better library with fewer dependencies)')

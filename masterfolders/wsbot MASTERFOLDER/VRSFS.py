@@ -27,7 +27,7 @@ from vkbottle import VKAPIError
 import schedule
 
 import sys
-print(sys.path)
+# print(sys.path)
 import io
 import rich
 from rich.traceback import install
@@ -53,7 +53,7 @@ with open(data_file_path) as file:
     data = json.load(file)
 
 token = data['vk_bot_token']
-print('Token:', token)
+# print('Token:', token)
 
 # token = ""
 bot = Bot(token=token)
@@ -63,11 +63,11 @@ photo_uploader = PhotoMessageUploader(bot.api)
 @bot.on.message(text="<handle> !srsf <table_id>")
 async def srsf(message: Message):
     """Start regular schedule forward"""
-    print('MSGv')
-    print(message)
-    print(Message)
-    print("^M|VALSv")
-    print(id)
+    # print('MSGv')
+    # print(message)
+    # print(Message)
+    # print("^M|VALSv")
+    # print(id)
     # print(handle)
 
     words_list = message.text.split()
@@ -75,9 +75,9 @@ async def srsf(message: Message):
     # Retrieve the last word using negative indexing
     table_id = words_list[-1]
 
-    print('TID', table_id)
+    # print('TID', table_id)
 
-    print(message.peer_id, 'pppiii')
+    # print(message.peer_id, 'pppiii')
     # ^ message peer id to later send message to the group
 
     # await bot.api.messages.send(peer_id=339422353, message="srsf^!^", random_id=0)
