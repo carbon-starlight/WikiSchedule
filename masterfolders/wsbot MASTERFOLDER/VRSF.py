@@ -4,6 +4,8 @@
 
 getpage_language = 'russian'
 
+logging_mode_is_loguru = True
+
 import asyncio
 from vkbottle import Keyboard, KeyboardButtonColor, Text
 import os
@@ -48,6 +50,16 @@ import os
 import re
 
 import traceback
+
+
+if logging_mode_is_loguru == True:
+    import sys
+    from loguru import logger
+    logger.remove()
+    logger.add(sys.stderr, level="WARNING")
+else:
+    import logging
+    logging.getLogger("vkbottle").setLevel(logging.INFO)
 
 print('line 55  compiling openmeteo_requests')  # right after it struggling
 
@@ -343,5 +355,6 @@ schedule.every().day.at("07:00").do(send_schedule_updates)
 # asyncio.run(send_schedule_updates())
 # asyncio.run(send_schedule_updates())
 # asyncio.run(send_schedule_updates())
+print('\033[92m▶ VRSF service [ONLINE]\033[0m')
 while True:
     schedule.run_pending()

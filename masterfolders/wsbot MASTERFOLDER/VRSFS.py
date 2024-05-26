@@ -4,6 +4,8 @@
 
 getpage_language = 'russian'
 
+logging_mode_is_loguru = True
+
 import asyncio
 from vkbottle import Keyboard, KeyboardButtonColor, Text
 import os
@@ -32,6 +34,16 @@ import io
 import rich
 from rich.traceback import install
 install(show_locals=True)
+
+if logging_mode_is_loguru == True:
+    import sys
+    from loguru import logger
+    logger.remove()
+    logger.add(sys.stderr, level="WARNING")
+else:
+    import logging
+    logging.getLogger("vkbottle").setLevel(logging.INFO)
+
 
 import os
 # os.chdir('C:/Users/qwert/wsbot foulder')
@@ -145,4 +157,5 @@ def remove_from_forwardClientList_json(peer_id, filename='forward_group-table_di
         print('file {} updated'.format(filename))
 
 
+print('\033[92m▶ VRSFS service [ONLINE]\033[0m')
 bot.run_forever()

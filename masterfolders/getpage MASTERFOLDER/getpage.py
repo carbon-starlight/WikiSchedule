@@ -1,5 +1,7 @@
 getpage_language = 'russian'
 
+logging_mode_is_loguru = True
+
 import asyncio
 from vkbottle import Keyboard, KeyboardButtonColor, Text
 import os
@@ -36,12 +38,17 @@ import PyPDF2
 import io
 # import rich
 
-# import sys
-# from loguru import logger
-# logger.remove()
-# logger.add(sys.stderr, level="WARNING")
 
-import logging
+if logging_mode_is_loguru == True:
+    import sys
+    from loguru import logger
+    logger.remove()
+    logger.add(sys.stderr, level="WARNING")
+else:
+    import logging
+    logging.getLogger("vkbottle").setLevel(logging.INFO)
+
+# import logging
 
 # logger.disable("vkbottle")
 
@@ -533,6 +540,8 @@ async def general_handler(message: Message):
     keyboard.add(Text("Кнопка 2"))
     keyboard.add(Text("Кнопка 3", payload={"command": 3}))
     await message.answer(message="""Пожалуйста, выберете учебник:""", keyboard=keyboard.get_json())
+
+print('\033[92m▶ GetPage service [ONLINE]\033[0m')
 
 bot.run_forever()
 
