@@ -1,5 +1,7 @@
 # WikiSchedule
- An open, free and easy to self-host Telegram bot for wiki-like class, homework and notes scheduling.
+An open, free and easy to self-host Telegram bot for wiki-like class, homework and notes scheduling.
+
+Managing class schedlule may be repetative. A situation where 15-30 students manage their personal diaries and notebooks cooperating at most via a shared group chat is full of inconvinient, boring and repetative actions. I was not able to find a suitable solution for it, so I created WikiSchedule. It is a Telegram bot that takes the hastle of managing organizational and conspect papers and divides it into the amount of students in your class or group.
 
 -----
 ### ⚠ This document is under development
