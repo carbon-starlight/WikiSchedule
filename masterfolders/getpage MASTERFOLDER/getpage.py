@@ -37,6 +37,8 @@ from pdf2image import convert_from_path
 import PyPDF2
 import io
 # import rich
+from rich import traceback
+traceback.install()
 
 
 if logging_mode_is_loguru == True:
