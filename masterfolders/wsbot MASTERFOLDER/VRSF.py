@@ -250,7 +250,7 @@ async def send_schedule_updates():
                     print('\n\n🟥 ERROR 86xxVDEU4837 🟥\n\n', e)
                 try:
                     # print('image', image)
-                    # await message.answer(attachment=image)
+                    await message.answer(attachment=image)
                 except Exception as e:
                     print('\n\n🟥 ERROR 88xx58YUUY 🟥\n\n', e)
                 
