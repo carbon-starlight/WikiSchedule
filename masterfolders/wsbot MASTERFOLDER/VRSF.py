@@ -355,6 +355,6 @@ schedule.every().day.at("07:00").do(send_schedule_updates)
 # asyncio.run(send_schedule_updates())
 # asyncio.run(send_schedule_updates())
 # asyncio.run(send_schedule_updates())
-print('\033[92m▶ VRSF service [ONLINE]\033[0m')
+print('\033[92m▶ VRSF service ┄┄ [ONLINE]\033[0m')
 while True:
     schedule.run_pending()

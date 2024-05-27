@@ -157,5 +157,5 @@ def remove_from_forwardClientList_json(peer_id, filename='forward_group-table_di
         print('file {} updated'.format(filename))
 
 
-print('\033[92m▶ VRSFS service [ONLINE]\033[0m')
+print('\033[92m▶ VRSFS service ┄ [ONLINE]\033[0m')
 bot.run_forever()

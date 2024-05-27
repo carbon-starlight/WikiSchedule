@@ -3671,7 +3671,7 @@ if __name__ == '__main__':
     # Polls the bot
     # How often checks for new messages, secs
     print('Polling...')
-    print('\033[92m▶ Telegram bot [ONLINE]\033[0m')
+    print('\033[92m▶ Telegram bot ┄┄ [ONLINE]\033[0m')
     # 
     # >>> print('\033[92m▶ WikiSchedule Telegram bot online!\033[0m') 
     # ▶ WikiSchedule Telegram bot online!
