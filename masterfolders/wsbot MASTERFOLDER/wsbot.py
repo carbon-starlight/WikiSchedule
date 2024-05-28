@@ -887,7 +887,7 @@ async def formSemigraphicTable(adding_from_week, user_id, table_type, weekArray,
     print('EXECUTING FORMSEMIGRAPHICTABLE')
     start_fst_timestamp = time.time()
     global s_table
-    getUserInfo(user_id)
+    await getUserInfo(user_id)
     week_calendar_boundaries = await getWeekCalendarBoundaries(adding_from_week)
     room_number_weekArray = await get_room_number_weekArray(table_user_in, adding_from_week)
     # filename = f"{table_user_in}_temporal_info.json"
@@ -898,6 +898,10 @@ async def formSemigraphicTable(adding_from_week, user_id, table_type, weekArray,
     except:
         print('Something went wrong. Try setting time with /set_temporal first.')
         await update.message.reply_text('Something went wrong. Try setting /set_temporal first.')
+
+    if ti[20] == None:
+        for i in range(20, 150):
+            ti[i] = " N/A "
 
     done_hw_weekArray = await get_done_hw_weekArray(table_user_in, adding_from_week, user_id)
 
