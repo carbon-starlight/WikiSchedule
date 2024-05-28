@@ -66,6 +66,12 @@ import json
 
 from rich import traceback
 traceback.install()
+traceback_mode_is_rich = True
+
+from rich.console import Console
+from rich.text import Text
+from io import StringIO
+
 
 def extract_configuration_data_dictionary_from_config_json():
     """extracts given data from config.json"""
@@ -2157,16 +2163,21 @@ Sotto Fureru mono
 
 
         except ValueError as e:
-            # Get the line number of the last executed line
-            _, _, tb = sys.exc_info()
-            line_number = traceback.extract_tb(tb)[-1][1]
+            if traceback_mode_is_rich:
+                # With rich's traceback:
+                print(str(e))
+            else:
+            # With standard traceback:
+                # Get the line number of the last executed line
+                _, _, tb = sys.exc_info()
+                line_number = traceback.extract_tb(tb)[-1][1]
 
-            # Create the error message including the line number
-            error_message = f"Error occurred on line {line_number}: {str(e)}"
+                # Create the error message including the line number
+                error_message = f"Error occurred on line {line_number}: {str(e)}"
 
-            # Print or display the error message
-            await update.message.reply_text(error_message)
-            print(error_message)
+                # Print or display the error message
+                print(error_message)
+                await update.message.reply_text(error_message)
     else:
         next_of_kind_lesson_week, next_of_kind_lesson_day_in_week, next_of_kind_lesson_in_day, current_lesson = await getToLesFromCurrent(update.message.chat.id)
         split_command = text.split(" ")
@@ -3396,28 +3407,65 @@ async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # traceback.format_exception returns the usual python message about an exception, but as a
     # list of strings rather than a single string, so we have to join them together.
-    tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
-    tb_string = "".join(tb_list)
+    if traceback_mode_is_rich:
+
+        # Assuming context.error is the exception object
+        exception = context.error
+
+        # Create a Console instance that writes to a string buffer
+        console = Console(file=StringIO())
+
+        # Create a Rich Traceback object
+        rich_traceback = traceback.Traceback.extract(
+            exc_type=type(exception),
+            exc_value=exception,
+            trace=exception.__traceback__,
+            show_locals=True  # This option shows local variables in the traceback, can be False if not needed
+        )
+
+        # Capture the traceback output as a string
+        with console.capture() as capture:
+            console.print(rich_traceback)
+
+        # Get the captured output
+        formatted_traceback = capture.get()
+
+        # Split the formatted traceback into a list of lines
+        tb_string = formatted_traceback
+    else:
+        tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
+        tb_string = "".join(tb_list)
+
+    print(tb_string)
+
+    error_log_id = str(f"{int(time.time())}-{str(random.getrandbits(64))}")
+
+
+    error_log = str(f"\n{error_log_id}\n\n{tb_string}\n")
+
+    with open('error_logs.txt', 'a') as file:
+        file.write(error_log)
 
     # Build the message with some markup and additional information about what happened.
     # You might need to add some logic to deal with messages longer than the 4096 character limit.
     update_str = update.to_dict() if isinstance(update, Update) else str(update)
+
     message = (
-        "An exception was raised while handling an update\nPlease, forvard this bug report to the developer\n"
+        "An exception was raised while handling an update\n\n"
         f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
         "</pre>\n\n"
         f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
         f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
-        f"<pre>{html.escape(tb_string)}</pre>"
+        f"<pre>{html.escape(tb_string)}</pre>\n\n"
+        f"<pre>log_id: {error_log_id}</pre>"
     )
 
-    print(message)
 
     # Finally, send the message TODO
     await context.bot.send_message(
         chat_id=DEVELOPER_CHAT_ID, text=message, parse_mode=ParseMode.HTML
     )
-1
+
 
     # # _, _, tb = sys.exc_info()
     # # line_number = traceback.extract_tb(tb)[-1][1]
