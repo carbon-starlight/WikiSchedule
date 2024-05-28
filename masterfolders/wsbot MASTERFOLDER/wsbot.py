@@ -3453,123 +3453,123 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(response)
 
 
-async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # Enable logging
-    import html
-    import logging
-    from telegram.constants import ParseMode
+# async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
+#     # Enable logging
+#     import html
+#     import logging
+#     from telegram.constants import ParseMode
 
-    logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
-    )
-    # set higher logging level for httpx to avoid all GET and POST requests being logged
-    logging.getLogger("httpx").setLevel(logging.WARNING)
-    logger = logging.getLogger(__name__)
-    """Log the error and send a telegram message to notify the developer."""
-    # Log the error before we do anything else, so we can see it even if something breaks.
-    logger.error("Exception while handling an update:", exc_info=context.error)
+#     logging.basicConfig(
+#     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+#     )
+#     # set higher logging level for httpx to avoid all GET and POST requests being logged
+#     logging.getLogger("httpx").setLevel(logging.WARNING)
+#     logger = logging.getLogger(__name__)
+#     """Log the error and send a telegram message to notify the developer."""
+#     # Log the error before we do anything else, so we can see it even if something breaks.
+#     logger.error("Exception while handling an update:", exc_info=context.error)
 
-    # traceback.format_exception returns the usual python message about an exception, but as a
-    # list of strings rather than a single string, so we have to join them together.
-    if traceback_mode_is_rich:
+#     # traceback.format_exception returns the usual python message about an exception, but as a
+#     # list of strings rather than a single string, so we have to join them together.
+#     if traceback_mode_is_rich:
 
-        # Assuming context.error is the exception object
-        exception = context.error
+#         # Assuming context.error is the exception object
+#         exception = context.error
 
-        # Create a Console instance that writes to a string buffer
-        console = Console(file=StringIO())
+#         # Create a Console instance that writes to a string buffer
+#         console = Console(file=StringIO())
 
-        # Create a Rich Traceback object
-        rich_traceback = traceback.Traceback.extract(
-            exc_type=type(exception),
-            exc_value=exception,
-            traceback=exception.__traceback__,
-            show_locals=True  # This option shows local variables in the traceback, can be False if not needed
-        )
+#         # Create a Rich Traceback object
+#         rich_traceback = traceback.Traceback.extract(
+#             exc_type=type(exception),
+#             exc_value=exception,
+#             traceback=exception.__traceback__,
+#             show_locals=True  # This option shows local variables in the traceback, can be False if not needed
+#         )
 
-        # Capture the traceback output as a string
-        with console.capture() as capture:
-            console.print(rich_traceback)
+#         # Capture the traceback output as a string
+#         with console.capture() as capture:
+#             console.print(rich_traceback)
 
-        # Get the captured output
-        formatted_traceback = capture.get()
+#         # Get the captured output
+#         formatted_traceback = capture.get()
 
-        # Split the formatted traceback into a list of lines
-        tb_string = formatted_traceback
-    else:
-        tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
-        tb_string = "".join(tb_list)
+#         # Split the formatted traceback into a list of lines
+#         tb_string = formatted_traceback
+#     else:
+#         tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
+#         tb_string = "".join(tb_list)
 
-    print(tb_string)
+#     print(tb_string)
 
-    error_log_id = str(f"{int(time.time())}-{str(random.getrandbits(64))}")
-
-
-    error_log = str(f"\n{error_log_id}\n\n{tb_string}\n")
-
-    with open('error_logs.txt', 'a') as file:
-        file.write(error_log)
-
-    # Build the message with some markup and additional information about what happened.
-    # You might need to add some logic to deal with messages longer than the 4096 character limit.
-    update_str = update.to_dict() if isinstance(update, Update) else str(update)
-
-    message = (
-        "An exception was raised while handling an update\n\n"
-        f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
-        "</pre>\n\n"
-        f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
-        f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
-        f"<pre>{html.escape(tb_string)}</pre>\n\n"
-        f"<pre>log_id: {error_log_id}</pre>"
-    )
+#     error_log_id = str(f"{int(time.time())}-{str(random.getrandbits(64))}")
 
 
-    # Finally, send the message TODO
-    await context.bot.send_message(
-        chat_id=DEVELOPER_CHAT_ID, text=message, parse_mode=ParseMode.HTML
-    )
+#     error_log = str(f"\n{error_log_id}\n\n{tb_string}\n")
+
+#     with open('error_logs.txt', 'a') as file:
+#         file.write(error_log)
+
+#     # Build the message with some markup and additional information about what happened.
+#     # You might need to add some logic to deal with messages longer than the 4096 character limit.
+#     update_str = update.to_dict() if isinstance(update, Update) else str(update)
+
+#     message = (
+#         "An exception was raised while handling an update\n\n"
+#         f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
+#         "</pre>\n\n"
+#         f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
+#         f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
+#         f"<pre>{html.escape(tb_string)}</pre>\n\n"
+#         f"<pre>log_id: {error_log_id}</pre>"
+#     )
 
 
-    # # _, _, tb = sys.exc_info()
-    # # line_number = traceback.extract_tb(tb)[-1][1]
-    # # print(f'Update {update} caused error {context.error} in line {line_number}')
-    # import traceback
-    # import sys
-    # try:
-    #     _, _, tb = sys.exc_info()
-    #     tb_list = traceback.extract_tb(tb)
-    #     if tb_list:
-    #         # Extract the line number from the last entry in the traceback list, if it exists
-    #         line_number = tb_list[-1].lineno
-    #         print(f'Update {update} caused error {context.error} in line {line_number}')
-    #     else:
-    #         print(f'Update {update} caused error {context.error}, but no traceback is available.')
-    # except Exception as err:
-    #     print(f'An error occurred while handling another error: {err}')
+#     # Finally, send the message TODO
+#     await context.bot.send_message(
+#         chat_id=DEVELOPER_CHAT_ID, text=message, parse_mode=ParseMode.HTML
+#     )
 
-    # try:
-    #     traceback_formatted = traceback.format_exception(exc_type, exc_value, exc_traceback)
-    #     traceback_string = ''.join(traceback_formatted)
-    #     print(f"Full traceback of error in update {update}:\n{traceback_string}")
-    # except Exception as e:
-    #     print('ErrInErrhdl 3134XCVOI', e)
-    # # Extract and print the complete formatted exception, including the stack trace
-    # # exc_type, exc_value, exc_traceback = sys.exc_info()
-    # # error_traceback = traceback.format_exception(exc_type, exc_value, exc_traceback)
-    # # print(f"NEW ERR HANDLER: Update {update} caused error {context.error}:\n{''.join(error_traceback)}")
-    # try:
-    #     print(context.error)
-    #     print('plplpl', sys.exc_info())
 
-    #     exc_type = "Error getting one 978"
-    #     exc_value = "Error getting one 098"
-    #     exc_traceback = "Error getting one 765"
-    #     exc_type, exc_value, exc_traceback = sys.exc_info()
-    #     error_traceback = traceback.format_exception(exc_type, exc_value, exc_traceback)
-    #     print(f"NEW ERR HANDLER: Update {update} caused error {context.error}:\n{''.join(error_traceback)}")
-    # except Exception as e:
-        # print('Error in error: ', e)
+#     # # _, _, tb = sys.exc_info()
+#     # # line_number = traceback.extract_tb(tb)[-1][1]
+#     # # print(f'Update {update} caused error {context.error} in line {line_number}')
+#     # import traceback
+#     # import sys
+#     # try:
+#     #     _, _, tb = sys.exc_info()
+#     #     tb_list = traceback.extract_tb(tb)
+#     #     if tb_list:
+#     #         # Extract the line number from the last entry in the traceback list, if it exists
+#     #         line_number = tb_list[-1].lineno
+#     #         print(f'Update {update} caused error {context.error} in line {line_number}')
+#     #     else:
+#     #         print(f'Update {update} caused error {context.error}, but no traceback is available.')
+#     # except Exception as err:
+#     #     print(f'An error occurred while handling another error: {err}')
+
+#     # try:
+#     #     traceback_formatted = traceback.format_exception(exc_type, exc_value, exc_traceback)
+#     #     traceback_string = ''.join(traceback_formatted)
+#     #     print(f"Full traceback of error in update {update}:\n{traceback_string}")
+#     # except Exception as e:
+#     #     print('ErrInErrhdl 3134XCVOI', e)
+#     # # Extract and print the complete formatted exception, including the stack trace
+#     # # exc_type, exc_value, exc_traceback = sys.exc_info()
+#     # # error_traceback = traceback.format_exception(exc_type, exc_value, exc_traceback)
+#     # # print(f"NEW ERR HANDLER: Update {update} caused error {context.error}:\n{''.join(error_traceback)}")
+#     # try:
+#     #     print(context.error)
+#     #     print('plplpl', sys.exc_info())
+
+#     #     exc_type = "Error getting one 978"
+#     #     exc_value = "Error getting one 098"
+#     #     exc_traceback = "Error getting one 765"
+#     #     exc_type, exc_value, exc_traceback = sys.exc_info()
+#     #     error_traceback = traceback.format_exception(exc_type, exc_value, exc_traceback)
+#     #     print(f"NEW ERR HANDLER: Update {update} caused error {context.error}:\n{''.join(error_traceback)}")
+#     # except Exception as e:
+#         # print('Error in error: ', e)
 
 
 # Your function that performs some task and saves the result to a file
