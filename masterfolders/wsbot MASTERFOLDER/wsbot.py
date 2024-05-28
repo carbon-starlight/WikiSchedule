@@ -3419,7 +3419,6 @@ async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
         rich_traceback = traceback.Traceback.extract(
             exc_type=type(exception),
             exc_value=exception,
-            trace=exception.__traceback__,
             show_locals=True  # This option shows local variables in the traceback, can be False if not needed
         )
 
