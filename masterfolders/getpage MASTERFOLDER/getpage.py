@@ -297,8 +297,12 @@ async def general_handler(message: Message):
     #     if word.startswith('['):
     #         word = 
 
-    print('received msg', text)
-    print('words', words)
+    print('Received a message:', text)
+    # print('words', words)
+
+    # Append a text log to a recieved messages file
+    with open('vk_getpage_recieved_messages_logs.txt', 'a') as file:
+        file.write(f"[{time.time()}]", str(message) + '\n\n')
 
     # await today_command('1-HAL', 14400)
 
