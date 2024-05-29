@@ -2509,7 +2509,7 @@ async def add_for(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         await update.message.reply_text(
             msg
         )
-        
+
     return CONTENT
 
 async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -2521,16 +2521,16 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     # if len(str(context.user_data['type'])) - len((context.user_data['type']).lstrip('\uFEFF')) == 1:
     if count_feff_symbols(str(context.user_data['type'])) == 1:
         # if a lesson is being added
-        command_type = f"al"
+        command_type = f"/al"
     if count_feff_symbols(str(context.user_data['type'])) == 2:
         # if a hw is being added
-        command_type = f"ah"
+        command_type = f"/ah"
     if count_feff_symbols(str(context.user_data['type'])) == 3:
         # if a hw mark is being added
-        command_type = f"done"
+        command_type = f"/done"
     if count_feff_symbols(str(context.user_data['type'])) == 4:
         # if a note is being added
-        command_type = f"an"
+        command_type = f"/an"
     
     if count_feff_symbols(str(context.user_data['week'])) == 1:
         # if a current week is being selected
@@ -2568,6 +2568,16 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     print(command)
 
     await update.message.reply_text(command)
+
+    update.message.text = command
+    if command_type == "/al":
+        await al_command(update, context)
+    if command_type == "/ah":
+        await ah_command(update, context)
+    if command_type == "/done":
+        await done_command(update, context)
+    if command_type == "/an":
+        await an_command(update, context)
 
     return ConversationHandler.END
 
