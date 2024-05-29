@@ -2319,10 +2319,11 @@ from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler
 
 # Constants for states
-TYPE, WEEK, DAY, LESSON_NUMBER, event_type_if_regular, ADD_FOR, CONTENT = range(7)
+TYPE, WEEK, DAY, LESSON_NUMBER, EVENT_TYPE_IF_REGULAR, ADD_FOR, CONTENT = range(7)
 
 # Command handler functions
 async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    print("func add_command")
     reply_keyboard = [['﻿Lesson', '﻿﻿Homework', '﻿﻿﻿Homework mark', '﻿﻿﻿﻿Note']]
     await update.message.reply_text(
         'What would you like to add?',
@@ -2331,6 +2332,7 @@ async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
     return TYPE
 
 async def type_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    print("func type_sel")
     context.user_data['type'] = update.message.text
 
     # reply_keyboard = [['﻿Current', '﻿﻿Next', '﻿﻿﻿Other']]
@@ -2342,6 +2344,7 @@ async def type_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     return WEEK
 
 async def week_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    print("func week_sel")
     context.user_data['week'] = update.message.text
 
     # TODO: Localization ↓
@@ -2370,6 +2373,7 @@ async def week_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 #     return await lesson_number_selection(update, context)
 
 async def day_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    print("func day_sel")
     context.user_data['day'] = update.message.text
     reply_keyboard = [[str(x) for x in range(1, 5)], [str(x) for x in range(5, 9)], ['Cancel']]
     await update.message.reply_text(
@@ -2381,6 +2385,7 @@ async def day_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 async def lesson_number_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     # print("010")
+    print("func lesson_number_sel")
     context.user_data['lesson_number'] = update.message.text
 
     if context.user_data['lesson_number'] == 'Cancel':
@@ -2394,13 +2399,14 @@ async def lesson_number_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) 
             reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
         )
 
-    return event_type_if_regular
+        return EVENT_TYPE_IF_REGULAR
 
 # async def event_type_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 #     context.user_data['event_type_if_regular'] = update.message.text
 #     return await if_one_time_event_or_regular_sel(update, context)
 
 async def if_one_time_event_or_regular_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    print("func if_one_time_event_or_regular_sel")
     if len(context.user_data['type']) - len(context.user_data['type'].lstrip('\uFEFF')) == 1:
     # if a lesson is being added
         context.user_data['event_type_if_regular'] = update.message.text
@@ -2415,6 +2421,7 @@ async def if_one_time_event_or_regular_sel(update: Update, context: ContextTypes
     return ADD_FOR
 
 async def add_for(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    print("func add_for")
     context.user_data['add_for'] = update.message.text
     await update.message.reply_text(
         'Please, share the content you would like to add'
@@ -2422,6 +2429,7 @@ async def add_for(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     return CONTENT
 
 async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    print("func content_input")
     context.user_data['content'] = update.message.text
     await update.message.reply_text(f"Data collected: {context.user_data}")
 
@@ -2480,6 +2488,7 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     return ConversationHandler.END
 
 async def cancel_add_conv(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    print("func cancel_add_conv")
     await update.message.reply_text('Operation cancelled.')
     return ConversationHandler.END
 
@@ -3735,7 +3744,7 @@ if __name__ == '__main__':
             # SPECIFIC_DATE: [MessageHandler(filters.TEXT & ~filters.COMMAND, lesson_number_selection)],
             DAY: [MessageHandler(filters.TEXT & ~filters.COMMAND, day_sel)],
             LESSON_NUMBER: [MessageHandler(filters.TEXT & ~filters.COMMAND, lesson_number_sel)],
-            event_type_if_regular: [MessageHandler(filters.TEXT & ~filters.COMMAND, if_one_time_event_or_regular_sel)],
+            EVENT_TYPE_IF_REGULAR: [MessageHandler(filters.TEXT & ~filters.COMMAND, if_one_time_event_or_regular_sel)],
             ADD_FOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_for)],
             CONTENT: [MessageHandler(filters.TEXT & ~filters.COMMAND, content_input)],
         },
