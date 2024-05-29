@@ -244,6 +244,7 @@ def getTableTemporalInfoFromMainArray(table_id):
                 and subarray[10] == 0
         ):
             return subarray[8]
+    
     ti = []
     for i in range(160):
         ti.append(" N/A ")
@@ -747,7 +748,10 @@ async def today_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # filename = f"{table_user_in}_temporal_info.json"
     # with open(filename, 'r') as fileTI:
     #     ti = json.load(fileTI)
-    ti = getTableTemporalInfoFromMainArray(table_user_in)
+    ti = getTableTemporalInfoFromMainArray(table_user_in)    
+    for i in range(0, 200):
+        if ti[i] == None:
+            ti[i] = ' N/A '
     if current_day_utz == 1:
         wd_n = 0
     elif current_day_utz == 2:
