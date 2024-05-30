@@ -3590,7 +3590,11 @@ async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
         except Exception as e:
             print(3591)
             console.log("TEST")
-            console.print_exception()  # This will print the exception with rich formatting
+            try:
+                console.print_exception()  # This will print the exception with rich formatting
+                console_exception_called = True
+            except Exception as console_error:
+                print(f"Error in console.print_exception: {console_error}")
             print(3593)
     else:
         tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
