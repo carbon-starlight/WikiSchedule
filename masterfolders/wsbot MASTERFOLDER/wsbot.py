@@ -754,6 +754,8 @@ async def today_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             if ti[i] == None:
                 ti[i] = ' N/A '
         except TypeError:
+            if ti = None:
+                ti = []
             ti[i] = ' N/A '
     if current_day_utz == 1:
         wd_n = 0
@@ -3589,7 +3591,7 @@ async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
             raise context.error
         except Exception as e:
             print(3591)
-            console.log("TEST")
+            # console.log("TEST")
             try:
                 console.print_exception(show_locals=True)
             except Exception as console_error:
