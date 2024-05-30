@@ -2347,9 +2347,9 @@ TYPE, WEEK, DAY, LESSON_NUMBER, EVENT_TYPE_IF_REGULAR, ADD_FOR, CONTENT = range(
 async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     print("func add_command")
     if update.message.from_user.language_code == 'ru':
-        reply_keyboard = [['‌Урок / Лекцию'], ['‌‌Домашнее задание'], ['‌‌‌Пометить Д/З как завершённое'], ['‌‌‌‌Конспект']]
+        reply_keyboard = [['‎Урок / Лекцию'], ['‎‎Домашнее задание'], ['‎‎‎Пометить Д/З как завершённое'], ['‎‎‎‎Конспект']]
     else:
-        reply_keyboard = [['‌Lesson'], ['‌‌Homework'], ['‌‌‌Homework mark'], ['‌‌‌‌Note']]
+        reply_keyboard = [['‎Lesson'], ['‎‎Homework'], ['‎‎‎Homework mark'], ['‎‎‎‎Note']]
     
     if update.message.from_user.language_code == 'ru':
         msg = "Что вы хотите добавить?"
@@ -2367,11 +2367,11 @@ async def type_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     print("adding to context.user_data['type']:", update.message.text)
     context.user_data['type'] = update.message.text
 
-    # reply_keyboard = [['‌Current', '‌‌Next', '‌‌‌Other']]
+    # reply_keyboard = [['‎Current', '‎‎Next', '‎‎‎Other']]
     if update.message.from_user.language_code == 'ru':
-        reply_keyboard = [['‌Текущий', '‌‌Следующий']]
+        reply_keyboard = [['‎Текущий', '‎‎Следующий']]
     else:
-        reply_keyboard = [['‌Current', '‌‌Next']]
+        reply_keyboard = [['‎Current', '‎‎Next']]
 
     if update.message.from_user.language_code == 'ru':
         msg = "В какую неделю добавить?"
@@ -2389,28 +2389,28 @@ async def week_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     context.user_data['week'] = update.message.text
 
     # TODO: Localization ↓
-    # if update.message.text != '‌‌‌Other':
+    # if update.message.text != '‎‎‎Other':
     if len(update.message.text) - len(update.message.text.lstrip('\uFEFF')) != 3:
         
         if update.message.from_user.language_code == 'ru':
             reply_keyboard = [
-                ['‌Понедельник'], 
-                ['‌‌Вторник'], 
-                ['‌‌‌Среда'], 
-                ['‌‌‌‌Четверг'], 
-                ['‌‌‌‌‌Пятница'], 
-                ['‌‌‌‌‌‌Суббота'], 
-                ['‌‌‌‌‌‌‌Воскресенье']
+                ['‎Понедельник'], 
+                ['‎‎Вторник'], 
+                ['‎‎‎Среда'], 
+                ['‎‎‎‎Четверг'], 
+                ['‎‎‎‎‎Пятница'], 
+                ['‎‎‎‎‎‎Суббота'], 
+                ['‎‎‎‎‎‎‎Воскресенье']
             ]
         else:
             reply_keyboard = [
-                ['‌Monday'], 
-                ['‌‌Tuesday'], 
-                ['‌‌‌Wednesday'], 
-                ['‌‌‌‌Thursday'], 
-                ['‌‌‌‌‌Friday'], 
-                ['‌‌‌‌‌‌Saturday'], 
-                ['‌‌‌‌‌‌‌Sunday']
+                ['‎Monday'], 
+                ['‎‎Tuesday'], 
+                ['‎‎‎Wednesday'], 
+                ['‎‎‎‎Thursday'], 
+                ['‎‎‎‎‎Friday'], 
+                ['‎‎‎‎‎‎Saturday'], 
+                ['‎‎‎‎‎‎‎Sunday']
             ]
 
         if update.message.from_user.language_code == 'ru':
@@ -2469,9 +2469,9 @@ async def lesson_number_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) 
         else:
             msg = "Would you like to add it as a one-time event or as a regular one?"
         if update.message.from_user.language_code == 'ru':
-            reply_keyboard = [['‌Единовременное', '‌‌Регулярное']]
+            reply_keyboard = [['‎Единовременное', '‎‎Регулярное']]
         else:
-            reply_keyboard = [['‌One-time', '‌‌Regular']]
+            reply_keyboard = [['‎One-time', '‎‎Regular']]
         
         print(2472)
         await update.message.reply_text(
@@ -2493,12 +2493,12 @@ async def if_one_time_event_or_regular_sel(update: Update, context: ContextTypes
         context.user_data['event_type_if_regular'] = update.message.text
     else:
         context.user_data['event_type_if_regular'] = None
-    # if context.user_data['type'] = '‌Lesson':
+    # if context.user_data['type'] = '‎Lesson':
 
     if update.message.from_user.language_code == 'ru':
-        reply_keyboard = [['‌Для себя', '‌‌Для онлайн-расписания', '‌‌‌Для всех расписаний, указанных как связанные с этим']]
+        reply_keyboard = [['‎Для себя', '‎‎Для онлайн-расписания', '‎‎‎Для всех расписаний, указанных как связанные с этим']]
     else:
-        reply_keyboard = [['‌For yourself', '‌‌For the schedule of your class', '‌‌‌For all the schedules that are connected']]
+        reply_keyboard = [['‎For yourself', '‎‎For the schedule of your class', '‎‎‎For all the schedules that are connected']]
     
     if update.message.from_user.language_code == 'ru':
         msg = "Добавить…"
