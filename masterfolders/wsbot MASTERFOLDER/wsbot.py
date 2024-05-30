@@ -2390,7 +2390,7 @@ async def week_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     # TODO: Localization ↓
     # if update.message.text != '‎‎‎Other':
-    if len(update.message.text) - len(update.message.text.lstrip('\uFEFF')) != 3:
+    if len(update.message.text) - len(update.message.text.lstrip('\u200E')) != 3:
         
         if update.message.from_user.language_code == 'ru':
             reply_keyboard = [
@@ -2462,8 +2462,8 @@ async def lesson_number_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) 
     
     print('context.user_data["type"]:', context.user_data['type'])
     print('context.user_data["week"]:', context.user_data['week'])
-    print(len(context.user_data['type']) - len(context.user_data['type'].lstrip('\uFEFF')))
-    if len(context.user_data['type']) - len(context.user_data['type'].lstrip('\uFEFF')) == 1:
+    print(len(context.user_data['type']) - len(context.user_data['type'].lstrip('\u200E')))
+    if len(context.user_data['type']) - len(context.user_data['type'].lstrip('\u200E')) == 1:
         if update.message.from_user.language_code == 'ru':
             msg = "Добавить как единовременное событие или регулярное?"
         else:
@@ -2488,7 +2488,7 @@ async def lesson_number_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) 
 
 async def if_one_time_event_or_regular_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     print("func if_one_time_event_or_regular_sel")
-    if len(context.user_data['type']) - len(context.user_data['type'].lstrip('\uFEFF')) == 1:
+    if len(context.user_data['type']) - len(context.user_data['type'].lstrip('\u200E')) == 1:
     # if a lesson is being added
         context.user_data['event_type_if_regular'] = update.message.text
     else:
@@ -2515,7 +2515,7 @@ async def add_for(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     print("func add_for")
     context.user_data['add_for'] = update.message.text
 
-    if count_feff_symbols(str(context.user_data['type'])) == 3:
+    if count_lrm_symbols(str(context.user_data['type'])) == 3:
         # if mark as done
         reply_keyboard = ['✓']
         await update.message.reply_text(
@@ -2524,13 +2524,13 @@ async def add_for(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         )
     else:
 
-        if count_feff_symbols(str(context.user_data['type'])) == 1:
+        if count_lrm_symbols(str(context.user_data['type'])) == 1:
             # if a lesson is being added
             if update.message.from_user.language_code == 'ru':
                 msg = "Введите название урока"
             else:
                 msg = "Specify the name of the lesson"
-        if count_feff_symbols(str(context.user_data['type'])) == 2 or count_feff_symbols(str(context.user_data['type'])) == 4:
+        if count_lrm_symbols(str(context.user_data['type'])) == 2 or count_lrm_symbols(str(context.user_data['type'])) == 4:
             # if a hw or a note is being added
             if update.message.from_user.language_code == 'ru':
                 msg = "Введите текст"
@@ -2548,46 +2548,46 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     await update.message.reply_text(f"Data collected: {context.user_data}")
 
 
-    # if len(str(context.user_data['type'])) - len((context.user_data['type']).lstrip('\uFEFF')) == 1:
-    if count_feff_symbols(str(context.user_data['type'])) == 1:
+    # if len(str(context.user_data['type'])) - len((context.user_data['type']).lstrip('\u200E')) == 1:
+    if count_lrm_symbols(str(context.user_data['type'])) == 1:
         # if a lesson is being added
         command_type = f"/al"
-    if count_feff_symbols(str(context.user_data['type'])) == 2:
+    if count_lrm_symbols(str(context.user_data['type'])) == 2:
         # if a hw is being added
         command_type = f"/ah"
-    if count_feff_symbols(str(context.user_data['type'])) == 3:
+    if count_lrm_symbols(str(context.user_data['type'])) == 3:
         # if a hw mark is being added
         command_type = f"/done"
-    if count_feff_symbols(str(context.user_data['type'])) == 4:
+    if count_lrm_symbols(str(context.user_data['type'])) == 4:
         # if a note is being added
         command_type = f"/an"
     
-    if count_feff_symbols(str(context.user_data['week'])) == 1:
+    if count_lrm_symbols(str(context.user_data['week'])) == 1:
         # if a current week is being selected
         week = "c"
-    if count_feff_symbols(str(context.user_data['week'])) == 2:
+    if count_lrm_symbols(str(context.user_data['week'])) == 2:
         # if a next week is being selected
         week = "n"
-    if count_feff_symbols(str(context.user_data['week'])) == 3:
+    if count_lrm_symbols(str(context.user_data['week'])) == 3:
         # if a other week is being selected
         print('\033[91mERROR: Week "Other" (digit code 3) is not supported yet\033[0m')
 
-    day = count_feff_symbols(str(context.user_data['day']))
+    day = count_lrm_symbols(str(context.user_data['day']))
 
     lesson = context.user_data['lesson_number']
 
-    if count_feff_symbols(str(context.user_data['event_type_if_regular'])) == 1:
+    if count_lrm_symbols(str(context.user_data['event_type_if_regular'])) == 1:
         exclusivity = 0
-    if count_feff_symbols(str(context.user_data['event_type_if_regular'])) == 2:
+    if count_lrm_symbols(str(context.user_data['event_type_if_regular'])) == 2:
         exclusivity = 1
 
-    if count_feff_symbols(str(context.user_data['add_for'])) == 1:
+    if count_lrm_symbols(str(context.user_data['add_for'])) == 1:
         # if a for yourself is being selected
         add_for = 0
-    if count_feff_symbols(str(context.user_data['add_for'])) == 2:
+    if count_lrm_symbols(str(context.user_data['add_for'])) == 2:
         # if a for the schedule of your class is being selected
         add_for = 1
-    if count_feff_symbols(str(context.user_data['add_for'])) == 3:
+    if count_lrm_symbols(str(context.user_data['add_for'])) == 3:
         # if a for all the schedules that are connected is being selected
         add_for = 2
 
@@ -2618,10 +2618,10 @@ async def cancel_add_conv(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 
 
 
-def count_feff_symbols(string):
+def count_lrm_symbols(string):
     count = 0
     for char in string:
-        if char == '\uFEFF':
+        if char == '\u200E':
             count += 1
         else:
             break
