@@ -2459,6 +2459,8 @@ async def lesson_number_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) 
         print(2459)
         return ConversationHandler.END
     
+    print('context.user_data["type"]:', context.user_data['type'])
+    print(len(context.user_data['type']) - len(context.user_data['type'].lstrip('\uFEFF')))
     if len(context.user_data['type']) - len(context.user_data['type'].lstrip('\uFEFF')) == 1:
         if update.message.from_user.language_code == 'ru':
             msg = "Добавить как единовременное событие или регулярное?"
@@ -2475,7 +2477,7 @@ async def lesson_number_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) 
             reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
         )
 
-        print(2478)
+    print(2478)
     return EVENT_TYPE_IF_REGULAR
 
 # async def event_type_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
