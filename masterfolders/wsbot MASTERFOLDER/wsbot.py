@@ -750,7 +750,10 @@ async def today_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     #     ti = json.load(fileTI)
     ti = getTableTemporalInfoFromMainArray(table_user_in)    
     for i in range(0, 200):
-        if ti[i] == None:
+        try:
+            if ti[i] == None:
+                ti[i] = ' N/A '
+        except TypeError:
             ti[i] = ' N/A '
     if current_day_utz == 1:
         wd_n = 0
