@@ -219,7 +219,7 @@ async def getUserInfo(user_id, username = None):
                 and subarray[10] == 0
             ):
                 semigraphic_mode_on = subarray[8]
-                print("semigr mode set to " + str(semigraphic_mode_on))
+                # print("semigr mode set to " + str(semigraphic_mode_on))
 
     # print('in func getUserInfo: ', mainArray)
     # print('in func getUserInfo: table_user_in:', table_user_in)
