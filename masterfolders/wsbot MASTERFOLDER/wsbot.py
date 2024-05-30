@@ -2452,9 +2452,11 @@ async def lesson_number_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) 
     # print("010")
     print("func lesson_number_sel")
     context.user_data['lesson_number'] = update.message.text
+    print(2455)
 
     if context.user_data['lesson_number'] == 'Cancel':
         await cancel_add_conv(update, context)
+        print(2459)
         return ConversationHandler.END
     
     if len(context.user_data['type']) - len(context.user_data['type'].lstrip('\uFEFF')) == 1:
@@ -2467,12 +2469,14 @@ async def lesson_number_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) 
         else:
             reply_keyboard = [['﻿One-time', '﻿﻿Regular']]
         
+        print(2472)
         await update.message.reply_text(
             msg,
             reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
         )
 
-        return EVENT_TYPE_IF_REGULAR
+        print(2478)
+    return EVENT_TYPE_IF_REGULAR
 
 # async def event_type_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 #     context.user_data['event_type_if_regular'] = update.message.text
