@@ -2349,7 +2349,7 @@ async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
     if update.message.from_user.language_code == 'ru':
         reply_keyboard = [['﻿Урок / ​Лекцию'], ['﻿﻿Домашнее задание'], ['﻿﻿﻿Пометить Д/З как завершённое'], ['﻿﻿﻿﻿Конспект']]
     else:
-        reply_keyboard = [['﻿Lesson'], ['﻿﻿Homework'], ['﻿﻿﻿Homework mark'], ['﻿﻿﻿﻿Note']]
+        reply_keyboard = [['﻿Lesso​n'], ['﻿﻿Homework'], ['﻿﻿﻿Homework mark'], ['﻿﻿﻿﻿Note']]
     
     if update.message.from_user.language_code == 'ru':
         msg = "Что вы хотите добавить?"
