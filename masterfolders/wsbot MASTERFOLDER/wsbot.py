@@ -2460,6 +2460,7 @@ async def lesson_number_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) 
         return ConversationHandler.END
     
     print('context.user_data["type"]:', context.user_data['type'])
+    print('context.user_data["week"]:', context.user_data['week'])
     print(len(context.user_data['type']) - len(context.user_data['type'].lstrip('\uFEFF')))
     if len(context.user_data['type']) - len(context.user_data['type'].lstrip('\uFEFF')) == 1:
         if update.message.from_user.language_code == 'ru':
