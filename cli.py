@@ -264,7 +264,7 @@ finally:
         except subprocess.TimeoutExpired:
             proc.kill()  # Force kill if it doesn't exit in time
 
-    print('\033[30m\033[41mAll subprocesses were terminated.\033[0m')
+    print('\033[30m\033[41m🭪 All subprocesses were terminated 🭨\033[0m')
 
     # print('All subprocesses were terminated.')
 
