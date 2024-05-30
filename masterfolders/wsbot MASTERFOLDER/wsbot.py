@@ -3590,6 +3590,7 @@ async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
         except Exception as e:
             print(3591)
             console.print_exception()  # This will print the exception with rich formatting
+            print(3593)
     else:
         tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
         tb_string = "".join(tb_list)
