@@ -756,6 +756,8 @@ async def today_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         except TypeError:
             if ti == None:
                 ti = []
+                for i in range(0, 200):
+                    ti.append(' N/A ')
             ti[i] = ' N/A '
     if current_day_utz == 1:
         wd_n = 0
