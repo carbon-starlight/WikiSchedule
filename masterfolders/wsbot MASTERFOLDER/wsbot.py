@@ -2364,6 +2364,7 @@ async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
 
 async def type_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     print("func type_sel")
+    print("adding to context.user_data['type']:", update.message.text)
     context.user_data['type'] = update.message.text
 
     # reply_keyboard = [['﻿Current', '﻿﻿Next', '﻿﻿﻿Other']]
