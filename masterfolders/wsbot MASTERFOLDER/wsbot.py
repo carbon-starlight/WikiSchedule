@@ -3589,6 +3589,7 @@ async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
             raise context.error
         except Exception as e:
             print(3591)
+            console.log("TEST")
             console.print_exception()  # This will print the exception with rich formatting
             print(3593)
     else:
