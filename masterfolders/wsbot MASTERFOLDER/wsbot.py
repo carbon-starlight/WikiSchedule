@@ -3585,8 +3585,10 @@ async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
     console = Console()
     if traceback_mode_is_rich:
         try:
+            print(3588)
             raise context.error
         except Exception as e:
+            print(3591)
             console.print_exception()  # This will print the exception with rich formatting
     else:
         tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
