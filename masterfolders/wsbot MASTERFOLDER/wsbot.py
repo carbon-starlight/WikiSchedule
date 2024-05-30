@@ -2347,7 +2347,7 @@ TYPE, WEEK, DAY, LESSON_NUMBER, EVENT_TYPE_IF_REGULAR, ADD_FOR, CONTENT = range(
 async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     print("func add_command")
     if update.message.from_user.language_code == 'ru':
-        reply_keyboard = [['﻿Урок / Лекцию'], ['﻿﻿Домашнее задание'], ['﻿﻿﻿Пометить Д/З как завершённое'], ['﻿﻿﻿﻿Конспект']]
+        reply_keyboard = [['﻿Урок / ​Лекцию'], ['﻿﻿Домашнее задание'], ['﻿﻿﻿Пометить Д/З как завершённое'], ['﻿﻿﻿﻿Конспект']]
     else:
         reply_keyboard = [['﻿Lesson'], ['﻿﻿Homework'], ['﻿﻿﻿Homework mark'], ['﻿﻿﻿﻿Note']]
     
