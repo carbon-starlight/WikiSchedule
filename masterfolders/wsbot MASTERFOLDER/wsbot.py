@@ -910,6 +910,17 @@ async def formSemigraphicTable(adding_from_week, user_id, table_type, weekArray,
         print('Something went wrong. Try setting time with /set_temporal first.')
         await update.message.reply_text('Something went wrong. Try setting /set_temporal first.')
 
+    for i in range(0, 200):
+        try:
+            if ti[i] == None:
+                ti[i] = ' N/A '
+        except TypeError:
+            if ti == None:
+                ti = []
+                for i in range(0, 200):
+                    ti.append(' N/A ')
+            ti[i] = ' N/A '
+
     if ti[20] == None:
         for i in range(20, 150):
             ti[i] = " N/A "
