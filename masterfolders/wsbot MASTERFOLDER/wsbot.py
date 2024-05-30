@@ -47,7 +47,7 @@ from telegram import Update, ReplyKeyboardMarkup
 import sys
 import traceback
 import tracemalloc
-tracemalloc.start()
+# tracemalloc.start()
 # ↑ REMOVE IN PRODUCTION
 # import schedule
 import time
@@ -3591,8 +3591,7 @@ async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
             print(3591)
             console.log("TEST")
             try:
-                console.print_exception()  # This will print the exception with rich formatting
-                console_exception_called = True
+                console.print_exception(show_locals=True)
             except Exception as console_error:
                 print(f"Error in console.print_exception: {console_error}")
             print(3593)
