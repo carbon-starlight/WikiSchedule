@@ -2575,6 +2575,8 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
         command_type = f"/an"
     else:
         console.log('\033[91mERROR: This LRM code is not supported\033[0m')
+    console.log(count_lrm_symbols(str(context.user_data['type'])))
+
 
     if count_lrm_symbols(str(context.user_data['week'])) == 1:
         # if a current week is being selected
@@ -2587,8 +2589,10 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
         print('\033[91mERROR: Week "Other" (digit code 3) is not supported yet\033[0m')
     else:
         console.log('\033[91mERROR: This LRM code is not supported\033[0m')
+    console.log(count_lrm_symbols(str(context.user_data['week'])))
 
     day = count_lrm_symbols(str(context.user_data['day']))
+    console.log(count_lrm_symbols(str(context.user_data['day'])))
 
     lesson = context.user_data['lesson_number']
 
@@ -2598,6 +2602,7 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
         exclusivity = 1
     else:
         console.log('\033[91mERROR: This LRM code is not supported\033[0m')
+    console.log(count_lrm_symbols(str(context.user_data['event_type_if_regular'])))
 
     if count_lrm_symbols(str(context.user_data['add_for'])) == 1:
         # if a for yourself is being selected
@@ -2612,6 +2617,7 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
         console.log(count_lrm_symbols(str(context.user_data['add_for'])))
         console.log('context.user_data["add_for"]:', context.user_data['add_for'])
         console.log('\033[91mERROR: This LRM code is not supported\033[0m')
+    console.log(count_lrm_symbols(str(context.user_data['add_for'])))
 
     content = context.user_data['content']
 
@@ -2645,6 +2651,7 @@ def count_lrm_symbols(string):
     count = 0
     for char in string:
         if char == '\u200e' or char == '\u200c':
+            # U+200E sometimes turn into U+200C for some reason
             count += 1
         else:
             break
@@ -3745,6 +3752,17 @@ async def save_data_for_interchange(table_user_in):
     # with open(filename, 'r') as fileTI:
     #     ti = json.load(fileTI)
     ti = getTableTemporalInfoFromMainArray(table_user_in)
+
+    for i in range(0, 200):
+        try:
+            if ti[i] == None:
+                ti[i] = ' N/A '
+        except TypeError:
+            if ti == None:
+                ti = []
+                for i in range(0, 200):
+                    ti.append(' N/A ')
+            ti[i] = ' N/A '
 
     ti_nums = [
         [ti[20], ti[21], ti[22], ti[23], ti[24], ti[25], ti[26], ti[27], ti[28], ti[29], ti[30], ti[31], ti[32], ti[33], ti[34], ti[35], ti[36], ti[37], ti[38], ti[39]],  # monday
