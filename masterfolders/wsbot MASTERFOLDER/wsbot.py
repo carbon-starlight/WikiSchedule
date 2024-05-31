@@ -3842,6 +3842,9 @@ async def save_data_for_interchange(table_user_in):
         'room_number_weekArray': room_number_weekArray
     }
 
+    if not os.path.exists('interchange'):
+        os.makedirs('interchange')
+
     with open(f'interchange/wsbot_today_update_{table_user_in}.json', 'w') as fp:
         """for interchange with other programs"""
         json.dump(td_upd_dic, fp)

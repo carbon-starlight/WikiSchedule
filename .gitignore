@@ -1,6 +1,6 @@
 config.json
-"masterfolders/getpage MASTERFOLDER/textbooks"
-"masterfolders/wsbot MASTERFOLDER/interchange"
+"masterfolders/getpage MASTERFOLDER/textbooks/**"
+"masterfolders/wsbot MASTERFOLDER/interchange/**"
 "masterfolders/wsbot MASTERFOLDER/forward_group-table_dictionary.json"
 "masterfolders/wsbot MASTERFOLDER/lg_logs"
 "masterfolders/wsbot MASTERFOLDER/mainArray"
