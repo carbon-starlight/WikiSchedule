@@ -2574,7 +2574,7 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
         command_type = f"/an"
     else:
         console.log('\033[91mERROR: This LRM code is not supported\033[0m')
-        
+
     if count_lrm_symbols(str(context.user_data['week'])) == 1:
         # if a current week is being selected
         week = "c"
@@ -2608,6 +2608,8 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
         # if a for all the schedules that are connected is being selected
         add_for = 2
     else:
+        console.log(count_lrm_symbols(str(context.user_data['add_for'])))
+        console.log('context.user_data["add_for"]:', context.user_data['add_for'])
         console.log('\033[91mERROR: This LRM code is not supported\033[0m')
 
     content = context.user_data['content']
