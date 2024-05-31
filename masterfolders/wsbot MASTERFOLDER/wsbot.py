@@ -69,6 +69,7 @@ traceback.install(show_locals=True)
 traceback_mode_is_rich = True
 
 from rich.console import Console
+console = Console()
 from rich.text import Text
 from io import StringIO
 
@@ -2562,25 +2563,29 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     if count_lrm_symbols(str(context.user_data['type'])) == 1:
         # if a lesson is being added
         command_type = f"/al"
-    if count_lrm_symbols(str(context.user_data['type'])) == 2:
+    elif count_lrm_symbols(str(context.user_data['type'])) == 2:
         # if a hw is being added
         command_type = f"/ah"
-    if count_lrm_symbols(str(context.user_data['type'])) == 3:
+    elif count_lrm_symbols(str(context.user_data['type'])) == 3:
         # if a hw mark is being added
         command_type = f"/done"
-    if count_lrm_symbols(str(context.user_data['type'])) == 4:
+    elif count_lrm_symbols(str(context.user_data['type'])) == 4:
         # if a note is being added
         command_type = f"/an"
-    
+    else:
+        console.log('\033[91mERROR: This LRM code is not supported\033[0m')
+        
     if count_lrm_symbols(str(context.user_data['week'])) == 1:
         # if a current week is being selected
         week = "c"
-    if count_lrm_symbols(str(context.user_data['week'])) == 2:
+    elif count_lrm_symbols(str(context.user_data['week'])) == 2:
         # if a next week is being selected
         week = "n"
-    if count_lrm_symbols(str(context.user_data['week'])) == 3:
+    elif count_lrm_symbols(str(context.user_data['week'])) == 3:
         # if a other week is being selected
         print('\033[91mERROR: Week "Other" (digit code 3) is not supported yet\033[0m')
+    else:
+        console.log('\033[91mERROR: This LRM code is not supported\033[0m')
 
     day = count_lrm_symbols(str(context.user_data['day']))
 
@@ -2588,18 +2593,22 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
 
     if count_lrm_symbols(str(context.user_data['event_type_if_regular'])) == 1:
         exclusivity = 0
-    if count_lrm_symbols(str(context.user_data['event_type_if_regular'])) == 2:
+    elif count_lrm_symbols(str(context.user_data['event_type_if_regular'])) == 2:
         exclusivity = 1
+    else:
+        console.log('\033[91mERROR: This LRM code is not supported\033[0m')
 
     if count_lrm_symbols(str(context.user_data['add_for'])) == 1:
         # if a for yourself is being selected
         add_for = 0
-    if count_lrm_symbols(str(context.user_data['add_for'])) == 2:
+    elif count_lrm_symbols(str(context.user_data['add_for'])) == 2:
         # if a for the schedule of your class is being selected
         add_for = 1
-    if count_lrm_symbols(str(context.user_data['add_for'])) == 3:
+    elif count_lrm_symbols(str(context.user_data['add_for'])) == 3:
         # if a for all the schedules that are connected is being selected
         add_for = 2
+    else:
+        console.log('\033[91mERROR: This LRM code is not supported\033[0m')
 
     content = context.user_data['content']
 
@@ -2611,12 +2620,14 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
 
     if command_type == "/al":
         await al_command(update, context, overwrite_update_message=command)
-    if command_type == "/ah":
+    elif command_type == "/ah":
         await ah_command(update, context, overwrite_update_message=command)
-    if command_type == "/done":
+    elif command_type == "/done":
         await done_command(update, context, overwrite_update_message=command)
-    if command_type == "/an":
+    elif command_type == "/an":
         await an_command(update, context, overwrite_update_message=command)
+    else:
+        console.log('\033[91mERROR: This LRM code is not supported\033[0m')
 
     return ConversationHandler.END
 
