@@ -2525,6 +2525,7 @@ async def if_one_time_event_or_regular_sel(update: Update, context: ContextTypes
 async def add_for(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     print("func add_for")
     context.user_data['add_for'] = update.message.text
+    print(update.message.text)
 
     if count_lrm_symbols(str(context.user_data['type'])) == 3:
         # if mark as done
