@@ -1452,17 +1452,20 @@ q
 
 # Commands
 
-async def done_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def done_command(update: Update, context: ContextTypes.DEFAULT_TYPE, overwrite_update_message=None):
     user_id = update.message.chat.id
     await getUserInfo(update.message.chat.id)
     await getCurrentTemporalInfo()
     # await getToLesFromCurrent()
     try:
-        # access the text in the message object(member inside update)
-        text = update.message.text
+        if overwrite_update_message is not None:
+            text = overwrite_update_message
+        else:
+            # access the text in the message object(member inside update)
+            text = update.message.text
         # split the text into words
         words = text.split()
-        # print(update.message.text)
+        # print(text)
 
         # check if the command is formed correctly
         if len(words) < 3 or len(words) > 5:
@@ -1927,18 +1930,21 @@ Type table ID after the command, separated with a space to log in.""")
         await update.message.reply_text(f'User not allowed or table does not exist')
 
 
-async def al_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def al_command(update: Update, context: ContextTypes.DEFAULT_TYPE, overwrite_update_message=None):
     """Add lesson command"""
     user_id = update.message.chat.id
     await getUserInfo(update.message.chat.id)
     await getCurrentTemporalInfo()
     # await getToLesFromCurrent()
     try:
-        # access the text in the message object(member inside update)
-        text = update.message.text
+        if overwrite_update_message is not None:
+            text = overwrite_update_message
+        else:
+            # access the text in the message object(member inside update)
+            text = update.message.text
         # split the text into words
         words = text.split()
-        # print(update.message.text)
+        # print(text)
 
         # check if the command is formed correctly
         if len(words) < 5 or len(words) > 8:
@@ -2039,13 +2045,16 @@ Correct syntax:
 
 
 
-async def ah_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def ah_command(update: Update, context: ContextTypes.DEFAULT_TYPE, overwrite_update_message=None):
     print('EXECUTING AH COMMAND')
     start_ac_timestamp = time.time()
     user_id = update.message.chat.id
     await getCurrentTemporalInfo()
     await getUserInfo(user_id)
-    text = update.message.text
+    if overwrite_update_message is not None:
+        text = overwrite_update_message
+    else:
+        text = update.message.text
     words = text.split()
     # print(len(words))
 
@@ -2066,7 +2075,6 @@ Correct syntax:
         try:
             # print('1205818478')
             # access the text in the message object(member inside update)
-            text = update.message.text
             # split the text into words
             words = text.split()
 
@@ -2123,10 +2131,13 @@ Correct syntax:
         print('END OF AH COMMAND EXECUTION IN ', time.time() - start_ac_timestamp)
 
 
-async def an_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def an_command(update: Update, context: ContextTypes.DEFAULT_TYPE, overwrite_update_message = None):
     """Add notes command"""
     user_id = update.message.chat.id
-    text = update.message.text
+    if overwrite_update_message is not None:
+        text = overwrite_update_message
+    else:
+        text = update.message.text
     words = text.split()
 
     if len(words) == 1:
@@ -2151,7 +2162,6 @@ Sotto Fureru mono
             await getUserInfo(user_id)
             await getCurrentTemporalInfo()
             # access the text in the message object(member inside update)
-            text = update.message.text
             # split the text into words
             words = text.split()
 
@@ -2599,15 +2609,14 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
 
     await update.message.reply_text(command)
 
-    update.message.text = command
     if command_type == "/al":
-        await al_command(update, context)
+        await al_command(update, context, overwrite_update_message=command)
     if command_type == "/ah":
-        await ah_command(update, context)
+        await ah_command(update, context, overwrite_update_message=command)
     if command_type == "/done":
-        await done_command(update, context)
+        await done_command(update, context, overwrite_update_message=command)
     if command_type == "/an":
-        await an_command(update, context)
+        await an_command(update, context, overwrite_update_message=command)
 
     return ConversationHandler.END
 
