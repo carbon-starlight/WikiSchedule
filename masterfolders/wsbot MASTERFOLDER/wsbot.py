@@ -2644,7 +2644,7 @@ async def cancel_add_conv(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
 def count_lrm_symbols(string):
     count = 0
     for char in string:
-        if char == '\u200E':
+        if char == '\u200e' or char == '\u200c':
             count += 1
         else:
             break
