@@ -2512,10 +2512,12 @@ async def if_one_time_event_or_regular_sel(update: Update, context: ContextTypes
     print(2509)
 
     if update.message.from_user.language_code == 'ru':
-        reply_keyboard = [['‎Для себя', '‎‎Для онлайн-расписания', '‎‎‎Для всех расписаний, указанных как связанные с этим']]
+        # reply_keyboard = [['‎Для себя', '‎‎Для онлайн-расписания', '‎‎‎Для всех расписаний, указанных как связанные с этим']]
+        reply_keyboard = [['‎Для себя', '‎‎Для онлайн-расписания']]
     else:
-        reply_keyboard = [['‎For yourself', '‎‎For the schedule of your class', '‎‎‎For all the schedules that are connected']]
-    
+        # reply_keyboard = [['‎For yourself', '‎‎For the schedule of your class', '‎‎‎For all the schedules that are connected']]
+        reply_keyboard = [['‎For yourself', '‎‎For the schedule of your class']]
+
     if update.message.from_user.language_code == 'ru':
         msg = "Добавить…"
     else:
@@ -2535,6 +2537,11 @@ async def add_for(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     if count_lrm_symbols(str(context.user_data['type'])) == 3:
         # if mark as done
         reply_keyboard = ['✓']
+        if update.message.from_user.language_code == 'ru':
+            msg = "Выберете стиль пометки"
+        else:
+            msg = "Select the style of the mark"
+            
         await update.message.reply_text(
             msg,
             reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
@@ -2562,7 +2569,7 @@ async def add_for(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     print("func content_input")
     context.user_data['content'] = update.message.text
-    await update.message.reply_text(f"Data collected: {context.user_data}")
+    # await update.message.reply_text(f"Data collected: {context.user_data}")
     if count_lrm_symbols(str(context.user_data['type'])) == 1:
         if update.message.from_user.language_code == 'ru':
             msg = "Введите номер аудитории"
