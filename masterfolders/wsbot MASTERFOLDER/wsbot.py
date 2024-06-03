@@ -2494,7 +2494,7 @@ async def lesson_number_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) 
         return EVENT_TYPE_IF_REGULAR
     
     print(2478)
-    return None
+    return await if_one_time_event_or_regular_sel(update, context)
 
 # async def event_type_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 #     context.user_data['event_type_if_regular'] = update.message.text
@@ -2569,10 +2569,11 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
         else:
             msg = "Enter the room number"
         await update.message.reply_text(msg)
+        return ROOM
     else:
         context.user_data['room'] = None
+        return await room_input(update, context)
 
-    return ROOM
 
 async def room_input (update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     print("func room_input")
