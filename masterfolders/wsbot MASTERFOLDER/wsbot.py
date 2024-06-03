@@ -3925,6 +3925,7 @@ if __name__ == '__main__':
             EVENT_TYPE_IF_REGULAR: [MessageHandler(filters.TEXT & ~filters.COMMAND, if_one_time_event_or_regular_sel)],
             ADD_FOR: [MessageHandler(filters.TEXT & ~filters.COMMAND, add_for)],
             CONTENT: [MessageHandler(filters.TEXT & ~filters.COMMAND, content_input)],
+            ROOM: [MessageHandler(filters.TEXT & ~filters.COMMAND, room_input)],
         },
         fallbacks=[CommandHandler('cancel', cancel_add_conv)]
     )
