@@ -2645,7 +2645,7 @@ async def room_input (update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
 
     room = context.user_data['room']
 
-    command = f"{command_type} {week} {day} {lesson} {add_for} {exclusivity} {content} {room if command_type == '/al' else ''}"
+    command = f"{command_type} {week} {day} {lesson} {add_for} {exclusivity if command_type == '/al' else ''} {content} {room if command_type == '/al' else ''}"
 
     print(command)
 
