@@ -2558,7 +2558,7 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     print("func content_input")
     context.user_data['content'] = update.message.text
     await update.message.reply_text(f"Data collected: {context.user_data}")
-    if context.user_data['type'] == 'Lesson':
+    if count_lrm_symbols(str(context.user_data['type'])) == 1:
         if update.message.from_user.language_code == 'ru':
             msg = "Введите номер аудитории"
         else:
@@ -2571,7 +2571,7 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
 
 async def room_input (update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     print("func room_input")
-    if context.user_data['type'] == 'Lesson':
+    if count_lrm_symbols(str(context.user_data['type'])) == 1:
         context.user_data['room'] = update.message.text
     else:
         context.user_data['room'] = None
