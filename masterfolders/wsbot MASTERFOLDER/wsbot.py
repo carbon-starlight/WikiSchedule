@@ -2352,7 +2352,7 @@ from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler
 
 # Constants for states
-TYPE, WEEK, DAY, LESSON_NUMBER, EVENT_TYPE_IF_REGULAR, ADD_FOR, CONTENT = range(7)
+TYPE, WEEK, DAY, LESSON_NUMBER, EVENT_TYPE_IF_REGULAR, ADD_FOR, CONTENT, ROOM = range(7)
 
 # Command handler functions
 async def add_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -2558,7 +2558,23 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     print("func content_input")
     context.user_data['content'] = update.message.text
     await update.message.reply_text(f"Data collected: {context.user_data}")
+    if context.user_data['type'] == 'Lesson':
+        if update.message.from_user.language_code == 'ru':
+            msg = "Введите номер аудитории"
+        else:
+            msg = "Enter the room number"
+        await update.message.reply_text(msg)
+    else:
+        context.user_data['room'] = None
 
+    return ROOM
+
+async def room_input (update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    print("func room_input")
+    if context.user_data['type'] == 'Lesson':
+        context.user_data['room'] = update.message.text
+    else:
+        context.user_data['room'] = None
 
     # if len(str(context.user_data['type'])) - len((context.user_data['type']).lstrip('\u200E')) == 1:
     if count_lrm_symbols(str(context.user_data['type'])) == 1:
@@ -2621,7 +2637,9 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
 
     content = context.user_data['content']
 
-    command = f"{command_type} {week} {day} {lesson} {add_for} {exclusivity} {content}"
+    room = context.user_data['room']
+
+    command = f"{command_type} {week} {day} {lesson} {add_for} {exclusivity} {content} {room if command_type == '/al' else ''}"
 
     print(command)
 
@@ -2637,6 +2655,9 @@ async def content_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
         await an_command(update, context, overwrite_update_message=command)
     else:
         console.log('\033[91mERROR: This LRM code is not supported\033[0m')
+
+    with open('command_logs.txt', 'a') as f:
+        f.write(command + " via /add " + 'by ' + str(update.message.chat.id) + str(time.time()) + '\n')
 
     return ConversationHandler.END
 
