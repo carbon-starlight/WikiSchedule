@@ -2475,6 +2475,7 @@ async def lesson_number_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) 
     print('context.user_data["week"]:', context.user_data['week'])
     print(len(context.user_data['type']) - len(context.user_data['type'].lstrip('\u200E')))
     if len(context.user_data['type']) - len(context.user_data['type'].lstrip('\u200E')) == 1:
+        # if a lesson is being added
         if update.message.from_user.language_code == 'ru':
             msg = "Добавить как единовременное событие или регулярное?"
         else:
@@ -2490,8 +2491,10 @@ async def lesson_number_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) 
             reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
         )
 
+        return EVENT_TYPE_IF_REGULAR
+    
     print(2478)
-    return EVENT_TYPE_IF_REGULAR
+    return None
 
 # async def event_type_selection(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 #     context.user_data['event_type_if_regular'] = update.message.text
