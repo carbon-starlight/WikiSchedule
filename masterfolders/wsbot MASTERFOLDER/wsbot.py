@@ -2506,6 +2506,8 @@ async def if_one_time_event_or_regular_sel(update: Update, context: ContextTypes
         context.user_data['event_type_if_regular'] = None
     # if context.user_data['type'] = '‎Lesson':
 
+    print(2509)
+
     if update.message.from_user.language_code == 'ru':
         reply_keyboard = [['‎Для себя', '‎‎Для онлайн-расписания', '‎‎‎Для всех расписаний, указанных как связанные с этим']]
     else:
