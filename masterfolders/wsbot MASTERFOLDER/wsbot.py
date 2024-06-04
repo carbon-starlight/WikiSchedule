@@ -877,15 +877,15 @@ async def today_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 │{ti_nums[wd_n][0]}-{ti_nums[wd_n][1][3:]}│{str(wA_nums[wd_n][0]) + ' '*(11-len(str(wA_nums[wd_n][0]))) if wA_nums[wd_n][0] != None else '           '}│{room_number_weekArray[wd_n*10+0]}│
 ├────────┼───────────┼─────┤
 │{ti_nums[wd_n][2]}-{ti_nums[wd_n][3][3:]}│{str(wA_nums[wd_n][1]) + ' '*(11-len(str(wA_nums[wd_n][1]))) if wA_nums[wd_n][1] != None else '           '}│{room_number_weekArray[wd_n*10+1]}│
-├─┼─────┼─────┼─────┼──────┤
-│{ti_nums[wd_n][4]}│{ti_nums[wd_n][5]}│{room_number_weekArray[wd_n*10+2]}│{str(wA_nums[wd_n][2]) + ' '*(6-len(str(wA_nums[wd_n][2]))) if wA_nums[wd_n][2] != None else '      '}│
-├─┼─────┼─────┼─────┼──────┤
-│{ti_nums[wd_n][6]}│{ti_nums[wd_n][7]}│{room_number_weekArray[wd_n*10+3]}│{str(wA_nums[wd_n][3]) + ' '*(6-len(str(wA_nums[wd_n][3]))) if wA_nums[wd_n][3] != None else '      '}│
-├─┼─────┼─────┼─────┼──────┤
-│5│{ti_nums[wd_n][8]}│{ti_nums[wd_n][9]}│{room_number_weekArray[wd_n*10+4]}│{str(wA_nums[wd_n][4]) + ' '*(6-len(str(wA_nums[wd_n][4]))) if wA_nums[wd_n][4] != None else '      '}│
-├─┼─────┼─────┼─────┼──────┤
-│6│{ti_nums[wd_n][10]}│{ti_nums[wd_n][11]}│{room_number_weekArray[wd_n*10+5]}│{str(wA_nums[wd_n][5]) + ' '*(6-len(str(wA_nums[wd_n][5]))) if wA_nums[wd_n][5] != None else '      '}│
-├─┴─────┴─────┴─────┴──────┤
+├────────┼───────────┼─────┤
+│{ti_nums[wd_n][4]}-{ti_nums[wd_n][5][3:]}│{str(wA_nums[wd_n][2]) + ' '*(11-len(str(wA_nums[wd_n][2]))) if wA_nums[wd_n][2] != None else '           '}│{room_number_weekArray[wd_n*10+2]}│
+├────────┼───────────┼─────┤
+│{ti_nums[wd_n][6]}-{ti_nums[wd_n][7][3:]}│{str(wA_nums[wd_n][3]) + ' '*(11-len(str(wA_nums[wd_n][3]))) if wA_nums[wd_n][3] != None else '           '}│{room_number_weekArray[wd_n*10+3]}│
+├────────┼───────────┼─────┤
+│{ti_nums[wd_n][8]}-{ti_nums[wd_n][9][3:]}│{str(wA_nums[wd_n][4]) + ' '*(11-len(str(wA_nums[wd_n][4]))) if wA_nums[wd_n][4] != None else '           '}│{room_number_weekArray[wd_n*10+4]}│
+├────────┼───────────┼─────┤
+│{ti_nums[wd_n][10]}-{ti_nums[wd_n][11][3:]}│{str(wA_nums[wd_n][5]) + ' '*(11-len(str(wA_nums[wd_n][5]))) if wA_nums[wd_n][5] != None else '           '}│{room_number_weekArray[wd_n*10+5]}│
+├────────┴───────────┴─────┤
 │TABLE ID: {table_user_in + ' '*(16-len(table_user_in))}│
 └──────────────────────────┘</pre>""")
 
