@@ -2653,7 +2653,7 @@ async def room_input (update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
 
     room = context.user_data['room']
 
-    command = f"{command_type} {week} {day} {lesson} {add_for} {exclusivity if command_type == '/al' else ''} {content} {room if command_type == '/al' else ''}"
+    command = f"{command_type} {week} {day} {lesson} {add_for} {exclusivity if command_type == '/al' else ''} {content if command_type != '/done' else ''} {room if command_type == '/al' else ''}"
 
     print(command)
 
@@ -3687,7 +3687,7 @@ async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
         tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
         tb_string = "".join(tb_list)
 
-    print(tb_string)
+    # print(tb_string)
 
     error_log_id = str(f"{int(time.time())}-{str(random.getrandbits(64))}")
 
