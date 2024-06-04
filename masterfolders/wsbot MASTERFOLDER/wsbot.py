@@ -29,7 +29,7 @@ from sqlite3 import Error
 from typing import Final
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo, KeyboardButton
 from telegram.ext import Updater, CallbackContext, CallbackQueryHandler, ConversationHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import Application, CallbackQueryHandler, CommandHandler, ContextTypes
@@ -2537,6 +2537,7 @@ async def add_for(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     if count_lrm_symbols(str(context.user_data['type'])) == 3:
         # if mark as done
         reply_keyboard = ['✓']
+        reply_keyboard = KeyboardButton(text='✓')
         if update.message.from_user.language_code == 'ru':
             msg = "Выберете стиль пометки"
         else:
@@ -2544,7 +2545,7 @@ async def add_for(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             
         await update.message.reply_text(
             msg,
-            reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
+            reply_markup=ReplyKeyboardMarkup([[reply_keyboard]])
         )
     else:
 
