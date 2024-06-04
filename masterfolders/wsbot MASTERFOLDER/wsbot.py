@@ -873,9 +873,9 @@ async def today_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 │WEEK {str(int(adding_from_week))} {str(week_calendar_boundaries)}{' '*(20-(len(str(int(adding_from_week)))+len(str(week_calendar_boundaries))))}│
 ├──────────────────────────┤
 │{wd_names[wd_n] + ' '*(26-len(wd_names[wd_n]))}│
-├─┬────────┬────────┬──────┤
-│1│{ti_nums[wd_n][0]}-{ti_nums[wd_n][1][3:]}│{room_number_weekArray[wd_n*10+0]}│{str(wA_nums[wd_n][0]) + ' '*(6-len(str(wA_nums[wd_n][0]))) if wA_nums[wd_n][0] != None else '      '}│
-├─┼─────┼─────┼─────┼──────┤
+├────────┬──────────┬──────┤
+│{ti_nums[wd_n][0]}-{ti_nums[wd_n][1][3:]}│{str(wA_nums[wd_n][0]) + ' '*(11-len(str(wA_nums[wd_n][0]))) if wA_nums[wd_n][0] != None else '           '}{room_number_weekArray[wd_n*10+0]}│
+├───────┼─────┼─────┼──────┤
 │2│{ti_nums[wd_n][2]}│{ti_nums[wd_n][3]}│{room_number_weekArray[wd_n*10+1]}│{str(wA_nums[wd_n][1]) + ' '*(6-len(str(wA_nums[wd_n][1]))) if wA_nums[wd_n][1] != None else '      '}│
 ├─┼─────┼─────┼─────┼──────┤
 │3│{ti_nums[wd_n][4]}│{ti_nums[wd_n][5]}│{room_number_weekArray[wd_n*10+2]}│{str(wA_nums[wd_n][2]) + ' '*(6-len(str(wA_nums[wd_n][2]))) if wA_nums[wd_n][2] != None else '      '}│
