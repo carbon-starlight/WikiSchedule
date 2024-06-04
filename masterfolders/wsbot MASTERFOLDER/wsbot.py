@@ -2380,17 +2380,17 @@ async def type_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     # reply_keyboard = [['‎Current', '‎‎Next', '‎‎‎Other']]
     if update.message.from_user.language_code == 'ru':
-        reply_keyboard = [['‎Текущий', '‎‎Следующий']]
+        reply_keyboard = [['‎К текущей', '‎‎К следующей']]
     else:
         reply_keyboard = [['‎Current', '‎‎Next']]
 
     if update.message.from_user.language_code == 'ru':
-        msg = "В какую неделю добавить?"
+        msg = "К расписанию какой недели добавить?"
     else:
         msg = "Please, specify the week"
 
     await update.message.reply_text(
-        'Please, specify the week',
+        msg,
         reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
     )
     return WEEK
@@ -2430,7 +2430,7 @@ async def week_sel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
             msg = "Please, specify the date"
 
         await update.message.reply_text(
-            'Specify the date',
+            msg,
             reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
         )
         return DAY
