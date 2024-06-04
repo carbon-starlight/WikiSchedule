@@ -2632,7 +2632,7 @@ async def room_input (update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
         exclusivity = 1
     else:
         console.log('\033[91mERROR: This LRM code is not supported\033[0m')
-    console.log(count_lrm_symbols(str(context.user_data['event_type_if_regular'])))
+    console.log(count_lrm_symbols(str(context.user_data['event_type_if_regular'])), style='red')
 
     if count_lrm_symbols(str(context.user_data['add_for'])) == 1:
         # if a for yourself is being selected
