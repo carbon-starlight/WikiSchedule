@@ -3672,71 +3672,142 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(response)
 
 
-async def error(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # Enable logging
-    import html
-    import logging
-    from telegram.constants import ParseMode
+async def err_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Raise an error to trigger the error handler."""
 
-    logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
-    )
-    # set higher logging level for httpx to avoid all GET and POST requests being logged
-    logging.getLogger("httpx").setLevel(logging.WARNING)
-    logger = logging.getLogger(__name__)
+    await context.bot.wrong_method_name()  # type: ignore[attr-defined]
+
+
+async def error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
+
     """Log the error and send a telegram message to notify the developer."""
+
     # Log the error before we do anything else, so we can see it even if something breaks.
+
     logger.error("Exception while handling an update:", exc_info=context.error)
 
+
     # traceback.format_exception returns the usual python message about an exception, but as a
+
     # list of strings rather than a single string, so we have to join them together.
 
-    console = Console()
-    if traceback_mode_is_rich:
-        try:
-            print(3588)
-            raise context.error
-        except Exception as e:
-            print(3591)
-            # console.log("TEST")
-            try:
-                console.print_exception(show_locals=True)
-            except Exception as console_error:
-                print(f"Error in console.print_exception: {console_error}")
-            print(3593)
-    else:
-        tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
-        tb_string = "".join(tb_list)
+    tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
 
-    # print(tb_string)
+    tb_string = "".join(tb_list)
 
-    error_log_id = str(f"{int(time.time())}-{str(random.getrandbits(64))}")
-
-
-    error_log = str(f"\n{error_log_id}\n\n{tb_string}\n")
-
-    with open('error_logs.txt', 'a') as file:
-        file.write(error_log)
 
     # Build the message with some markup and additional information about what happened.
+
     # You might need to add some logic to deal with messages longer than the 4096 character limit.
+
     update_str = update.to_dict() if isinstance(update, Update) else str(update)
 
     message = (
-        "An exception was raised while handling an update\n\n"
+
+        "An exception was raised while handling an update\n"
+
         f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
+
         "</pre>\n\n"
+
         f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
+
         f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
-        f"<pre>{html.escape(tb_string)}</pre>\n\n"
-        f"<pre>log_id: {error_log_id}</pre>"
+
+        f"<pre>{html.escape(tb_string)}</pre>"
+
     )
 
 
-    # Finally, send the message TODO
+    # Finally, send the message
+
     await context.bot.send_message(
+
         chat_id=DEVELOPER_CHAT_ID, text=message, parse_mode=ParseMode.HTML
+
     )
+
+
+
+# async def error(update: object, context: ContextTypes.DEFAULT_TYPE):
+#     # Enable logging
+#     import html
+#     import logging
+#     from telegram.constants import ParseMode
+
+#     logger.error("Exception while handling an update:", exc_info=context.error)
+
+#     logging.basicConfig(
+#     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+#     )
+#     # set higher logging level for httpx to avoid all GET and POST requests being logged
+#     logging.getLogger("httpx").setLevel(logging.WARNING)
+#     logger = logging.getLogger(__name__)
+#     """Log the error and send a telegram message to notify the developer."""
+#     # Log the error before we do anything else, so we can see it even if something breaks.
+#     logger.error("Exception while handling an update:", exc_info=context.error)
+
+#     # traceback.format_exception returns the usual python message about an exception, but as a
+#     # list of strings rather than a single string, so we have to join them together.
+
+
+
+
+
+
+
+
+#     console = Console()
+#     if traceback_mode_is_rich:
+#         try:
+#             print(3588)
+#             raise context.error
+#         except Exception as e:
+#             print(3591)
+#             # console.log("TEST")
+#             try:
+#                 console.print_exception(show_locals=True)
+#             except Exception as console_error:
+#                 print(f"Error in console.print_exception: {console_error}")
+#             print(3593)
+#     else:
+#         tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
+#         tb_string = "".join(tb_list)
+
+#     # print(tb_string)
+
+#     error_log_id = str(f"{int(time.time())}-{str(random.getrandbits(64))}")
+
+
+#     error_log = str(f"\n{error_log_id}\n\n{tb_string}\n")
+
+#     with open('error_logs.txt', 'a') as file:
+#         file.write(error_log)
+
+#     # Build the message with some markup and additional information about what happened.
+#     # You might need to add some logic to deal with messages longer than the 4096 character limit.
+#     update_str = update.to_dict() if isinstance(update, Update) else str(update)
+
+#     message = (
+#         "An exception was raised while handling an update\n\n"
+#         f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
+#         "</pre>\n\n"
+#         f"<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n"
+#         f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
+#         f"<pre>{html.escape(tb_string)}</pre>\n\n"
+#         f"<pre>log_id: {error_log_id}</pre>"
+#     )
+
+
+#     # Finally, send the message TODO
+#     await context.bot.send_message(
+#         chat_id=DEVELOPER_CHAT_ID, text=message, parse_mode=ParseMode.HTML
+#     )
+
+
+
+
+
 
 
     # # _, _, tb = sys.exc_info()
@@ -3987,6 +4058,7 @@ if __name__ == '__main__':
     app.add_handler(CallbackQueryHandler(button_callback))
     app.add_handler(CommandHandler('today', today_command))
     app.add_handler(CommandHandler('mv', mv_command))
+    app.add_handler(CommandHandler('err', err_command))
     # app.add_handler(CommandHandler('add', add_command))
 
     timer_handler = CommandHandler('timer', callback_timer)
