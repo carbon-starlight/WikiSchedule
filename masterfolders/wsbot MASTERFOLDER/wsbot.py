@@ -73,6 +73,9 @@ console = Console()
 from rich.text import Text
 from io import StringIO
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 def extract_configuration_data_dictionary_from_config_json():
     """extracts given data from config.json"""
