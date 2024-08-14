@@ -178,7 +178,7 @@ if change_token not in ('1', '2'):
         new_chat_id = input('Enter the new chat ID: ')
         data['developer_telegram_chat_id'] = new_chat_id
 
-    user_input = input(f'\nWikiSchedule also supports forwarding messages to a VK group chat and storing a textbook database that can be accessed via VK group. Would you like to enable it? (y/n) [n]: ')
+    user_input = input(f'\n[EXPERIMENTAL] WikiSchedule also supports forwarding messages to a VK group chat and storing a textbook database that can be accessed via VK group. Would you like to enable it? (y/n) [n]: ')
     forward_to_vk = (user_input.lower() or 'n') == 'y'
 
     change_vk_bot_token = False
