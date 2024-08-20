@@ -113,7 +113,7 @@ else:
 
 print('Welcome to WikiSchedule set script — command line edition!')
 print('Please, proceed through the following steps to set up your server.\n')
-print('You can also proceed with one of pre-set configurations by pressing a number: 1 — saved tokens, no VK; 2 — saved tokens, VK on.')
+print('You can also proceed with one of pre-set configurations by pressing a number: 1 — saved tokens, no VK; 2 — saved tokens, VK on (experimental).')
 
 preconfig = None
 # change_token = ((input(f'\nDo you want to ensure dependencies are installed? (If it is the first time you run this program on this computer / virtual enviroment it is recommended to leave "y") (y/n) [y]: ')).lower() or 'y') == 'y'

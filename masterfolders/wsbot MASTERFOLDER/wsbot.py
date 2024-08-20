@@ -1,5 +1,5 @@
 
-# FINISH:
+# TODO:
 #
 #   getToLesFromCurrent():
 #   subgroup level
@@ -7,6 +7,7 @@
 #   today
 #   start_command has some ti testing, remove
 #   make mv command move distant homework, update documentation
+#   separate documentation between help and man
 #
 
 from __future__ import annotations
