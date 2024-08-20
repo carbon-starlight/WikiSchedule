@@ -64,6 +64,10 @@ user_id = None
 import os
 import json
 
+import html
+import logging
+from telegram.constants import ParseMode
+
 from rich import traceback
 traceback.install(show_locals=True)
 traceback_mode_is_rich = True
@@ -3687,16 +3691,55 @@ async def error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
 
     # Log the error before we do anything else, so we can see it even if something breaks.
 
+    from rich.traceback import Traceback
+
+
+    tb = Traceback(
+        show_locals=True
+    )
+    
+    # Print the traceback using the rich console
+    console.print(tb)
+
+
+    # from rich.traceback import Traceback
+
+    # # Assuming `context.error` is the exception object
+    # context_error = context.error
+
+    # # Create the rich traceback object
+    # tb = Traceback(
+    #     type(context_error),
+    #     context_error,
+    #     context_error.__traceback__,
+    #     show_locals=False
+    # )
+
+    # Convert the traceback to a string
+    # tb_string = str(tb)
+    # print('traceback: \n\n', tb_string)
+
+    # from rich.traceback import Traceback
+
+    # # Assuming context.error is your exception object
+    # context_error = context.error
+
+    # tb = Traceback.extract(
+    #     type(context_error),
+    #     context_error,
+    #     context_error.__traceback__,
+    #     show_locals=False,
+    #     suppress=[],
+    #     max_frames=None,
+    #     extra_lines=3,
+    #     theme="dark"
+    # )
+
+    # tb_string = str(tb)
+    # print('traceback: \n\n', tb_string)
+
+
     logger.error("Exception while handling an update:", exc_info=context.error)
-
-
-    # traceback.format_exception returns the usual python message about an exception, but as a
-
-    # list of strings rather than a single string, so we have to join them together.
-
-    tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
-
-    tb_string = "".join(tb_list)
 
 
     # Build the message with some markup and additional information about what happened.
@@ -3717,7 +3760,7 @@ async def error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
 
         f"<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n"
 
-        f"<pre>{html.escape(tb_string)}</pre>"
+        f"<pre>{html.escape(str(tb))}</pre>"
 
     )
 
@@ -3734,9 +3777,6 @@ async def error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
 
 # async def error(update: object, context: ContextTypes.DEFAULT_TYPE):
 #     # Enable logging
-#     import html
-#     import logging
-#     from telegram.constants import ParseMode
 
 #     logger.error("Exception while handling an update:", exc_info=context.error)
 
