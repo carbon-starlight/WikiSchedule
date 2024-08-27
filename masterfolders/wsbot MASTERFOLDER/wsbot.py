@@ -1541,7 +1541,13 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
                                         
 Вы используете русскую языковую версию. Она была определена на основе языковых настроек вашего устройства. English version is also available.
                                         
-Ознакомьтесь с подробным руководством с помощью команды /help.""", parse_mode="HTML")
+Ознакомьтесь с кратким руководством с помощью команды /help.
+
+Команда /mandoc покажет подробный мануал с некоторыми скрытыми функциями.
+
+WikiSchedule — свободное ПО: оно разрабатывается сообществом энтузиастов и распространяется по условиям лицензии <a href="https://www.gnu.org/licenses/agpl-3.0.html">GNU AGPL</a>, как определено Фондом Свободного Програмного Обеспечения. Продолжая, вы принимаете её условия, включая ограничения на распространение модификаций исходного кода и отказ от ответственности.
+
+Это надёжная программа — но как и в любое другое ПО ипи сервер она может страдать от переодических багов и даунтаймов. Никогда не полагайтесь на WS как на единственный источник координации. Мы предупредили.""", parse_mode="HTML")
 
     else:
         await update.message.reply_text(f"""Welcome to WikiSchedule!
@@ -1552,11 +1558,193 @@ Good news — you've probably found the solution. With WS bot, you can have the 
                                         
 You are using the international language version (English). It was determined based on language settings of your device. Russian version is also available.
                                         
-View a detailed tutorial with /help command.""", parse_mode="HTML")
+View a brief tutorial with /help command.
+
+The /mandoc command will show a detailed manual with some advanced features.
+
+WikiSchedule is free software: it is developed by a community of enthusiasts and distributed under the terms of the <a href="https://www.gnu.org/licenses/agpl-3.0.html">GNU AGPL</a>, as defined by the Free Software Foundation. By continuing, you accept its terms, including the restrictions on the distribution of source code modifications and the disclaimer of warranties.
+
+This is a reliable program — but like any other software or server, it may suffer from periodic bugs and downtimes. Never rely on WS as the sole source of coordination. You have been warned."""", parse_mode="HTML")
+
+
 
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Sending a message with documentation"""
+    # print(update.message.from_user.language_code)
+    if update.message.from_user.language_code == 'ru':
+        await update.message.reply_text("""Добро пожаловать в WikiSchedule!
+
+Вы можете войти в таблицы, в которые были приглашены с помощью команды /lg. Через пробел введите id расписания.
+
+Пример синтаксиса:
+
+<pre>/lg 1-MIKU</pre>
+
+Если вы получили пригласительный код, добавьте его после id таблицы через пробел.
+
+
+Вы можете создать новые таблицы с помощью команды /cs ([c]reate [s]chedule). Через пробел добавьте часовой пояс в секундах (например, UTC+04:00 это +14400). После этого можно добавить желаемое название [опционально]. Если оно занято, то будет заменено сгенерированным. Создав расписание, вы станете его единственным администратором.
+
+Пример синтаксиса:
+
+<pre>/cs +14400</pre>
+
+
+Приглашайте новых пользователей с помощью команды /au ([a]dd [u]ser). Через пробел введите id или username пользователя.
+
+Пример синтаксиса:
+
+<pre>/au 5725769420</pre>
+
+Если вы отправите просто "/au", то будет сгенерирован код приглашения.
+                                        
+
+Вызовите расписание на сегодня командой /today.
+
+
+Вы можете получить расписаниe на неделю с помощью команды /ls. Для просмотра домашнего задания используйте команду /ls_hw, а для просмотра конспектов и заметок — /ls_n. Чтобы увидеть информацию для конкретной недели, введите её номер после команды /ls(_hw|_n).
+
+
+Добавить уроки, Д/З или заметки в расписание можно при помощи команды /add.
+
+
+Существуют более примитивные команды для их добавления в ручном режиме — обратитесь к полной инструкции с /man для их просмотра.""", parse_mode="HTML")
+        await update.message.reply_text("""
+Чтобы задать время начала и конца отдельных уроков, используйте команду /set_temporal.
+
+В следующем примере текст после "#" (до следующей строки) приведён для разъяснения, не включайте его в свою команду.
+
+Пример синтаксиса:
+
+<pre>
+/set_temporal
+08:20 09:55  # нач и кон 1 урока
+10:05 11:40  # нач и кон 2-ого
+12:20 13:55  # и так далее
+14:05 15:40
+15:50 17:25
+17:35 19:10
+00:00 00:00
+00:00 00:00  # этот блок — универсальное время
+00:00 00:00  # если необходимо составить другое расписание на определенный день
+00:00 00:00  # пишите "00:00 00:00", пока не достигните 10 уроков
+
+01:01 01:02  # это особенное для понедельника время
+01:03 01:04  # можно ограничиться первым блоком
+01:05 01:06  # если занятия начинаются и заканчиваются в одно и то же время каждый день.
+01:07 01:08
+01:09 01:10
+01:11 01:12
+00:00 00:00
+00:00 00:00
+00:00 00:00
+00:00 00:00  # если же нет, продолжайте до конца недели.
+
+02:01 02:02  # вторник
+02:03 02:04
+...
+</pre>
+
+Время всегда должно быть в формате hh:mm, всегда 5 символов. "9:30" — недействительно, "09:30" — допустимо.
+
+
+<pre>────────────────────────────</pre>
+
+Если эта линия растянулась на 2 строки, попробуйте уменьшить размер шрифта, иначе семиграфические таблицы будут отображаться некорректно.
+
+Если вам когда-нибудь понадобится более 6 уроков, или если таблица отображается некорректно, а менять настройки шрифта не хочется, можно включить/выключить семиграфический режим командой /tg_sg. Таблицы будут выглядеть не так красиво, зато станут более надежными. Если вам когда-нибудь потребуется использовать 8 или более уроков, не стесняйтесь, пишите мне, если это кому-то понадобится, я добавлю такую возможность.
+
+Если у вас возникнут вопросы или предложения, пожалуйста, напишите мне: @carbon_starlight""", parse_mode = "HTML")
+
+    else:
+        await update.message.reply_text(_("""Welcome to WikiSchedule!
+
+Ever found annoying that every student in your class should write down the same common schedule you all share? Type your common homework to their offline timetable app and later check it and notes out in search for misunderstandings via a regular messenger?
+
+Good news — you've probably found the solution. With WS bot, you can have the same schedule for the whole group. Only one contribution — instead of 15+ — for everyone to use!
+
+
+Log in to tables you are invited to with /lg command. Separated with a space, enter table id.
+
+Syntax example:
+
+<pre>/lg 1-MIKU</pre>
+
+If you got an invitation code, add it after table name, separated with a space.
+
+
+Create new schedules with /cs command. Separated with a space, add it's time zone in seconds (for example, UTC+04:00 is +14400). After it you can add a desired name [optional]. If taken, in will be replaced with a generated one. Upon creating a schedule, you will become it's only admin.
+
+Syntax example:
+
+<pre>/cs +14400</pre>
+
+
+Invite new users with /au command. Separated with a space, enter user id. Please, note: not handle, id, digits only.
+
+Syntax example:
+
+<pre>/au 5725769420</pre>
+
+If you will send just "/au", it will generate an invitation code.
+                                          
+
+List today lessons with /today command.
+
+
+List schedule for a week with /ls command. Use /ls_hw to see homework, or /ls_n to see notes. To see info for a particular week number, enter it after /ls(_hw|_n) command.
+
+Add a lesson, note or homework with /add command."""), parse_mode = 'HTML')
+
+        await update.message.reply_text("""To set information of lesson start/end, use /set_temporal command.
+
+In the following example text after "#"s (up to new line) is for explanation, don't include it to your command.
+Syntax example:
+
+<pre>/set_temporal
+08:20 09:55  # start and end of the first lesson
+10:05 11:40  # start and end of second one
+12:20 13:55  # and so on
+14:05 15:40
+15:50 17:25
+17:35 19:10
+00:00 00:00
+00:00 00:00  # this block is universal time
+00:00 00:00  # if you will need to make another timetable for a specific day
+00:00 00:00  # write "00:00 00:00" until you'll reach 10 lessons
+
+01:01 01:02  # this is time specific for monday
+01:03 01:04  # you may limit yourself to the first block
+01:05 01:06  # if lessons start and end at the same time every single day.
+01:07 01:08
+01:09 01:10
+01:11 01:12
+00:00 00:00
+00:00 00:00
+00:00 00:00
+00:00 00:00  # if not, go on until the end of the week.
+
+02:01 02:02  # tuesday
+02:03 02:04
+...
+</pre>
+
+Time must always be in hh:mm format, 5 symbols always. "9:30" is invalid, "09:30" is valid.
+
+
+<pre>────────────────────────────</pre>
+
+If this line is of 2 lines, try lowering your font size, or the table will not be displayed correctly.
+
+If you will ever need more than 6 lessons, or if a table is not displayed correctly and you don't want to change your font settings, you can toggle semigraphic mode on/off with /tg_sg command. Tables will not look this nice, but will be more reliable. If you'll ever need to use 8 or more lessons, don't hesitate to write me, if someone will need it, I will make the feature.
+
+
+If you will have any questions or suggestions, please, contact me: @carbon_starlight""", parse_mode = "HTML")
+
+
+async def man_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Sending a message with full documentation"""
     # print(update.message.from_user.language_code)
     if update.message.from_user.language_code == 'ru':
         await update.message.reply_text("""Добро пожаловать в WikiSchedule!
@@ -1913,6 +2101,7 @@ If you will ever need more than 6 lessons, or if a table is not displayed correc
 
 
 If you will have any questions or suggestions, please, contact me: @carbon_starlight""", parse_mode = "HTML")
+
 
 
 async def getValidInviteCodes(for_table):
@@ -4103,6 +4292,7 @@ if __name__ == '__main__':
     app.add_handler(CommandHandler('today', today_command))
     app.add_handler(CommandHandler('mv', mv_command))
     app.add_handler(CommandHandler('err', err_command))
+    app.add_handler(CommandHandler('man', man_command))
     # app.add_handler(CommandHandler('add', add_command))
 
     timer_handler = CommandHandler('timer', callback_timer)

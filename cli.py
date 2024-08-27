@@ -15,9 +15,41 @@ numberFontIsBoldLine = False
 preset_config = None
 
 import json
-# import os
+import os
+import platform
 import subprocess
 import sys
+
+# Checking version
+
+def get_local_version():
+    try:
+        version = subprocess.check_output(['git', 'describe', '--tags', '--abbrev=0'], encoding='utf-8').strip()
+        return version
+    except subprocess.CalledProcessError:
+        return None
+
+local_version = get_local_version()
+
+def get_latest_remote_version():
+    try:
+        # Fetch the latest tags from the remote
+        subprocess.run(['git', 'fetch', '--tags'], check=True)
+
+        # Get the latest tag name
+        latest_version = subprocess.check_output(
+            ['git', 'describe', '--tags', subprocess.check_output(['git', 'rev-list', '--tags', '--max-count=1']).strip()],
+            encoding='utf-8'
+        ).strip()
+        
+        return latest_version
+
+    except subprocess.CalledProcessError:
+        return None
+
+latest_remote_version = get_latest_remote_version()
+
+
 
 with open('config.json', 'r') as f:
     config = json.load(f)
@@ -76,19 +108,6 @@ if len(parts) == 2:
     parts.append(None)
 version = parts
 # print(version)
-if displayVersion:
-        
-    print(f"""
-╦ ╦┬┬┌─┬╔═╗┌─┐┬ ┬┌─┐┌┬┐┬ ┬┬  ┌─┐  {NumAssmbl[version[0]][0]} {NumAssmbl[version[1]][0] if version[1] != None else ''} {                                  NumAssmbl[version[2]][0] if version[2] != None else ''} 
-║║║│├┴┐│╚═╗│  ├─┤├┤  │││ ││  ├┤   {NumAssmbl[version[0]][1]} {NumAssmbl[version[1]][1] if version[1] != None else ''} {                                  NumAssmbl[version[2]][1] if version[2] != None else ''} 
-╚╩╝┴┴ ┴┴╚═╝└─┘┴ ┴└─┘─┴┘└─┘┴─┘└─┘  {NumAssmbl[version[0]][2]}o{NumAssmbl[version[1]][2] if version[1] != None else ''}{"o" if version[2] != None else ''}{NumAssmbl[version[2]][2] if version[2] != None else ''} 
-""")
-else:
-    print(f"""
-╦ ╦┬┬┌─┬╔═╗┌─┐┬ ┬┌─┐┌┬┐┬ ┬┬  ┌─┐
-║║║│├┴┐│╚═╗│  ├─┤├┤  │││ ││  ├┤ 
-╚╩╝┴┴ ┴┴╚═╝└─┘┴ ┴└─┘─┴┘└─┘┴─┘└─┘
-""")
 
 
 """
@@ -111,13 +130,63 @@ else:
 # print(_0[2], _1[2], _2[2], _3[2], _4[2], _5[2], _6[2], _7[2], _8[2], _9[2])
 
 
-print('Welcome to WikiSchedule set script — command line edition!')
-print('Please, proceed through the following steps to set up your server.\n')
-print('You can also proceed with one of pre-set configurations by pressing a number: 1 — saved tokens, no VK; 2 — saved tokens, VK on (experimental).')
+while True:
+    
+    if platform.system() == 'Windows':
+        os.system('cls')
+    else:
+        os.system('clear')
 
-preconfig = None
-# change_token = ((input(f'\nDo you want to ensure dependencies are installed? (If it is the first time you run this program on this computer / virtual enviroment it is recommended to leave "y") (y/n) [y]: ')).lower() or 'y') == 'y'
-change_token = input(f'\nDo you want to ensure dependencies are installed? (If it is the first time you run this program on this computer / virtual enviroment it is recommended to leave "y") (y/n/1/2) [y]: ').lower() or 'y'
+    if displayVersion:        
+        print(f"""
+╦ ╦┬┬┌─┬╔═╗┌─┐┬ ┬┌─┐┌┬┐┬ ┬┬  ┌─┐  {NumAssmbl[version[0]][0]} {NumAssmbl[version[1]][0] if version[1] != None else ''} {                                  NumAssmbl[version[2]][0] if version[2] != None else ''} 
+║║║│├┴┐│╚═╗│  ├─┤├┤  │││ ││  ├┤   {NumAssmbl[version[0]][1]} {NumAssmbl[version[1]][1] if version[1] != None else ''} {                                  NumAssmbl[version[2]][1] if version[2] != None else ''} 
+╚╩╝┴┴ ┴┴╚═╝└─┘┴ ┴└─┘─┴┘└─┘┴─┘└─┘  {NumAssmbl[version[0]][2]}o{NumAssmbl[version[1]][2] if version[1] != None else ''}{"o" if version[2] != None else ''}{NumAssmbl[version[2]][2] if version[2] != None else ''} 
+""")
+    else:
+        print(f"""
+╦ ╦┬┬┌─┬╔═╗┌─┐┬ ┬┌─┐┌┬┐┬ ┬┬  ┌─┐
+║║║│├┴┐│╚═╗│  ├─┤├┤  │││ ││  ├┤ 
+╚╩╝┴┴ ┴┴╚═╝└─┘┴ ┴└─┘─┴┘└─┘┴─┘└─┘
+""")
+
+    if local_version and latest_remote_version:
+        if local_version != latest_remote_version:
+            print(f"Running vesrion {local_version} -> {latest_remote_version} is availible. [u]pdate?\n")
+        else:
+            print(f"Version {local_version}\n")
+    else:
+        if local_version:
+            print("ERROR: Could not determine the latest availble version. Is the network okay\n")
+        elif latest_remote_version: 
+            print(f"ERROR: Could not determine the local version, while online version ({latest_remote_version}) was fetched. Something wrong with git?\n")
+        else:
+            print(f"ERROR: Could not determine nor the latest availible, nor the local version\n")
+
+    print('Welcome to the WikiSchedule Server launch script — command line edition!')
+    print('Please, proceed through the following steps to set up your server.\n')
+    print('You can also proceed with one of pre-set configurations by pressing a number: 1 — saved tokens, no VK; 2 — saved tokens, VK on (experimental).')
+    print('Type [l] to view the license or [m] to open the manual. [q] to exit viewer.')
+
+
+    def view_file(filepath):
+        try:
+            # Try to use `less` to show the file, which allows scrolling
+            subprocess.run(['less', filepath])
+        except FileNotFoundError:
+            # If `less` is not available, fall back to `more`
+            subprocess.run(['more', filepath])
+
+    preconfig = None
+    # change_token = ((input(f'\nDo you want to ensure dependencies are installed? (If it is the first time you run this program on this computer / virtual enviroment it is recommended to leave "y") (y/n) [y]: ')).lower() or 'y') == 'y'
+    change_token = input(f'\nDo you want to ensure dependencies are installed? (If it is the first time you run this program on this computer / virtual enviroment it is recommended to leave "y") (y/n/l/m/1/2) [y]: ').lower() or 'y'
+
+    if change_token == 'l':
+        view_file('LICENSE.txt')
+    elif change_token == 'm':
+        view_file('README.md')
+    else:
+        break
 
 if change_token == '' or change_token == 'y':
     change_token == True
