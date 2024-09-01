@@ -51,9 +51,12 @@ latest_remote_version = get_latest_remote_version()
 
 
 
-with open('config.json', 'r') as f:
-    config = json.load(f)
-version = config["version"]
+try:
+    with open('config.json', 'r') as f:
+        config = json.load(f)
+    version = config["version"]
+except:
+    version = "0.0.0"
 
 NumAssmbl = {
     "0": ["╔═╗", "║ ║", "╚═╝"],

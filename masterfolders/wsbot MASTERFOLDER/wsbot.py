@@ -1564,7 +1564,7 @@ The /mandoc command will show a detailed manual with some advanced features.
 
 WikiSchedule is free software: it is developed by a community of enthusiasts and distributed under the terms of the <a href="https://www.gnu.org/licenses/agpl-3.0.html">GNU AGPL</a>, as defined by the Free Software Foundation. By continuing, you accept its terms, including the restrictions on the distribution of source code modifications and the disclaimer of warranties.
 
-This is a reliable program — but like any other software or server, it may suffer from periodic bugs and downtimes. Never rely on WS as the sole source of coordination. You have been warned."""", parse_mode="HTML")
+This is a reliable program — but like any other software or server, it may suffer from periodic bugs and downtimes. Never rely on WS as the sole source of coordination. You have been warned.""", parse_mode="HTML")
 
 
 
@@ -3476,7 +3476,7 @@ async def cs_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         #     json.dump(ti, file)
         ti = getTableTemporalInfoFromMainArray(table_name)
 
-        await save_data_for_interchange()
+        # await save_data_for_interchange(table_name)
 
         await update.message.reply_text(f'Creating a new table {table_name}')
     
