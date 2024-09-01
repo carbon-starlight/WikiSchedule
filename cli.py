@@ -182,12 +182,14 @@ while True:
 
     preconfig = None
     # change_token = ((input(f'\nDo you want to ensure dependencies are installed? (If it is the first time you run this program on this computer / virtual enviroment it is recommended to leave "y") (y/n) [y]: ')).lower() or 'y') == 'y'
-    change_token = input(f'\nDo you want to ensure dependencies are installed? (If it is the first time you run this program on this computer / virtual enviroment it is recommended to leave "y") (y/n/l/m/1/2) [y]: ').lower() or 'y'
+    change_token = input(f'\nDo you want to ensure dependencies are installed? (If it is the first time you run this program on this computer / virtual enviroment it is recommended to leave "y") (y/n/l/m/u/1/2) [y]: ').lower() or 'y'
 
     if change_token == 'l':
         view_file('LICENSE.txt')
     elif change_token == 'm':
         view_file('README.md')
+    elif change_token == 'u':
+        subprocess.run(["git", "pull"], check=True)
     else:
         break
 
