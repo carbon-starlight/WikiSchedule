@@ -219,9 +219,18 @@ if change_token not in ('1', '2'):
             sys.exit(1)
 
 
-    with open('config.json', 'r') as f:
-        data = json.load(f)
-
+    try:
+        with open('config.json', 'r') as f:
+            data = json.load(f)
+    except:
+        print('No config.json created yet')
+        data = {
+            "version": "???",
+            "telegram_bot_username": ">none<",
+            "telegram_bot_token": ">none<",
+            "developer_telegram_chat_id": ">none<",
+            "vk_bot_token": ">none<"
+        }
     # change_username = input(f'The Telegram bot username is currently set to {data["telegram_bot_username"]}. Do you want to change it? (y/n) [n]: ').lower() == 'y'
 
     user_input = input(f'The Telegram bot username is currently set to "{data["telegram_bot_username"]}". Would you like to change it? (y/n) [n]: ')
