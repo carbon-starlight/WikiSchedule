@@ -7,7 +7,7 @@ Managing class schedlule may be repetative. A situation where 15-30 students man
 
 The main instance of the bot (hosted by me) is located at https://t.me/wikiscbot. https://t.me/wikischbot is my development (unstable) version running the latest commit.
 
-## How to self-host:
+## How to self-host
 You will need a computer that will run 24/7 with active internet connection. You will not need a graphical enviroment or a window manager installed on it's operating system. A lightweight OS is recommended.
 
 Possible options:
@@ -45,11 +45,17 @@ If you encounter `error: externally-managed-environment` some solutions are list
 
 After getting the system up and running you may disable GUI to save CPU and RAM resources with `sudo systemctl set-default multi-user.target`; `reboot` ([read article](https://www.cyberciti.biz/faq/switch-boot-target-to-text-gui-in-systemd-linux/)). Works with systemd-based OSes (Fedora, Debian, etc.). Doesn't work with Alpine, but it should come without intrusive GUI anyway.
 
-## Copying:
+## Copying
 AGPLv3 or any later version, as defined by the Free Software Foundation. Contact me for possible excetpions.
 
-## Contact me:
+## Contributing
+Just open a pull request and I will review it.
+
+## Any CLA?
+There are cases when there is a need to grant exceptions from GPL/AGPL (the most famous one is a case with VLC that had to attach an exception to their license to qualify for AppStore publishing). I will assume that you preserve a right to grant exceptions from AGPL terms soulely by me (note: after these exceptions the software will not become less Free by any definition, granting such exceptions is explicitly prohibited by AGPL, it may just drift into being more permissive, to the side where MIT and BSD lay). If you are a GPL purist and you do not want me to grant any exceptions from software with your code, mention it in your pull request, I will respect that wish.
+
+## Contact me
 There is a chance I will respond in Telegram: https://t.me/carbon_starlight. I have a bad habit of not checking inbox often, and not scrolling to see all the messages when I do, so if I do not see you message for some time and your inqury is kinda important, fell free to send new messages until I will see you and come up with some sort of response. I do not ghost anyone except for automatic spam accounts.
 
-## Donate:
+## Donate
 It is my personal project where I pay for hosting out of my personal pocket, so, if you found my project useful or promising, donations will be really apperciated. I'm working on adding all dono info here: until that, please, contact me personally.
