@@ -18,10 +18,14 @@ Possible options:
 
 If you have DE/VM installed you can exit GUI with `Ctrl+Alt+F2` (on some systems `Alt+Ctrl+F4`) to save some RAM. Turning it back may be accomprished with `Ctrl+Alt+F1`
 
-Install GitHub [CLI] to your operating system. 
+After getting the system up and running you may disable GUI to save CPU and RAM resources with `sudo systemctl set-default multi-user.target`; `reboot` ([read article](https://www.cyberciti.biz/faq/switch-boot-target-to-text-gui-in-systemd-linux/)). Works with systemd-based OSes (Fedora, Debian, etc.). Doesn't work with Alpine, but it should come without intrusive GUI anyway.
+
+If you connected to your server via SSH all the processes you see and launch in this console will get killed as soon as your connection is broken. You will need a process detacher or a terminal multiplexer so your launched processes won't get killed as soon as there is a `broken pipe` — `dtach`, `screen`, `tmux` or `byobu`. I recommend `byobu` to beginners. Install `byobu` with your OS's package manager and launch it. Press F9 to open it's TUI menu with a tutorial, `Esc` to go back, F6 to exit, enter `byobu` to get back to your terminal.
+
+Install `git` to your operating system. 
 
 [Navigate](https://andysbrainbook.readthedocs.io/en/latest/unix/Unix_01_Navigation.html) to the folder where you want this program to be stored. Clone this repo to your machine with the following command:  
-`gh repo clone carbon-starlight/WikiSchedule`
+`git clone carbon-starlight/WikiSchedule`
 
 If you already hosted WikiSchedule on a different computer and now are moving to a new machine and want to preserve the database, move your configuration/database files/cataloges to their locations. Since 2.0 these are the only database files _(I hope)_. Addition of `mediaArray` file or catalog/folder to this list is planned in the future.  
 
@@ -42,8 +46,6 @@ Navigate to project's folder. Launch cli.py to start the program.
 Follow the instructions.
 
 If you encounter `error: externally-managed-environment` some solutions are listed here: https://stackoverflow.com/a/75696359
-
-After getting the system up and running you may disable GUI to save CPU and RAM resources with `sudo systemctl set-default multi-user.target`; `reboot` ([read article](https://www.cyberciti.biz/faq/switch-boot-target-to-text-gui-in-systemd-linux/)). Works with systemd-based OSes (Fedora, Debian, etc.). Doesn't work with Alpine, but it should come without intrusive GUI anyway.
 
 ## Copying
 AGPLv3 or any later version, as defined by the Free Software Foundation. Contact me for possible excetpions.
