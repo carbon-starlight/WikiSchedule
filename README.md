@@ -1,8 +1,14 @@
 # WikiSchedule
 An open, free and easy to self-host Telegram bot for wiki-like class, homework and notes scheduling.
 
-![photo_2024-09-25_02-07-03](https://github.com/user-attachments/assets/c120f1d9-f505-479f-8a36-f253703f7ebd) | ![photo_2024-09-25_02-07-06](https://github.com/user-attachments/assets/fefab97e-58b7-4a68-9a9b-93bcbb947dcd)
-:-------------------------:|:-------------------------:
+<div align="left">
+<a>
+  <img src="https://github.com/user-attachments/assets/c120f1d9-f505-479f-8a36-f253703f7ebd" width="320px">
+</a>
+<a>
+  <img src="https://github.com/user-attachments/assets/fefab97e-58b7-4a68-9a9b-93bcbb947dcd" width="358px">
+</a>
+</div>
 
 _Matrix support is in development_
 
