@@ -1,11 +1,25 @@
 # WikiSchedule
 An open, free and easy to self-host Telegram bot for wiki-like class, homework and notes scheduling.
 
+![photo_2024-09-25_02-07-03](https://github.com/user-attachments/assets/c120f1d9-f505-479f-8a36-f253703f7ebd) | ![photo_2024-09-25_02-07-06](https://github.com/user-attachments/assets/fefab97e-58b7-4a68-9a9b-93bcbb947dcd)
+:-------------------------:|:-------------------------:
+
 _Matrix support is in development_
 
 Managing class schedlule may be repetative. A situation where 15-30 students manage their personal diaries and notebooks cooperating at most via a shared group chat is full of inconvinient, boring and repetative actions. I was not able to find a suitable solution for it, so I created WikiSchedule. It is a Telegram bot that takes the hastle of managing organizational and conspect papers and divides it into the amount of students in your class or group.
 
 The main instance of the bot (hosted by me) is located at https://t.me/wikiscbot. https://t.me/wikischbot is my development (unstable) version running the latest commit.
+
+## Operation
+Enter `/help` to see the manual. 
+
+`/cs` to create a schedule or `/lg` to join an existing timetable.
+
+`/add` will allow you to add a lesson, homework or a note.
+
+`/today` will show lessons for today
+
+`/ls`, `/ls_h` and `/ls_n` will list lessons, homework or notes for the current week. Postpend with a number or a letter ([c]urrent/[n]ext) to specify the week.
 
 ## How to self-host
 You will need a computer that will run 24/7 with active internet connection. You will not need a graphical enviroment or a window manager installed on it's operating system. A lightweight OS is recommended.
