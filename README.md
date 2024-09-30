@@ -32,7 +32,7 @@ You will need a computer that will run 24/7 with active internet connection. You
 
 Possible options:
 
-- [Fedora Server](https://fedoraproject.org/) *No version for IA-32 processors*
+- [Fedora Cloud](https://fedoraproject.org/) *No version for IA-32 processors*
 - [Debian](https://www.debian.org/) *Supports most architectures, but finding an option right for your machine on their website might be challenging*
 - [Alpine Linux](https://www.alpinelinux.org/) *Lightest of them all, but dual-boot may be challenging and some users reported it being slow specifically for Python code*
 
